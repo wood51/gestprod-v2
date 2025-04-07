@@ -1,0 +1,15 @@
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ @@title ?: 'Mon App' }}</title>
+
+  <!-- Choix Dev/Prod via DEBUG -->
+  <check if="{{ @DEBUG == 3 }}">
+    <!-- Tailwind en DEV via Vite -->
+    <script type="module" src="http://localhost:5173/app/views/assets/css/src/tailwind.css"></script>
+    <script type="module" src="http://localhost:5173/@vite/client"></script>
+    <false>
+      <!-- Tailwind en PROD (output.css compilé) -->
+      <link rel="stylesheet" href="/app/views/assets/css/build/output.css" />
+    </false>
+  </check>
+</head>

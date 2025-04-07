@@ -1,0 +1,17 @@
+{
+    "name": "wood51/f3-starter",
+    "type": "project",
+    "description": "Boilerplate Fat-Free Framework avec Tailwind CSS/HTMX/Hyperscript, Vite et Docker.",
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "wood51"
+      }
+    ],
+    "require": {
+      "bcosca/fatfree-core": "^3.9"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+  }
+  

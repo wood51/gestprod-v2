@@ -1,0 +1,24 @@
+# Dépendances node
+/node_modules/
+
+# Dépendances PHP
+/vendor/
+
+# Fichiers compilés par Vite
+/app/views/assets/css/build/
+
+# Données de la base (MariaDB montée en local)
+/docker/bdd_data/
+
+# Certificats 
+/docker/conf/certs/*.*
+
+# Configs perso (à ajouter si tu veux plus tard)
+/docker/.env
+
+# Fichier temporaires F3
+/tmp/
+
+# Systèmes
+.DS_Store
+Thumbs.db
