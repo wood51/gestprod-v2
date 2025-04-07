@@ -11,4 +11,3 @@ $f3->UI = "app/views/";
 $f3->route("GET /",'MainController->index');
 
 $f3->run();
-

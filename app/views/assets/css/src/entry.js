@@ -1,1 +1,1 @@
-import './tailwind.css'
+import './tailwind.css'; // chemin public via Nginx
