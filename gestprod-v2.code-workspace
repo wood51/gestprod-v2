@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "app"
+		},
+		{
+			"path": "app/core"
+		},
+		{
+			"path": "app/hello"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
+}

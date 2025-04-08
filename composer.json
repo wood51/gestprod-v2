@@ -9,9 +9,9 @@
       }
     ],
     "require": {
-      "bcosca/fatfree-core": "^3.9"
+      "bcosca/fatfree-core": "^3.9",
+        "wood51/f3-route": "^1.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
   }
-  

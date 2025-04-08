@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0f0045125f7423c901d23504ac46747",
+    "content-hash": "385f06742b14cd8d9a80977358066712",
     "packages": [
         {
             "name": "bcosca/fatfree-core",
@@ -50,6 +50,37 @@
                 }
             ],
             "time": "2024-12-31T17:11:04+00:00"
+        },
+        {
+            "name": "wood51/f3-route",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wood51/f3-route.git",
+                "reference": "17787117909c2af7674a3196d8fbf7e2e0c5f834"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wood51/f3-route/zipball/17787117909c2af7674a3196d8fbf7e2e0c5f834",
+                "reference": "17787117909c2af7674a3196d8fbf7e2e0c5f834",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Un plugin pour Fat-Free Framework",
+            "support": {
+                "issues": "https://github.com/wood51/f3-route/issues",
+                "source": "https://github.com/wood51/f3-route/tree/v1.0"
+            },
+            "time": "2024-12-31T05:57:51+00:00"
         }
     ],
     "packages-dev": [],

@@ -1,0 +1,8 @@
+{
+    "core" : {
+        "enabled"  :true
+    },
+    "hello" : {
+        "enabled" : true
+    }
+}

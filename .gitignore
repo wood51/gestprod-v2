@@ -11,10 +11,10 @@
 /docker/bdd_data/
 
 # Certificats 
-/docker/conf/certs/*.*
+# /docker/conf/certs/*.*
 
 # Configs perso (à ajouter si tu veux plus tard)
-/docker/.env
+# /docker/.env
 
 # Fichier temporaires F3
 /tmp/
