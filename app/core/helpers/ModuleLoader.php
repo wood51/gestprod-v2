@@ -56,8 +56,7 @@ class ModuleLoader extends \Prefab
         $f3->error_log = new Log('error.log');
 
         // Ici instanciation de tous les plugins f3 nécessaire 
+        Falsum\Run::handler();;
         \AnnotationRoutingPlugin::instance();
-
-        //$f3->debug_log->write("Core Initialisé...");
     }
 }

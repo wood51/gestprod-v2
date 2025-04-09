@@ -10,7 +10,9 @@
     ],
     "require": {
       "bcosca/fatfree-core": "^3.9",
-        "wood51/f3-route": "^1.0"
+        "wood51/f3-route": "^1.0",
+        "ikkez/f3-cortex": "^1.7",
+        "ikkez/f3-falsum": "^2.8"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

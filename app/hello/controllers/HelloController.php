@@ -3,10 +3,11 @@
 class HelloController
 {
     /**
-     * @route("GET /hello")
+     * @route("GET /")
      */
     public function index()
     {
+        echo var_dump(\AuthService::login("dpo","davi"));
         echo \Template::instance()->render('hello.html');
     }
 }
