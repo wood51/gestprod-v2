@@ -1,6 +1,6 @@
 <?php
 
-class CoreLoader extends \Prefab
+class ModuleLoader extends \Prefab
 {
 
     function __construct()
@@ -50,10 +50,6 @@ class CoreLoader extends \Prefab
         $f3->UI .= rtrim($ui, "|");
         $f3->AUTOLOAD .= rtrim($autoload, "|");
 
-        echo "AUTOLOAD : " . $f3->AUTOLOAD . "<br>";
-        echo "UI : " . $f3->UI . "<br>";
-
-
         // Création des logs
         $f3->LOGS = "app/logs/";
         $f3->debug_log = new Log('debug.log');
@@ -62,6 +58,6 @@ class CoreLoader extends \Prefab
         // Ici instanciation de tous les plugins f3 nécessaire 
         \AnnotationRoutingPlugin::instance();
 
-        $f3->debug_log->write("Core Initialisé...");
+        //$f3->debug_log->write("Core Initialisé...");
     }
 }
