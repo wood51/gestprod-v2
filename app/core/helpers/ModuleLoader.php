@@ -15,10 +15,9 @@ class ModuleLoader extends \Prefab
             "app/core/services/|" .
             "app/core/tests/";
 
-        $f3->UI = "app/views/|app/core/views/";
+        $f3->UI = "app/views/";
 
         $autoload = "|";
-        $ui = "|";
         foreach (glob("app/*", GLOB_ONLYDIR) as $dir) {
 
             $module_name = basename($dir);
@@ -40,14 +39,9 @@ class ModuleLoader extends \Prefab
                         $autoload .= "$dir/$subdir/|";
                     }
                 }
-
-                if (is_dir("$dir/views")) {
-                    $ui .= "$dir/views/|";
-                }
             }
         }
 
-        $f3->UI .= rtrim($ui, "|");
         $f3->AUTOLOAD .= rtrim($autoload, "|");
 
         // Création des logs
@@ -56,7 +50,10 @@ class ModuleLoader extends \Prefab
         $f3->error_log = new Log('error.log');
 
         // Ici instanciation de tous les plugins f3 nécessaire 
-        Falsum\Run::handler();;
+        Falsum\Run::handler();
+
+       \CoreMiddlewareService::base_middleware();
+
         \AnnotationRoutingPlugin::instance();
     }
 }

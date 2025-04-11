@@ -3,7 +3,13 @@
 require("vendor/autoload.php");
 
 $f3 = \Base::instance();
+
+
 $f3->DEBUG = 3;
+
+$f3->CACHE = true;
+new Session(NULL,'CSRF');
+
 $f3->AUTOLOAD = "app/core/helpers/"; // Mini pour charger la classe ModuleLoader
 
 // Configurer la base de données MariaDB
@@ -19,6 +25,11 @@ try {
     die("Erreur de connexion à MariaDB : " . $e->getMessage());
 }
 
+
+\Flash::instance();
+
 \ModuleLoader::instance();
+
+
 
 $f3->run();

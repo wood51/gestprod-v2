@@ -12,7 +12,9 @@
       "bcosca/fatfree-core": "^3.9",
         "wood51/f3-route": "^1.0",
         "ikkez/f3-cortex": "^1.7",
-        "ikkez/f3-falsum": "^2.8"
+        "ikkez/f3-falsum": "^2.8",
+        "ikkez/f3-flash": "^1.0",
+        "ikkez/f3-middleware": "^1.1"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
