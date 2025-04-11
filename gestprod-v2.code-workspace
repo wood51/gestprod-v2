@@ -1,19 +1,24 @@
 {
 	"folders": [
 		{
+			"name": "gestprod-v2",
 			"path": "."
 		},
 		{
+			"name": "app",
 			"path": "app"
 		},
 		{
+			"name": "hello",
 			"path": "app/hello"
 		},
 		{
-			"path": "app/views"
+			"name": "user",
+			"path": "app/user"
 		},
 		{
-			"path": "app/users"
+			"name": "views",
+			"path": "app/views"
 		}
 	],
 	"settings": {
