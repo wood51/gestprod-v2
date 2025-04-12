@@ -19,4 +19,16 @@ class UsersModel extends \DB\Cortex
 
         return $users;
     }
+
+    public static function get_all()
+    {
+        $users = new self();
+
+        $list = [];
+        foreach ($users->find() as $user) {
+            $list[] = $user->cast();
+        }
+        
+        return $list;
+    }
 }

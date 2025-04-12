@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <include href="themes/base/partials/_head.html" />
+  </head>
+
+  <body class="bg-gray-50 dark:bg-gray-800 dark:text-gray-200 font-sans text-gray-800 overflow-auto">
+    <include href="/themes/base/components/toast/_toast.html" />
+    <!-- Layout principal -->
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <include href="themes/base/partials/_aside.html" />
+
+      <!-- Contenu principal -->
+      <main class="flex-1">
+        <!-- Topbar -->
+        <include href="themes/base/partials/_topbar.html" />
+
+        <!-- Main Content-->
+        <div id="content" hx-target="this" hx-swap="innerHTML">
+          <!-- contenu injecté ici -->
+        </div>
+
+      </main>
+    </div>
+  </body>
+</html>

@@ -9,8 +9,8 @@
 			"path": "app"
 		},
 		{
-			"name": "hello",
-			"path": "app/hello"
+			"name": "core",
+			"path": "app/core"
 		},
 		{
 			"name": "user",

@@ -1,5 +1,5 @@
 <?php
-class AuthController 
+class AuthController
 {
 
     /**
@@ -7,7 +7,7 @@ class AuthController
      */
     function page_login($f3)
     {
-        echo \Template::instance()->render("core/themes/base/login.html");
+        echo \Template::instance()->render("themes/base/login.html");
     }
 
     /**
@@ -17,18 +17,20 @@ class AuthController
     {
 
         if (AuthService::login($f3->POST['username'], $f3->POST['password'])) {
-            \Flash::instance()->addMessage("Connexion réussi");
-            $f3->reroute("/");
+            header("HX-Redirect: /");
+            http_response_code(200);
         } else {
-            \Flash::instance()->addMessage("Erreur de connexion","error");
-            $f3->reroute("/login");
+            \Flash::instance()->addMessage("Erreur de connexion", "error");
+            header("HX-Trigger: showFlash");
+            http_response_code(204);
         }
     }
 
     /**
      * @route("GET /logout")
      */
-    function logout($f3) {
+    function logout($f3)
+    {
         AuthService::logout();
         $f3->reroute("/login");
     }

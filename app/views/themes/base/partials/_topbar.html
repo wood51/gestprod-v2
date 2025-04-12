@@ -1,0 +1,18 @@
+<div class="navbar bg-base-100 border-b px-4 z-10 shadow-sm justify-between">
+  <div class="text-lg font-semibold">Bienvenue, <span class="text-primary">David</span></div>
+  <div id="clock" class="font-mono text-md text-gray-500">12:00</div>
+</div>
+
+<!-- 🕒 Horloge -->
+<script>
+  setInterval(() => {
+    const now = new Date();
+    const clock = document.getElementById("clock");
+    if (clock) {
+      clock.innerText = now.toLocaleTimeString("fr-FR", {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+  }, 1000);
+</script>
