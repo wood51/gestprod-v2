@@ -1,5 +1,4 @@
-<!-- Toast Conteneur-->
-<include href="/themes/base/components/_toast.html" />
-<pre>
-      {{\Base::instance()->dump(@users) }}
-</pre>
+<h2 class="text-xl font-semibold mb-4">Utilisateurs</h2>
+<div id="user-list" hx-get="/user/list" hx-trigger="refreshUserList from:body" hx-swap="innerHTML">
+  <include href="user/partials/_users_list.html" />
+</div>

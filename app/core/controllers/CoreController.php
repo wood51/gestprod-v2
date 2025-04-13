@@ -7,6 +7,7 @@ class CoreController
     function index($f3)
     {
         $theme = "base";
+        $f3->user = AuthService::user();
         echo \Template::instance()->render("themes/$theme/" . $theme . "_layout.html");
     }
 

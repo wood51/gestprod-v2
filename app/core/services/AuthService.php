@@ -9,13 +9,13 @@ class AuthService
      * @param string $password
      * @return bool True si login OK, sinon false
      */
-    public static function login($username, $password): bool
+    public static function login($username, $password)
     {
         try {
             $user = \UsersModel::get_by_username($username);
 
             if (password_verify($password, $user->password)) {
-                $_SESSION['user'] = $user->cast();
+                \Base::instance()->SESSION['user'] = $user->cast();
                 return true;
             } else {
                 \Base::instance()->error_log->write("Mot de passe invalide");

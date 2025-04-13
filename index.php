@@ -25,6 +25,8 @@ try {
     die("Erreur de connexion à MariaDB : " . $e->getMessage());
 }
 
+// $f3->LANGUAGE='fr';
+// $f3->LOCALES='app/dict/';
 
 \Flash::instance();
 

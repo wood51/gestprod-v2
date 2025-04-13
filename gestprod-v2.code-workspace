@@ -1,14 +1,6 @@
 {
 	"folders": [
 		{
-			"name": "gestprod-v2",
-			"path": "."
-		},
-		{
-			"name": "app",
-			"path": "app"
-		},
-		{
 			"name": "core",
 			"path": "app/core"
 		},
@@ -19,6 +11,9 @@
 		{
 			"name": "views",
 			"path": "app/views"
+		},
+		{
+			"path": "."
 		}
 	],
 	"settings": {

@@ -52,7 +52,18 @@ class ModuleLoader extends \Prefab
         // Ici instanciation de tous les plugins f3 nécessaire 
         Falsum\Run::handler();
 
-       \CoreMiddlewareService::base_middleware();
+        \CoreMiddlewareService::base_middleware();
+        //$f3->CORTEX['standardiseID']=false;
+
+        $validation = \Validation::instance();
+        $validation->loadLang();
+
+        $validation->onError(function ($text, $key) {
+            \Base::instance()->set('error.' . $key, $text);
+            \Flash::instance()->addMessage($text, 'error');
+            header("HX-Trigger: showFlash");
+            http_response_code(204);
+        });
 
         \AnnotationRoutingPlugin::instance();
     }

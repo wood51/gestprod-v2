@@ -14,7 +14,7 @@ export default defineConfig({
     {
       name: "full-reload-php",
       handleHotUpdate({ file, server }) {
-        if (file.endsWith(".php") || file.endsWith(".html")) {
+        if (file.endsWith(".css") || file.endsWith(".html")) {
           server.ws.send({
             type: "full-reload",
             path: "*"
