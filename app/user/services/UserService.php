@@ -18,6 +18,10 @@ class UserService
       UsersModel::add($data);
    }
 
+   function edit_user($user_id,$data) {
+      UsersModel::edit($user_id,$data);
+   }
+
    function delete_user($user_id) {
       UsersModel::delete(($user_id));
    }

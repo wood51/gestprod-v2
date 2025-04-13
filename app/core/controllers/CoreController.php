@@ -16,6 +16,7 @@ class CoreController
      */
     function toastMessages($f3)
     {
+        $f3->flash_messages= \Flash::instance()->getMessages();
         echo \Template::instance()->render('themes/base/components/toast/_toast_messages.html');
     }
 }

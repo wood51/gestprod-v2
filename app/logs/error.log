@@ -35,3 +35,5 @@ Sat, 12 Apr 2025 00:38:28 +0000 [172.18.0.5 (172.18.0.1)] Mot de passe invalide
 Sat, 12 Apr 2025 06:21:00 +0000 [172.18.0.4 (172.18.0.1)] Mot de passe invalide
 Sun, 13 Apr 2025 07:28:13 +0000 [172.18.0.4 (172.18.0.1)] L'utlisateur n'existe pas
 Sun, 13 Apr 2025 07:28:13 +0000 [172.18.0.4 (172.18.0.1)] EXCEPTION login: L'utlisateur n'existe pas
+Sun, 13 Apr 2025 19:42:08 +0000 [172.18.0.4 (172.18.0.1)] L'utlisateur n'existe pas
+Sun, 13 Apr 2025 19:42:08 +0000 [172.18.0.4 (172.18.0.1)] EXCEPTION login: L'utlisateur n'existe pas

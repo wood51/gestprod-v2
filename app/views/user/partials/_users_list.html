@@ -22,7 +22,7 @@
             </td>
             <td>
               <div class="flex gap-1">
-                <button class="btn btn-xs btn-outline btn-info">Modifier</button>
+                <button hx-get="/user/{{ @user._id }}/edit-form" hx-target="#modal" hx-swap="innerHTML" class="btn btn-xs btn-outline btn-info">Modifier</button>
                 <button hx-get="/user/{{ @user._id }}/confirm-delete" hx-target="#modal" hx-swap="innerHTML" class="btn btn-xs btn-outline btn-error">Supprimer</button>
               </div>
             </td>

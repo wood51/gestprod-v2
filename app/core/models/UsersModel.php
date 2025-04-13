@@ -77,7 +77,7 @@ class UsersModel extends \DB\Cortex
         $user = new self();
 
         $user->copyfrom($data); // remplit tous les champs
-        
+
         $user->username = UserHelper::generate_username($user->nom, $user->prenom);
         $user->password = password_hash($data['password'], PASSWORD_BCRYPT);
 
@@ -85,7 +85,7 @@ class UsersModel extends \DB\Cortex
             throw new \Exception("La validation des données à échoué");
         }
 
-        $user->save();
+        $user->insert();
         return $user;
     }
 
@@ -102,5 +102,27 @@ class UsersModel extends \DB\Cortex
         $user->load(['_id = ?', $user_id]);
         $user->deleted = true;
         $user->update();
+    }
+
+    public static function edit($user_id, $data)
+    {
+        $user = new self();
+        $user->load(['_id = ?', $user_id]);
+
+        $old_prefix = UserHelper::calculate_username_prefix($user->nom, $user->prenom);
+        $new_prefix = UserHelper::calculate_username_prefix($data['nom'], $data['prenom']);
+
+        $user->copyfrom($data, ['nom', 'prenom', 'role']); // remplit tous les champs
+
+        if ($old_prefix !== $new_prefix) {
+            $user->username = UserHelper::generate_username($user->nom, $user->prenom);
+        }
+
+        if (!$user->validate()) {
+            throw new \Exception("La validation des données à échoué");
+        }
+
+        $user->update();
+        return $user;
     }
 }

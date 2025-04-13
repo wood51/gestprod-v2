@@ -50,7 +50,7 @@ class ModuleLoader extends \Prefab
         $f3->error_log = new Log('error.log');
 
         // Ici instanciation de tous les plugins f3 nécessaire 
-        Falsum\Run::handler();
+        //Falsum\Run::handler();
 
         \CoreMiddlewareService::base_middleware();
         //$f3->CORTEX['standardiseID']=false;
