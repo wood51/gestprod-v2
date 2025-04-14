@@ -1,30 +1,51 @@
 #!/bin/bash
 
-# Exceution :
-# chmod +x docker/fix-perm.sh
-# ./docker/fix-perm.sh
-# Ce script corrige les permissions des dossiers utilisés par le conteneur Docker
+# --- 1. Clone le projet ---
+REPO=$1
 
+if [ -z "$REPO" ]; then
+  echo "❌ Il faut spécifier l'URL du repo Git"
+  echo "Usage : ./install-project.sh git@github.com:tonuser/tonprojet.git"
+  exit 1
+fi
 
-echo "🔧 Correction des permissions en cours..."
+# On extrait le nom du dossier (nom du repo sans .git)
+PROJECT_NAME=$(basename "$REPO" .git)
 
-# Utilisateur utilisé par Apache dans le conteneur
-APACHE_USER=www-data
+# Clone
+git clone "$REPO"
+cd "$PROJECT_NAME" || exit 1
 
-# Liste des dossiers à corriger
+echo "📁 Projet cloné dans $PROJECT_NAME"
+
+# --- 2. Fix des permissions de base (node/npm) ---
+echo "🔧 Correction des droits locaux (node_modules, etc.)"
+sudo chown -R $USER:$USER .
+
+# --- 3. Install composer + npm ---
+echo "📦 Installation des dépendances PHP et JS..."
+composer install
+npm install
+
+# --- 4. Fix des permissions pour Apache & MariaDB ---
+echo "🔐 Correction des permissions web"
 FOLDERS=(tmp app/logs docker/bdd_data)
 
 for DIR in "${FOLDERS[@]}"; do
   if [ -d "$DIR" ]; then
     echo "➡️  Correction de $DIR"
-    sudo chown -R $APACHE_USER:$APACHE_USER "$DIR"
+    sudo chown -R www-data:www-data "$DIR"
     sudo chmod -R 775 "$DIR"
   else
-    echo "⚠️  Dossier $DIR introuvable. Création..."
+    echo "📁 Création de $DIR"
     sudo mkdir -p "$DIR"
-    sudo chown -R $APACHE_USER:$APACHE_USER "$DIR"
+    sudo chown -R www-data:www-data "$DIR"
     sudo chmod -R 775 "$DIR"
   fi
 done
 
-echo "✅ Permissions corrigées avec succès."
+# --- 5. Lancement de Docker ---
+echo "🐳 Lancement des conteneurs Docker..."
+docker-compose up -d
+
+echo "✅ Installation terminée, projet prêt !"
