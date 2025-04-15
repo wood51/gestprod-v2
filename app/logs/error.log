@@ -39,3 +39,5 @@ Sun, 13 Apr 2025 19:42:08 +0000 [172.18.0.4 (172.18.0.1)] L'utlisateur n'existe 
 Sun, 13 Apr 2025 19:42:08 +0000 [172.18.0.4 (172.18.0.1)] EXCEPTION login: L'utlisateur n'existe pas
 Mon, 14 Apr 2025 16:27:31 +0000 [172.18.0.5 (10.0.2.2)] EXCEPTION login: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'deleted' in 'WHERE'
 Mon, 14 Apr 2025 16:31:12 +0000 [172.18.0.5 (10.0.2.2)] Mot de passe invalide
+Mon, 14 Apr 2025 17:09:13 +0000 [172.18.0.5 (10.0.2.2)] L'utlisateur n'existe pas
+Mon, 14 Apr 2025 17:09:13 +0000 [172.18.0.5 (10.0.2.2)] EXCEPTION login: L'utlisateur n'existe pas
