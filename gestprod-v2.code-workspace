@@ -1,16 +1,19 @@
 {
 	"folders": [
 		{
-			"path": "."
-		},
-		{
-			"path": "app"
-		},
-		{
+			"name": "core",
 			"path": "app/core"
 		},
 		{
-			"path": "app/hello"
+			"name": "user",
+			"path": "app/user"
+		},
+		{
+			"name": "views",
+			"path": "app/views"
+		},
+		{
+			"path": "."
 		}
 	],
 	"settings": {

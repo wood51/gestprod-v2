@@ -6,14 +6,15 @@ export default defineConfig({
     host: "0.0.0.0",
     port: 5173,
     watch: {
-      usePolling: true
+      usePolling: true,
+      interval:300
     }
   },
   plugins: [
     {
       name: "full-reload-php",
       handleHotUpdate({ file, server }) {
-        if (file.endsWith(".php") || file.endsWith(".html")) {
+        if (file.endsWith(".css") || file.endsWith(".html")) {
           server.ws.send({
             type: "full-reload",
             path: "*"

@@ -1,0 +1,10 @@
+<div id="toast-container" class="toast toast-top toast-end pointer-events-none z-50">
+  <div id="toast-messages" hx-get="/toast/messages" hx-trigger="showFlash from:body" hx-swap="innerHTML" class="pointer-events-auto">
+    <repeat group="{{ \Flash::instance()->getMessages() }}" value="{{ @msg }}">
+      <div class="alert alert-{{ @msg.status }} flex justify-between items-center mb-2 shadow-lg" _="on load wait 5s remove me">
+        <span>{{ @msg.text | esc }}</span>
+        <button _="on click remove closest .alert" class="alert-close"><i class="fa fa-times"></i></button>
+      </div>
+    </repeat>
+  </div>
+</div>

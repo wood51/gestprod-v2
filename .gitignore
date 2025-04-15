@@ -19,6 +19,9 @@
 # Fichier temporaires F3
 /tmp/
 
+# Fichier de log
+/app/logs/
+
 # Systèmes
 .DS_Store
 Thumbs.db

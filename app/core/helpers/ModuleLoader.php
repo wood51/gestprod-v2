@@ -15,10 +15,9 @@ class ModuleLoader extends \Prefab
             "app/core/services/|" .
             "app/core/tests/";
 
-        $f3->UI = "app/views/|app/core/views/";
+        $f3->UI = "app/views/";
 
         $autoload = "|";
-        $ui = "|";
         foreach (glob("app/*", GLOB_ONLYDIR) as $dir) {
 
             $module_name = basename($dir);
@@ -40,14 +39,9 @@ class ModuleLoader extends \Prefab
                         $autoload .= "$dir/$subdir/|";
                     }
                 }
-
-                if (is_dir("$dir/views")) {
-                    $ui .= "$dir/views/|";
-                }
             }
         }
 
-        $f3->UI .= rtrim($ui, "|");
         $f3->AUTOLOAD .= rtrim($autoload, "|");
 
         // Création des logs
@@ -56,8 +50,21 @@ class ModuleLoader extends \Prefab
         $f3->error_log = new Log('error.log');
 
         // Ici instanciation de tous les plugins f3 nécessaire 
-        \AnnotationRoutingPlugin::instance();
+        //Falsum\Run::handler();
 
-        //$f3->debug_log->write("Core Initialisé...");
+        \CoreMiddlewareService::base_middleware();
+        //$f3->CORTEX['standardiseID']=false;
+
+        $validation = \Validation::instance();
+        $validation->loadLang();
+
+        $validation->onError(function ($text, $key) {
+            \Base::instance()->set('error.' . $key, $text);
+            \Flash::instance()->addMessage($text, 'error');
+            header("HX-Trigger: showFlash");
+            http_response_code(204);
+        });
+
+        \AnnotationRoutingPlugin::instance();
     }
 }
