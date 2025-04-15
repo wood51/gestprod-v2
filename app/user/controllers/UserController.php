@@ -21,6 +21,13 @@ class UserController
         echo \Template::instance()->render("user/users.html");
     }
 
+    /**
+     * @route("GET /users/dashboard")
+     */
+    function dashboard($f3) {
+        echo \Template::instance()->render("user/dashboard.html");
+    }
+
     /********************************
      * Partials
      *******************************/

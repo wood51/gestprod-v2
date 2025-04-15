@@ -1,0 +1,297 @@
+<div class="p-6 space-y-6">
+  <!-- 🔢 Cartes Résumé -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Utilisateurs -->
+    <div class="card bg-base-100 shadow-sm hover:shadow-lg transition-shadow">
+      <div class="card-body">
+        <h3 class="text-xl font-bold text-primary">Utilisateurs</h3>
+        <p class="text-5xl font-extrabold text-center my-4">16</p>
+        <div class="card-actions justify-end">
+          <button class="btn btn-primary">Ajouter</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Présents aujourd'hui avec sparkline en bas à droite -->
+    <div class="card bg-base-100 shadow-sm hover:shadow-lg transition-shadow">
+      <div class="card-body flex flex-col justify-between h-full">
+        <!-- Titre -->
+        <h3 class="text-xl font-bold text-success">Présents</h3>
+
+        <!-- Nombre centré -->
+        <p class="text-5xl font-extrabold text-center my-4">14</p>
+
+        <!-- Sparkline en bas à droite -->
+        <div class="flex justify-end">
+          <div id="presence-sparkline" class="w-36 h-12"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Absents ou activité -->
+    <div class="card bg-base-100 shadow-sm hover:shadow-lg transition-shadow">
+      <div class="card-body">
+        <h3 class="text-xl font-bold text-error">Connectés</h3>
+        <p class="text-5xl font-extrabold text-center my-4">2</p>
+        <div class="flex justify-end">Dern. connexion : David le 14-04-2025 à 16:45</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 👥 Table Utilisateurs -->
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h3 class="card-title text-2xl mb-4">Liste des utilisateurs</h3>
+
+      <div class="overflow-x-auto">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Statut</th>
+              <th class="text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Exemple statique -->
+            <tr class="hover:bg-base-200">
+              <td>Jean Dupont</td>
+              <td>jean.dupont@example.com</td>
+              <td><span class="badge badge-success">Présent</span></td>
+              <td class="text-right space-x-2">
+                <button class="btn btn-sm btn-outline">Modifier</button>
+                <button class="btn btn-sm btn-error text-white">Supprimer</button>
+              </td>
+            </tr>
+            <tr class="hover:bg-base-200">
+              <td>Marie Curie</td>
+              <td>marie.curie@example.com</td>
+              <td><span class="badge badge-error">Absent</span></td>
+              <td class="text-right space-x-2">
+                <button class="btn btn-sm btn-outline">Modifier</button>
+                <button class="btn btn-sm btn-error text-white">Supprimer</button>
+              </td>
+            </tr>
+            <tr class="hover:bg-base-200">
+              <td>Marie Curie</td>
+              <td>marie.curie@example.com</td>
+              <td><span class="badge badge-error">Absent</span></td>
+              <td class="text-right space-x-2">
+                <button class="btn btn-sm btn-outline">Modifier</button>
+                <button class="btn btn-sm btn-error text-white">Supprimer</button>
+              </td>
+            </tr>
+            <tr class="hover:bg-base-200">
+              <td>Marie Curie</td>
+              <td>marie.curie@example.com</td>
+              <td><span class="badge badge-error">Absent</span></td>
+              <td class="text-right space-x-2">
+                <button class="btn btn-sm btn-outline">Modifier</button>
+                <button class="btn btn-sm btn-error text-white">Supprimer</button>
+              </td>
+            </tr>
+            <!-- Ajoute autant de lignes que tu veux -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var options6 = {
+        series: [
+          {
+            data: [15, 16, 12, 15, 15, 15, 3]
+          }
+        ],
+        chart: {
+          type: "bar",
+          width: 150,
+          height: 45,
+          sparkline: {
+            enabled: true
+          }
+        },
+        plotOptions: {
+          bar: {
+            columnWidth: "60%"
+          }
+        },
+        labels: [1, 2, 3, 4, 5, 6, 7],
+        xaxis: {
+          crosshairs: {
+            width: 1
+          }
+        },
+        tooltip: {
+          fixed: {
+            enabled: false
+          },
+          x: {
+            show: false
+          },
+          y: {
+            title: {
+              formatter: function (seriesName) {
+                return "";
+              }
+            }
+          },
+          marker: {
+            show: false
+          }
+        }
+      };
+
+      var chart6 = new ApexCharts(document.querySelector("#presence-sparkline"), options6);
+      chart6.render();
+    });
+  </script>
+</div>
+<!-- Bouton -->
+<div class="flex justify-end mt-8">
+  <button class="btn btn-warning" _="on click absence_modal.showModal()">Déclarer absents / heures supp.</button>
+</div>
+
+<!-- Modale -->
+<dialog id="absence_modal" class="modal">
+  <div class="modal-box w-full max-w-4xl">
+    <h3 class="font-bold text-lg mb-4">Déclaration : absents & heures supplémentaires</h3>
+
+    <form>
+      <!-- Date -->
+      <label class="form-control w-full mb-4">
+        <span class="label-text">Date</span>
+        <input type="date" name="date" class="input input-bordered w-full" required />
+      </label>
+
+      <!-- Options -->
+      <div class="flex items-center justify-between mb-4">
+        <!-- Recherche -->
+        <label class="form-control w-1/2">
+          <span class="label-text">Recherche opérateur</span>
+          <input type="text" placeholder="Ex : Jean..." class="input input-bordered w-full" oninput="filterTableRows(this.value)" />
+        </label>
+
+        <!-- Case vendredi complet -->
+        <label class="cursor-pointer flex items-center gap-2">
+          <input type="checkbox" class="checkbox checkbox-primary" id="vendredi-hs" onchange="applyVendrediHS(this.checked)" />
+          <span>Vendredi complet (4.75 h)</span>
+        </label>
+      </div>
+
+      <!-- Liste utilisateurs -->
+      <div class="overflow-x-auto max-h-72 overflow-y-auto">
+        <table class="table table-sm table-zebra w-full" id="presence-table">
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th class="text-center">Absent ?</th>
+              <th>Heures Supplémentaires</th>
+              <th>Retard (min)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Jean Dupont</td>
+
+              <!-- Absent -->
+              <td class="text-center">
+                <input
+                  type="checkbox"
+                  name="absents[]"
+                  value="1"
+                  class="checkbox checkbox-error"
+                  id="absent-1"
+                  onchange="
+                           document.getElementById('hs-1').disabled = this.checked;
+                           document.getElementById('vhs-1').disabled = this.checked;
+                           document.getElementById('retard-1').disabled = this.checked;
+                           document.getElementById('retard-min-1').disabled = this.checked || !document.getElementById('retard-1').checked;
+                         "
+                />
+              </td>
+
+              <!-- Heures Supplémentaires -->
+              <td>
+                <div class="flex items-center gap-2">
+                  <input type="number" min="0" step="0.25" name="hs[1]" id="hs-1" class="input input-sm input-bordered w-24" onchange="adjustHsFromRetard(1)" />
+                  <input
+                    type="checkbox"
+                    class="checkbox checkbox-primary"
+                    id="vhs-1"
+                    onchange="
+                             document.getElementById('hs-1').value = this.checked ? '4.75' : '';
+                             adjustHsFromRetard(1);
+                           "
+                  />
+                </div>
+              </td>
+
+              <!-- Retard -->
+              <td>
+                <div class="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    class="checkbox checkbox-warning"
+                    id="retard-1"
+                    onchange="
+                             document.getElementById('retard-min-1').disabled = !this.checked || document.getElementById('absent-1').checked;
+                             adjustHsFromRetard(1);
+                           "
+                  />
+                  <input type="number" min="0" name="retard[1]" id="retard-min-1" class="input input-sm input-bordered w-20" disabled oninput="adjustHsFromRetard(1)" />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Actions -->
+      <div class="modal-action mt-4">
+        <button class="btn btn-primary" type="submit">Enregistrer</button>
+        <form method="dialog">
+          <button class="btn">Annuler</button>
+        </form>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<script>
+  // Recherche live
+  function filterTableRows(value) {
+    const rows = document.querySelectorAll("#presence-table tbody tr");
+    rows.forEach((row) => {
+      const name = row.cells[0].innerText.toLowerCase();
+      row.style.display = name.includes(value.toLowerCase()) ? "" : "none";
+    });
+  }
+
+  // Appliquer 4.75 à tous les inputs HS
+  function applyVendrediHS(active) {
+    const inputs = document.querySelectorAll('input[name^="hs["]');
+    inputs.forEach((input) => {
+      if (!input.disabled) input.value = active ? "4.75" : "";
+    });
+  }
+</script>
+<script>
+  function adjustHsFromRetard(id) {
+    const retardMin = parseFloat(document.getElementById(`retard-min-${id}`).value) || 0;
+    const retardChecked = document.getElementById(`retard-${id}`).checked;
+    const vendrediChecked = document.getElementById(`vhs-${id}`).checked;
+    const hsInput = document.getElementById(`hs-${id}`);
+
+    if (!retardChecked) return;
+
+    let baseHs = vendrediChecked ? 4.75 : parseFloat(hsInput.value) || 0;
+    const retardHeures = retardMin / 60;
+    let hsFinal = Math.max(baseHs - retardHeures, 0);
+
+    hsInput.value = hsFinal.toFixed(2);
+  }
+</script>
