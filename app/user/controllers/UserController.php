@@ -25,6 +25,7 @@ class UserController
      * @route("GET /users/dashboard")
      */
     function dashboard($f3) {
+        $f3->users = $this->service->get_all_active_users();
         echo \Template::instance()->render("user/dashboard.html");
     }
 
