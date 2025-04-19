@@ -17,7 +17,7 @@
   }
 }
 
-/*Tweak toast daisy UI*/
+
 .alert {
   @apply shadow-md backdrop-blur-xs transition duration-300;
 }
