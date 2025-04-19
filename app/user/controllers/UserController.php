@@ -21,9 +21,33 @@ class UserController
         echo \Template::instance()->render("user/users.html");
     }
 
+    /**
+     * @route("GET /users/dashboard")
+     */
+    function dashboard($f3) {
+        $paginated_users = $this->service->paginate_active_users();
+        $f3->users = $paginated_users['subset'];
+        $f3->active_page = $paginated_users['pos']+1;
+        $f3->nb_pages = array_map('strval', range(1, $paginated_users['count'])); // pour template f3 repeat array('1','2',....count)
+        $f3->empty_rows = array_fill(1,$paginated_users['limit']-count( $paginated_users['subset'])," ");
+        echo \Template::instance()->render("user/dashboard.html");
+    }
+
     /********************************
      * Partials
      *******************************/
+    /**
+     * @route("GET /users/@page/@limit")
+     */
+    function paginated_users($f3,$params) {
+        $paginated_users = $this->service->paginate_active_users($params['page'],$params['limit']);
+        $f3->users = $paginated_users['subset'];
+        $f3->active_page = $paginated_users['pos']+1;
+        $f3->nb_pages = array_map('strval', range(1, $paginated_users['count'])); // pour template f3 repeat array('1','2',....count)
+        $f3->empty_rows = array_fill(1,$paginated_users['limit']-count( $paginated_users['subset'])," ");
+        
+        echo \Template::instance()->render("user/partials/_paginated_users_list.html");
+    }
 
     /**
      * @route("GET /users/list")

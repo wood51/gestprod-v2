@@ -1,10 +1,25 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-/*Tweak toast daisy UI*/
+@plugin '@tailwindcss/typography';
+@plugin "daisyui";
+@plugin "daisyui/theme" {
+  themes: all;
+}
+
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+
 .alert {
-  @apply shadow-md backdrop-blur-sm transition duration-300;
+  @apply shadow-md backdrop-blur-xs transition duration-300;
 }
 
 .alert-success {
