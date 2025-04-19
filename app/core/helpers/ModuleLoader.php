@@ -13,7 +13,6 @@ class ModuleLoader extends \Prefab
             "|app/core/controllers/|" .
             "app/core/models/|" .
             "app/core/services/|" .
-            "app/core/tests/";
 
         $f3->UI = "app/views/";
 

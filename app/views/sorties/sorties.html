@@ -1,0 +1,35 @@
+<div class="gris lg:grid-cols-3">
+  <div class="col-span-3 card w-full bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title">Sorties</h2>
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Jours</th>
+              <th>Semaine</th>
+              <th>Rotors</th>
+              <th>Stators</th>
+              <th>Stators_ST</th>
+              <th>Paliers</th>
+              <th>ALternateurs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <repeat group="{{@sorties}}" value="{{@sortie}}">
+              <tr>
+                <td>{{@sortie.date}}</td>
+                <td>{{@sortie.semaine}}</td>
+                <td>{{@sortie.rotor}}</td>
+                <td>{{@sortie.stator}}</td>
+                <td>{{@sortie.stator_st}}</td>
+                <td>{{@sortie.palier}}</td>
+                <td>{{@sortie.alternateur}}</td>
+              </tr>
+            </repeat>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
