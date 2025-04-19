@@ -71,6 +71,12 @@ class UsersModel extends \DB\Cortex
         return $users->afind(['deleted = ?', $deleted]);
     }
 
+    public static function paginate_all($page,$limit,$deleted = false)
+    {
+        $users = new self();
+        return $users->paginate($page-1,$limit,['deleted = ?', $deleted]);
+    }
+
     public static function add($data)
     {
 
