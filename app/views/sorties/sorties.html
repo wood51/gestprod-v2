@@ -45,79 +45,68 @@
       series: [
         {
           name: "Rotors",
-          data: [{
-            x:'Lundi',
-            y:5
-        }],
+          data: [2, 4, 1, 1, 5],
         },
         {
           name: "Stators",
-          data: [3],
+          data: [2, 4, 1, 1, 5],
         },
         {
           name: "Stators_ST",
-          data: [1,4],
+          data: [2, 4, 1, 1, 5],
         },
         {
           name: "Paliers",
-          data: [0,0,4],
+          data: [2, 4, 1, 1, 5],
         },
         {
           name: "Alternateurs",
-          data: [],
+          data: [2, 4, 1, 1, 5],
         },
       ],
       chart: {
         type: "bar",
-        height:"500",
+        height: "600",
       },
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: "55%",
+          columnWidth: "80%",
           borderRadius: 5,
           borderRadiusApplication: "end",
         },
       },
       dataLabels: {
         enabled: true,
-      },
-      stroke: {
-        show: true,
-        width: 2,
-        colors: ["transparent"],
-      },
-      xaxis: {
-        // categories: [
-        //   "Lun",
-        //   "Mar",
-        //   "Mer",
-        //   "Jeu",
-        //   "Ven",
-        // ],
-        type:'category'
-      },
-      yaxis: {
-        title: {
-          text: "Sorties",
+        style: {
+          fontSize: "36px",
         },
       },
-      fill: {
-        opacity: 1,
+      legend: {
+        fontSize: "24px",
+        markers: {
+          size: "16px",
+          shape: "circle",
+        },
       },
-      tooltip: {
-        // y: {
-        //   formatter: function (val) {
-        //     return "$ " + val + " thousands";
-        //   },
-        // },
+      xaxis: {
+        categories: ["Lun", "Mar", "Mer", "Jeu", "Ven"],
+        labels: {
+          style: {
+            fontSize: "24px",
+          },
+        },
+      },
+      yaxis: {
+        labels :{
+          style: {
+            fontSize : "24px"
+          }
+        }
       },
     };
 
-    var chart = new ApexCharts(
-      document.querySelector("#sorties-chart"),
-      options
-    );
+    var chart = new ApexCharts(document.querySelector("#sorties-chart"), options);
     chart.render();
   </script>
 </div>
