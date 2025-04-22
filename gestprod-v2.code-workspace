@@ -1,6 +1,10 @@
 {
 	"folders": [
 		{
+			"name": "gestprod-v2",
+			"path": "."
+		},
+		{
 			"name": "core",
 			"path": "app/core"
 		},
@@ -9,16 +13,12 @@
 			"path": "app/user"
 		},
 		{
-			"name": "sorties",
-			"path": "app/sorties"
+			"name": "suivis",
+			"path": "app/suivis"
 		},
 		{
 			"name": "views",
 			"path": "app/views"
-		},
-		{
-			"name": "gestprod-v2",
-			"path": "."
 		}
 	],
 	"settings": {
