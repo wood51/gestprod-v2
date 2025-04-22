@@ -1,4 +1,4 @@
-<div class="gris lg:grid-cols-3">
+<div class="grid lg:grid-cols-3 gap-6">
   <div class="col-span-3 card w-full bg-base-100 shadow-xl">
     <div class="card-body">
       <h2 class="card-title">Sorties</h2>
@@ -32,4 +32,92 @@
       </div>
     </div>
   </div>
+
+  <div class="col-span-3 card w-full bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title">Sorties</h2>
+      <div id="sorties-chart" class="w-full"></div>
+    </div>
+  </div>
+
+  <script>
+    var options = {
+      series: [
+        {
+          name: "Rotors",
+          data: [{
+            x:'Lundi',
+            y:5
+        }],
+        },
+        {
+          name: "Stators",
+          data: [3],
+        },
+        {
+          name: "Stators_ST",
+          data: [1,4],
+        },
+        {
+          name: "Paliers",
+          data: [0,0,4],
+        },
+        {
+          name: "Alternateurs",
+          data: [],
+        },
+      ],
+      chart: {
+        type: "bar",
+        height:"500",
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: "55%",
+          borderRadius: 5,
+          borderRadiusApplication: "end",
+        },
+      },
+      dataLabels: {
+        enabled: true,
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ["transparent"],
+      },
+      xaxis: {
+        // categories: [
+        //   "Lun",
+        //   "Mar",
+        //   "Mer",
+        //   "Jeu",
+        //   "Ven",
+        // ],
+        type:'category'
+      },
+      yaxis: {
+        title: {
+          text: "Sorties",
+        },
+      },
+      fill: {
+        opacity: 1,
+      },
+      tooltip: {
+        // y: {
+        //   formatter: function (val) {
+        //     return "$ " + val + " thousands";
+        //   },
+        // },
+      },
+    };
+
+    var chart = new ApexCharts(
+      document.querySelector("#sorties-chart"),
+      options
+    );
+    chart.render();
+  </script>
 </div>

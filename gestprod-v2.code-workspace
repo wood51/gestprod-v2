@@ -9,15 +9,36 @@
 			"path": "app/user"
 		},
 		{
+			"name": "sorties",
+			"path": "app/sorties"
+		},
+		{
 			"name": "views",
 			"path": "app/views"
 		},
 		{
+			"name": "gestprod-v2",
 			"path": "."
 		}
 	],
 	"settings": {
 		"git.ignoreLimitWarning": true,
-		"liveServer.settings.multiRootWorkspaceName": "gestprod-v2"
+		"liveServer.settings.multiRootWorkspaceName": "gestprod-v2",
+		"sqltools.connections": [
+			{
+				"mysqlOptions": {
+					"authProtocol": "default",
+					"enableSsl": "Disabled"
+				},
+				"previewLimit": 50,
+				"server": "localhost",
+				"port": 3306,
+				"driver": "MariaDB",
+				"name": "gestprod-v2",
+				"database": "gestprod-v2",
+				"username": "root",
+				"password": "Bd135@c127"
+			}
+		]
 	}
 }
