@@ -1,9 +1,9 @@
 <nav>
-  <ul class="space-y-2 text-white">
+  <ul class="space-y-2 text-white" hx-ext="multi-swap">
     <!-- Séparateur -->
     <li><hr class="border-t border-gray-500 mb-2" /></li>
     <li class="flex items-center justify-around gap-4 w-full py-2">
-      <a href="/" class="text-gray-500 hover:text-indigo-500 text-xl" title="Notification">
+      <a href="/accueil-partials" hx-get="/accueil-partials" hx-swap="multi:#aside_menu,#content:outerHTML" class="text-gray-500 hover:text-indigo-500 text-xl" title="Acceuil">
         <i class="fas fa-home"></i>
       </a>
       <a href="#" class="text-gray-500 hover:text-indigo-500 text-xl" title="Paramètres" hx-get="/user/parametres" hx-target="body" hx-swap="beforeend">
@@ -15,11 +15,12 @@
     </li>
 
     <!-- Séparateur -->
-      <li>
-        <a href="/suivis/empilage-rotor" hx-get="/suivis/empilage-rotor" hx-target="#content" class="btn btn-ghost">Empilage Rotor</a>
-      </li>
-      <li>
-        <a href="/suivis/empilage-stator" hx-get="/suivis/empilage-stator" hx-target="#content" class="btn btn-ghost">Empilage Stator</a>
-      </li>
+    <li><hr class="border-t border-gray-500 my-2" /></li>
+    <li>
+      <a href="/postes/empilage-rotor" hx-get="/postes/empilage-rotor" hx-target="#content" class="btn btn-ghost">Empilage Rotor</a>
+    </li>
+    <li>
+      <a href="/postes/empilage-stator" hx-get="/postes/empilage-stator" hx-target="#content" class="btn btn-ghost">Empilage Stator</a>
+    </li>
   </ul>
 </nav>

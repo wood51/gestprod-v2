@@ -1,9 +1,9 @@
 <nav>
-    <ul class="space-y-2 text-white">
+    <ul class="space-y-2 text-white" hx-ext="multi-swap">
       <!-- Séparateur -->
       <li><hr class="border-t border-gray-500 mb-2" /></li>
       <li class="flex items-center justify-around gap-4 w-full py-2">
-        <a href="/" class="text-gray-500 hover:text-indigo-500 text-xl" title="Notification">
+        <a href="/accueil-partials" hx-get="/accueil-partials" hx-swap="multi:#aside_menu,#content:outerHTML" class="text-gray-500 hover:text-indigo-500 text-xl" title="Acceuil">
           <i class="fas fa-home"></i>
         </a>
         <a href="#" class="text-gray-500 hover:text-indigo-500 text-xl" title="Paramètres" hx-get="/user/parametres" hx-target="body" hx-swap="beforeend">
@@ -17,9 +17,11 @@
       <!-- Séparateur -->
       <li><hr class="border-t border-gray-500 my-2" /></li>
       <!-- <li><a href="/users" hx-get="/users" hx-target="#content" class="btn btn-ghost"> Utilisateurs </a></li> -->
-      <li><a href="/users/dashboard" hx-get="/users/dashboard" hx-target="#content" class="btn btn-ghost">Utilisateurs - Dashboard</a></li>
+      <li><a href="/users/dashboard" hx-get="/users/dashboard" hx-target="#content" class="btn btn-ghost">Utilisateurs</a></li>
       <!-- Séparateur -->
-      <li><a href="/suivis/menu" hx-push-url="true" hx-get="/suivis/menu" hx-target="#menu_content" hx-swap="innerHTML" class="btn btn-ghost">Postes</a></li>
+      <li><hr class="border-t border-gray-500 my-2" /></li>
+      <!-- <li><a href="/postes" hx-push-url="true" hx-get="/postes" hx-target="#content" class="btn btn-ghost">Postes</a></li> -->
+      <li><a href="/postes" hx-get="/postes" hx-push-url="true" hx-swap="multi:#aside_menu,#content:outerHTML" class="btn btn-ghost">Postes</a></li>
 
     </ul>
   </nav>
