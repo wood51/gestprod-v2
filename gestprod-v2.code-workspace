@@ -9,12 +9,8 @@
 			"path": "app/core"
 		},
 		{
-			"name": "user",
-			"path": "app/user"
-		},
-		{
-			"name": "suivis",
-			"path": "app/suivis"
+			"name": "kpi-securite",
+			"path": "app/kpi-securite"
 		},
 		{
 			"name": "views",

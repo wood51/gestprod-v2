@@ -7,7 +7,11 @@ class CoreController
     function index($f3)
     {
         $theme = "base";
+        $now = new \DateTimeImmutable();
+        $f3->annee = (int)$now->format('Y');
+        $f3->mois = (int)$now->format('n');
         $f3->user = AuthService::user();
+
         $f3->aside_menu = \Template::instance()->render("themes/base/partials/_nav_principale.html");
         echo \Template::instance()->render("themes/$theme/" . $theme . "_layout.html");
     }
@@ -18,10 +22,10 @@ class CoreController
     function accueil_partial($f3)
     {
         $menu = \Template::instance()->render("themes/base/partials/_nav_principale.html");
-        $content ="";
+        $content = "";
 
         echo '<div id="aside_menu">' . $menu . '</div>';
-        echo '<div id="content" class="p-4">'.$content.'</div>';
+        echo '<div id="content" class="p-4">' . $content . '</div>';
     }
 
     /**
