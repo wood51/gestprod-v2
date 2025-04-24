@@ -1,0 +1,98 @@
+<div class=" bg-white p-8 rounded-3xl shadow-2xl w-full max-w-4xl border border-gray-300">
+  <h1 class="text-6xl font-extrabold text-center bg-red-600 text-white py-4 rounded-xl mb-8 tracking-widest">SÉCURITÉ</h1>
+
+  <!-- Indicateurs séparés -->
+  <div class="grid grid-cols-2 gap-6 text-center text-2xl">
+    <div class="border border-gray-300 rounded-xl p-4">
+      <p class="text-lg">Jours sans accident</p>
+      <p class="text-5xl text-green-600 font-bold" id="compteur">-</p>
+    </div>
+    <div class="border border-gray-300 rounded-xl p-4">
+      <p class="text-lg">Record sans accident</p>
+      <p class="text-5xl text-blue-600 font-bold">18</p>
+    </div>
+  </div>
+
+  <div class="text-center font-bold text-indigo-600 text-3xl mt-10 mb-4">Avril 2025</div>
+
+  <!-- En-tête jours de la semaine -->
+  <div class="grid grid-cols-7 gap-1 text-lg text-center font-semibold mb-1">
+    <div>Lun</div>
+    <div>Mar</div>
+    <div>Mer</div>
+    <div>Jeu</div>
+    <div>Ven</div>
+    <div>Sam</div>
+    <div>Dim</div>
+  </div>
+
+  <!-- Jours du calendrier sans bordure principale -->
+  <div id="calendrier" class="grid grid-cols-7 gap-1 text-center text-xl rounded-xl p-2"></div>
+
+  <!-- Légende -->
+  <div class="mt-10 text-xl border border-gray-300 rounded-xl p-4">
+    <div class="flex items-center gap-4 mb-2">
+      <div class="w-6 h-6 bg-green-200 border border-gray-500 rounded"></div>
+      Jour sans AT
+    </div>
+    <div class="flex items-center gap-4 mb-2">
+      <div class="w-6 h-6 bg-red-300 border border-gray-500 rounded"></div>
+      Jour avec AT
+    </div>
+    <div class="flex items-center gap-4 mb-2">
+      <div class="w-6 h-6 bg-gray-300 border border-gray-500 rounded"></div>
+      Non travaillé
+    </div>
+  </div>
+</div>
+
+<script>
+  const annee = 2025;
+  const mois = 2;
+  const joursAT = [];
+  const nonTravailles = [6, 13, 14, 21, 27];
+  const nbJours = new Date(annee,mois,0).getDate();
+  const premierJour = 2; // Mardi (1 = Lundi, 2 = Mardi, etc.)
+
+  let compteur = 0;
+  const calendrier = document.getElementById("calendrier");
+
+ const first_day = new Date(annee,mois,1).getDate();
+
+  // Ajouter des cases vides pour aligner avec le mardi (1 case vide pour lundi)
+  for (let i = 1; i < first_day; i++) {
+    const empty = document.createElement("div");
+    calendrier.appendChild(empty);
+  }
+
+
+  for (let i = 1; i <= nbJours; i++) {
+    date = new Date(annee,mois,i);
+
+    let classes = "p-3 border border-gray-400 rounded-xl font-semibold";
+
+    if (joursAT.includes(i)) {
+      classes += " bg-red-300 text-red-900";
+    // } else if (nonTravailles.includes(i)) {
+    } else if (is_weekend(date)) {
+      classes += " bg-gray-300 text-gray-700";
+    } else {
+      classes += " bg-green-200 text-green-800";
+      compteur++;
+    }
+
+    const div = document.createElement("div");
+    div.className = classes;
+    div.textContent = i;
+    calendrier.appendChild(div);
+  }
+
+  document.getElementById("compteur").textContent = compteur;
+
+  function is_weekend(date) {
+    // Obtenir le jour de la semaine (0 pour dimanche, 6 pour samedi)
+    const jourSemaine = date.getDay();
+    // Vérifier si le jour est samedi (6) ou dimanche (0)
+    return jourSemaine === 0 || jourSemaine === 6;
+}
+</script>
