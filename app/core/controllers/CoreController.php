@@ -7,9 +7,7 @@ class CoreController
     function index($f3)
     {
         $theme = "base";
-        $now = new \DateTimeImmutable();
-        $f3->annee = (int)$now->format('Y');
-        $f3->mois = (int)$now->format('n');
+
         $f3->user = AuthService::user();
 
         $f3->aside_menu = \Template::instance()->render("themes/base/partials/_nav_principale.html");

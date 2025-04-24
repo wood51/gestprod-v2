@@ -6,6 +6,8 @@ class KpiSecuriteController
      */
     function kpi_securite($f3, $params)
     {
+        $f3->daysSince = $this->get_last_arret();
+
         $formatter = new \IntlDateFormatter(
             'fr_FR', // locale
             \IntlDateFormatter::LONG,
@@ -15,6 +17,7 @@ class KpiSecuriteController
             'LLLL yyyy' // format personnalisé : mois complet + année
         );
         $now = new \DateTimeImmutable();
+        $aujourdhui = $now->format("Y-m-d");
         $annee = (int)$now->format('Y');
         $mois = (int)$now->format('n');
         // $annee = $params['annee'];
@@ -27,14 +30,27 @@ class KpiSecuriteController
             $mois = 1;
             $annee++;
         }
-        $max_case = 35;
+
+
+        $accidents = new DB\Cortex($f3->DB, 'accidents_travail');
+        //$liste_accidents = $accidents->find()
+        $accidents->jour = 'DATE(`date`)';
+        $liste_accidents = $accidents->afind(['arret > 0 and YEAR(`date`) = ? and MONTH(`date`) = ?', $annee, $mois]);
+        // echo var_dump($r);
+        // die();
+        $joursAT = [];
+
+        if (is_array($liste_accidents)) {
+            $joursAT = array_map(fn($row) => (int)date('j', strtotime($row['jour'])), $liste_accidents);
+        }
+        $max_case = 42;
 
         $semaines_fermees = [32, 33, 34];
 
         $fermeture_noel_start = new DateTimeImmutable('2025-12-25');
         $fermeture_noel_end = new DateTimeImmutable('2026-01-01');
 
-        $joursAT = [2, 8];
+        //$joursAT = [2, 8];
 
         $feries = json_decode(
             file_get_contents('https://calendrier.api.gouv.fr/jours-feries/metropole.json'),
@@ -70,12 +86,14 @@ class KpiSecuriteController
                 $weekNumber = (int)$date->format('W'); // Numéro de semaine
                 $isInFermetureNoel = $date >= $fermeture_noel_start && $date <= $fermeture_noel_end;
                 $isFerme = in_array($weekNumber, $semaines_fermees) || $isInFermetureNoel;
+                $isToday = ($date->format('Y-m-d') === $aujourdhui);
                 $jours[] = [
                     'nb' => $jourDuMois,
                     'at' => in_array($jourDuMois, $joursAT),
                     'work' => (int)$date->format('N') <= 5, // lundi à vendredi
                     'ferie' => $isFerie,
-                    'ferme' => $isFerme
+                    'ferme' => $isFerme,
+                    'aujourdhui' => $isToday
                 ];
             }
         }
@@ -90,8 +108,7 @@ class KpiSecuriteController
             'jours' => $jours
         ];
 
-         echo Template::instance()->render("kpi-securite/kpi-securite.html");
-        
+        echo Template::instance()->render("kpi-securite/kpi-securite.html");
     }
     /**
      * @route("GET /kpi/securite/@annee/@mois")
@@ -106,7 +123,9 @@ class KpiSecuriteController
             \IntlDateFormatter::GREGORIAN,
             'LLLL yyyy' // format personnalisé : mois complet + année
         );
-   
+
+        $now = new \DateTimeImmutable();
+        $aujourdhui = $now->format("Y-m-d");
         $annee = $params['annee'];
         $mois = $params['mois'];
         if ($mois < 1) {
@@ -117,14 +136,26 @@ class KpiSecuriteController
             $mois = 1;
             $annee++;
         }
-        $max_case = 35;
+
+        $accidents = new DB\Cortex($f3->DB, 'accidents_travail');
+        //$liste_accidents = $accidents->find()
+        $accidents->jour = 'DATE(`date`)';
+        $liste_accidents = $accidents->afind(['arret > 0 and YEAR(`date`) = ? and MONTH(`date`) = ?', $annee, $mois]);
+        // echo var_dump($r);
+        // die();
+        $joursAT = [];
+
+        if (is_array($liste_accidents)) {
+            $joursAT = array_map(fn($row) => (int)date('j', strtotime($row['jour'])), $liste_accidents);
+        }
+        $max_case = 42;
 
         $semaines_fermees = [32, 33, 34];
 
         $fermeture_noel_start = new DateTimeImmutable('2025-12-25');
         $fermeture_noel_end = new DateTimeImmutable('2026-01-01');
 
-        $joursAT = [2, 8];
+        // $joursAT = [2, 8];
 
         $feries = json_decode(
             file_get_contents('https://calendrier.api.gouv.fr/jours-feries/metropole.json'),
@@ -160,12 +191,14 @@ class KpiSecuriteController
                 $weekNumber = (int)$date->format('W'); // Numéro de semaine
                 $isInFermetureNoel = $date >= $fermeture_noel_start && $date <= $fermeture_noel_end;
                 $isFerme = in_array($weekNumber, $semaines_fermees) || $isInFermetureNoel;
+                $isToday = ($date->format('Y-m-d') === $aujourdhui);
                 $jours[] = [
                     'nb' => $jourDuMois,
                     'at' => in_array($jourDuMois, $joursAT),
                     'work' => (int)$date->format('N') <= 5, // lundi à vendredi
                     'ferie' => $isFerie,
-                    'ferme' => $isFerme
+                    'ferme' => $isFerme,
+                    'aujourdhui' => $isToday
                 ];
             }
         }
@@ -180,7 +213,20 @@ class KpiSecuriteController
             'jours' => $jours
         ];
 
-         echo Template::instance()->render("kpi-securite/partials/_calendar.html");
-        
+        echo Template::instance()->render("kpi-securite/partials/_calendar.html");
+    }
+
+    function get_last_arret() {
+        $accidents = new DB\Cortex(Base::instance()->DB, 'accidents_travail');
+        $accidents->jour = 'DATE(`date`)';
+        $dernier_arret = $accidents->findone(['arret > 0'],['order'=>'date DESC'])['jour'] ?? null;
+        $aujourdhui = (new DateTimeImmutable())->format('Y-m-d');
+        if ($dernier_arret) {
+            $daysSince =strval( (new DateTimeImmutable($dernier_arret))->diff(new DateTimeImmutable($aujourdhui))->days);
+        } else {
+            // Aucun accident = tout le monde est parfait 🏆
+            $daysSince = "-";
+        }
+        return $daysSince;
     }
 }

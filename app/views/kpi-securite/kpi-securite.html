@@ -5,7 +5,7 @@
   <div class="grid grid-cols-2 gap-6 text-center text-2xl">
     <div class="border border-gray-300 rounded-xl p-4">
       <p class="text-lg">Jours sans accident</p>
-      <p class="text-5xl text-green-600 font-bold" id="compteur">-</p>
+      <p class="text-5xl text-green-600 font-bold" id="compteur">{{@daysSince}}</p>
     </div>
     <div class="border border-gray-300 rounded-xl p-4">
       <p class="text-lg">Record sans accident</p>
@@ -19,6 +19,10 @@
   
   <!-- Légende -->
   <div class="flex justify-center items-center gap-6 mt-10 text-xl border border-gray-300 rounded-xl p-4">
+    <div class="flex items-center gap-1 m-2">
+      <div class="w-6 h-6 bg-amber-200 border border-gray-500 rounded"></div>
+      Jour encours
+    </div>
     <div class="flex items-center gap-1 m-2">
       <div class="w-6 h-6 bg-green-200 border border-gray-500 rounded"></div>
       Jour sans AT

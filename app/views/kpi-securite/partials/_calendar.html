@@ -40,7 +40,12 @@
           <false>
             <check if="{{@jour.at}}">
               <true><div class="p-3 rounded-xl border border-gray-700 font-semibold text-gray-700 bg-red-200">{{@jour.nb}}</div></true>
-              <false><div class="p-3 rounded-xl border border-gray-700 font-semibold text-gray-700 bg-green-200">{{@jour.nb}}</div></false>
+              <false>
+                <check if="{{@jour.aujourdhui}}">
+                  <true><div class="p-3 rounded-xl border border-gray-700 font-semibold text-gray-700 bg-amber-200">{{@jour.nb}}</div></true>
+                  <false><div class="p-3 rounded-xl border border-gray-700 font-semibold text-gray-700 bg-green-200">{{@jour.nb}}</div></false>
+                </check>
+              </false>
             </check>
           </false>
         </check>
