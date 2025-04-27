@@ -5,6 +5,13 @@ class AccidentsTravailModel extends \DB\Cortex
         $db = 'DB',
         $table = 'accidents_travail';
 
+    public static function all($add_sans_arret = false) {
+        $accidents = new self();
+        $filtre = ($add_sans_arret) ? [""] : ["arret > 0"];
+        $all = $accidents ->afind($filtre, ['order' => 'date ASC']);
+        return $all;
+    }
+
     public static function accidents($annee, $mois)
     {
         $accidents = new self();

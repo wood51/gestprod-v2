@@ -1,21 +1,21 @@
 <?php
 class KpiSecuriteService
 {
-    function get_last_arret()
+    private array $joursFeries = [];
+
+    function __construct()
     {
-        $dernier_arret = AccidentsTravailModel::last_accident();
-        $now = DateHelper::build();
-        $daysSince = ($dernier_arret)
-            ? (new DateTimeImmutable($dernier_arret))->diff(new DateTimeImmutable($now->aujourdhui))->days
-            : null;
-        return $daysSince;
+        $this->joursFeries = array_keys(json_decode(
+            file_get_contents('https://calendrier.api.gouv.fr/jours-feries/metropole.json'),
+            true
+        ));
     }
-    
+
 
     function isFermeture(DateTimeImmutable $date_obj)
     {
         $fermetures = ConfigFermeturesModel::all();
-       
+
         foreach ($fermetures as $fermeture) {
             if ($date_obj >= $fermeture['debut'] && $date_obj <= $fermeture['fin']) {
                 return true;
@@ -23,6 +23,80 @@ class KpiSecuriteService
         }
 
         return false;
+    }
+
+    function isOuvrable($date)
+    {
+        //$date = "2025-08-14"; // tu fixes ici pour ton test
+        $dateObj = new DateTimeImmutable($date);
+
+        // 1. Week-end ?
+        $isWeekend = (int)$dateObj->format("N") > 5;
+
+
+        $isFerie = in_array($date, $this->joursFeries);
+
+        $isFermeture =  $this->isFermeture(new DateTimeImmutable($date));
+
+        // Résultat final
+        $isOuvrable = !$isWeekend && !$isFerie && !$isFermeture;
+
+
+        return $isOuvrable;
+    }
+
+    function nb_jours_sans_at()
+    {
+        $dernier_arret = new DateTimeImmutable(AccidentsTravailModel::last_accident());
+        $now = new DateTimeImmutable();
+
+        $count = 0;
+        $date = $dernier_arret->modify('+1 day'); // commencer le lendemain de l'accident
+
+        while ($date <= $now) {
+            if ($this->isOuvrable($date->format('Y-m-d'))) {
+                $count++;
+            }
+            $date = $date->modify('+1 day');
+        }
+
+        return $count;
+    }
+
+    function record_sans_at()
+    {
+        $dates_arrets = array_column(AccidentsTravailModel::all(), 'date');
+
+
+        $record = [
+            'nb_jours' => 0,
+            'debut' => null,
+            'fin' => null
+        ];
+
+        for ($i = 0; $i < count($dates_arrets) - 1; $i++) {
+            $debut = new DateTimeImmutable($dates_arrets[$i]);
+            $fin = new DateTimeImmutable($dates_arrets[$i + 1]);
+
+            $nb_jours = 0;
+            $current = $debut->modify('+1 day');
+
+            for (; $current < $fin; $current = $current->modify('+1 day')) {
+                if ($this->isOuvrable($current->format('Y-m-d'))) {
+                    $nb_jours++;
+                }
+            }
+
+            if ($nb_jours > $record['nb_jours']) {
+                $record = [ // pour utlisé dans les templates
+                    'nb_jours' => $nb_jours,
+                    'debut' => $debut->format('d/m/Y'),
+                    'fin' => $fin->format('d/m/Y')
+                ];
+            }
+        }
+
+        return $record;
     }
 
     function createCalendar($annee = null, $mois = null)
@@ -76,6 +150,4 @@ class KpiSecuriteService
             'next_month' => (int)$nextDate->format('n'),
         ];
     }
-
-    
 }
