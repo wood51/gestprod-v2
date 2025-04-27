@@ -3,13 +3,21 @@ class AccidentsTravailModel extends \DB\Cortex
 {
     protected
         $db = 'DB',
-        $table = 'accidents_travail';
+        $table = 'securite_accidents_travail';
 
-    public static function all($add_sans_arret = false) {
+    public static function all($add_sans_arret = false)
+    {
         $accidents = new self();
         $filtre = ($add_sans_arret) ? [""] : ["arret > 0"];
-        $all = $accidents ->afind($filtre, ['order' => 'date ASC']);
+        $all = $accidents->afind($filtre, ['order' => 'date ASC']);
         return $all;
+    }
+
+    public static function find_by_date($date)
+    {
+        $accident = new self();
+        $findone = $accident->findone(['date = ?', $date]);
+        return ($findone) ? $findone->cast() : [];
     }
 
     public static function accidents($annee, $mois)
@@ -40,8 +48,8 @@ class AccidentsTravailModel extends \DB\Cortex
     public static function last_accident()
     {
         $accident = new self();
-        $last = $accident->findone(['arret > 0'], ['order' => 'date DESC'])['date'];
+        $last = $accident->findone(['arret > 0'], ['order' => 'date DESC']);
 
-        return $last ?? null;
+       return ($last) ? $last['date'] : null;
     }
 }

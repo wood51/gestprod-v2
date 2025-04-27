@@ -1,9 +1,9 @@
 <?php
-class ConfigFermeturesModel extends DB\Cortex
+class AtelierFermeturesModel extends DB\Cortex
 {
     protected
         $db = 'DB',
-        $table = 'config_fermetures';
+        $table = 'atelier_fermetures';
 
     public static function all()
     {

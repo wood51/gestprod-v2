@@ -14,7 +14,7 @@ class KpiSecuriteService
 
     function isFermeture(DateTimeImmutable $date_obj)
     {
-        $fermetures = ConfigFermeturesModel::all();
+        $fermetures = AtelierFermeturesModel::all();
 
         foreach ($fermetures as $fermeture) {
             if ($date_obj >= $fermeture['debut'] && $date_obj <= $fermeture['fin']) {
@@ -47,55 +47,60 @@ class KpiSecuriteService
 
     function nb_jours_sans_at()
     {
-        $dernier_arret = new DateTimeImmutable(AccidentsTravailModel::last_accident());
-        $now = new DateTimeImmutable();
+        if (AccidentsTravailModel::last_accident()) {
+            $dernier_arret = new DateTimeImmutable(AccidentsTravailModel::last_accident());
+            $now = new DateTimeImmutable();
 
-        $count = 0;
-        $date = $dernier_arret->modify('+1 day'); // commencer le lendemain de l'accident
+            $count = 0;
+            $date = $dernier_arret->modify('+1 day'); // commencer le lendemain de l'accident
 
-        while ($date <= $now) {
-            if ($this->isOuvrable($date->format('Y-m-d'))) {
-                $count++;
+            while ($date <= $now) {
+                if ($this->isOuvrable($date->format('Y-m-d'))) {
+                    $count++;
+                }
+                $date = $date->modify('+1 day');
             }
-            $date = $date->modify('+1 day');
-        }
 
-        return $count;
+            return $count;
+        }
+        return 0;
     }
 
     function record_sans_at()
     {
-        $dates_arrets = array_column(AccidentsTravailModel::all(), 'date');
-
-
         $record = [
             'nb_jours' => 0,
             'debut' => null,
             'fin' => null
         ];
 
-        for ($i = 0; $i < count($dates_arrets) - 1; $i++) {
-            $debut = new DateTimeImmutable($dates_arrets[$i]);
-            $fin = new DateTimeImmutable($dates_arrets[$i + 1]);
+        if (AccidentsTravailModel::all()) {
+            $dates_arrets = array_column(AccidentsTravailModel::all(), 'date');
 
-            $nb_jours = 0;
-            $current = $debut->modify('+1 day');
 
-            for (; $current < $fin; $current = $current->modify('+1 day')) {
-                if ($this->isOuvrable($current->format('Y-m-d'))) {
-                    $nb_jours++;
+
+            for ($i = 0; $i < count($dates_arrets) - 1; $i++) {
+                $debut = new DateTimeImmutable($dates_arrets[$i]);
+                $fin = new DateTimeImmutable($dates_arrets[$i + 1]);
+
+                $nb_jours = 0;
+                $current = $debut->modify('+1 day');
+
+                for (; $current < $fin; $current = $current->modify('+1 day')) {
+                    if ($this->isOuvrable($current->format('Y-m-d'))) {
+                        $nb_jours++;
+                    }
+                }
+
+                if ($nb_jours > $record['nb_jours']) {
+                    $record = [ // pour utlisé dans les templates
+                        'nb_jours' => $nb_jours,
+                        'debut' => $debut->format('d/m/Y'),
+                        'fin' => $fin->format('d/m/Y')
+                    ];
                 }
             }
-
-            if ($nb_jours > $record['nb_jours']) {
-                $record = [ // pour utlisé dans les templates
-                    'nb_jours' => $nb_jours,
-                    'debut' => $debut->format('d/m/Y'),
-                    'fin' => $fin->format('d/m/Y')
-                ];
-            }
         }
-
         return $record;
     }
 
