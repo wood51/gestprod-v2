@@ -9,11 +9,9 @@
 			"path": "app/core"
 		},
 		{
-			"name": "kpi-securite",
-			"path": "app/kpi-securite"
+			"path": "app/kpi-dashboard"
 		},
 		{
-			"name": "views",
 			"path": "app/views"
 		}
 	],

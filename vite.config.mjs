@@ -7,7 +7,8 @@ export default defineConfig({
     port: 5173,
     watch: {
       usePolling: true,
-      interval:300
+      interval:300,
+      ignored: ["**/*.php"]
     }
   },
   plugins: [
