@@ -1,23 +1,37 @@
 {
 	"folders": [
 		{
-			"name": "core",
+			"name": "gestprod-v2",
+			"path": "."
+		},
+		{
 			"path": "app/core"
 		},
 		{
-			"name": "user",
-			"path": "app/user"
+			"path": "app/modules"
 		},
 		{
-			"name": "views",
 			"path": "app/views"
-		},
-		{
-			"path": "."
 		}
 	],
 	"settings": {
 		"git.ignoreLimitWarning": true,
-		"liveServer.settings.multiRootWorkspaceName": "gestprod-v2"
+		"liveServer.settings.multiRootWorkspaceName": "gestprod-v2",
+		"sqltools.connections": [
+			{
+				"mysqlOptions": {
+					"authProtocol": "default",
+					"enableSsl": "Disabled"
+				},
+				"previewLimit": 50,
+				"server": "localhost",
+				"port": 3306,
+				"driver": "MariaDB",
+				"name": "gestprod-v2",
+				"database": "gestprod-v2",
+				"username": "root",
+				"password": "Bd135@c127"
+			}
+		]
 	}
 }

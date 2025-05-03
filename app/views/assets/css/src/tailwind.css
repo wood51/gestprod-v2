@@ -41,3 +41,16 @@
 .alert-close {
   @apply cursor-pointer hover:text-red-300;
 }
+
+@layer components {
+  .checkbox-no-anim,
+  .checkbox-no-anim::before,
+  .checkbox-no-anim::after {
+    @apply transition-none;
+  }
+
+  .checkbox-no-anim::before,
+  .checkbox-no-anim::after {
+    animation: none !important;
+  }
+}
