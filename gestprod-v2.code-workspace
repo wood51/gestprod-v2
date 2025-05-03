@@ -3,16 +3,6 @@
 		{
 			"name": "gestprod-v2",
 			"path": "."
-		},
-		{
-			"name": "core",
-			"path": "app/core"
-		},
-		{
-			"path": "app/kpi-dashboard"
-		},
-		{
-			"path": "app/views"
 		}
 	],
 	"settings": {

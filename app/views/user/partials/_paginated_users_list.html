@@ -1,0 +1,98 @@
+<div class="flex justify-between items-baseline">
+  <h3 class="card-title text-3xl mb-4">Liste des utilisateurs</h3>
+  <button class="btn btn-ghost"><i class="fa-solid fa-bars text-xl"></i></button>
+</div>
+<table class="table table-fixed w-full">
+  <thead>
+    <tr>
+      <th class="w-72">Nom</th>
+      <th>Statut</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <repeat group="{{@users}}" value="{{@user}}">
+      <tr class="hover:bg-base-200 relative h-14">
+        <td>
+          <div class="flex items-center gap-x-4">
+            <i class="fa-solid fa-eye cursor-pointer" onclick="user_card.showModal()"></i>
+            <span>{{@user.prenom|ucfirst}} {{@user.nom|ucfirst}}</span>
+          </div>
+        </td>
+        <td><span class="badge badge-success badge-outline">Présent</span></td>
+        <td class="flex justify-between relative z-10">
+          <div class="dropdown dropdown-left dropdown-end">
+            <label tabindex="0" class="btn btn-ghost btn-sm m-0">
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </label>
+            <div tabindex="0" class="dropdown-content z-50 menu p-4 shadow-sm bg-base-100 rounded-box w-72">
+              <form class="space-y-3">
+                <h2 class="text font-semibold text-center w-full m-2">{{@user.prenom|ucfirst}} {{@user.nom|ucfirst}}</h2>
+                <!-- Absence -->
+                <div class="flex items-center gap-2">
+                  <input type="checkbox" id="absent-1" class="checkbox checkbox-error" />
+                  <select id="motif-1" class="select select-sm select-bordered w-full">
+                    <option>CP</option>
+                    <option>Maladie</option>
+                    <option>CSS</option>
+                  </select>
+                </div>
+
+                <!-- Retard -->
+                <label class="flex items-center gap-2">
+                  <input type="checkbox" id="retard-check-1" class="checkbox checkbox-warning" />
+                  <input type="number" id="retard-1" placeholder="min" class="input input-sm input-bordered w-full" />
+                </label>
+
+                <!-- HS -->
+                <div class="flex items-center gap-2">
+                  <input type="checkbox" id="vhs-1" class="checkbox checkbox-info" />
+                  <input type="number" id="hs-1" step="0.25" class="input input-sm input-bordered w-full" placeholder="Heures supp" />
+                </div>
+
+                <button type="submit" class="btn btn-sm btn-primary w-full">Valider</button>
+              </form>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </repeat>
+    <repeat group="{{ @empty_rows }}" value="{{ @i }}">
+      <!-- TODO : trouver un truc plus propre-->
+      <tr class="h-14 opacity-40 hover:bg-transparent">
+        <td>
+          <div class="flex items-center gap-2 invisible">
+            <i class="fa-solid fa-eye"></i>
+            <span>Nom Prénom</span>
+          </div>
+        </td>
+        <td><span class="badge badge-success badge-outline invisible">Présent</span></td>
+        <td class="flex justify-end gap-2 invisible">
+          <button class="btn btn-sm btn-outline btn-primary">Action</button>
+        </td>
+      </tr>
+    </repeat>
+  </tbody>
+</table>
+<div class="flex justify-center gap-4">
+  <repeat group="{{@nb_pages}}" value="{{@page}}">
+    <button class="btn btn-circle btn-md {{ @page == @active_page ? 'btn-primary' : '' }}" hx-get="/users/{{@page}}/5" hx-target="#paginated_users_list" hx-swap="innerHTML">
+      {{@page}}
+    </button>
+  </repeat>
+</div>
+
+<!-- user card modal -->
+<dialog id="user_card" class="modal">
+  <div class="modal-box">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+    </form>
+    <div>
+      <h3 class="text-3xl font-bold text-center w-full">Prenom Nom</h3>
+      <form>
+        <button>rtrth</button>
+      </form>
+    </div>
+  </div>
+</dialog>
