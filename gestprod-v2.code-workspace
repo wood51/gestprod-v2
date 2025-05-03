@@ -3,6 +3,12 @@
 		{
 			"name": "gestprod-v2",
 			"path": "."
+		},
+		{
+			"path": "app/core"
+		},
+		{
+			"path": "app/modules"
 		}
 	],
 	"settings": {
