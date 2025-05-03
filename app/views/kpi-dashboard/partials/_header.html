@@ -1,0 +1,24 @@
+<!-- Header -->
+<div class="navbar h-32 flex justify-between bg-gray-700">
+  <!-- Logo -->
+  <div class="flex flex-col items-center  cursor-pointer ml-4 m-y-1">
+    <div class="flex items-center gap-2">
+      <a href="/"><img src="{{@BASE}}/{{@UI}}/assets/img/gears.svg" width="50" alt="Logo GestProd" /></a>
+      <a href="/"><span class=" text-xl sm:text-3xl font-semibold text-indigo-400">GESTPROD</span></a>
+    </div>
+    <a href="/"><span class="text-base text-gray-500 text-center font-semibold italic">Gestion de production DEE</span></a>
+  </div>
+  <!-- Clock -->
+  <span id="clock" class="text-2xl text-white font-semibold mr-4">12:00</span>
+</div>
+<!-- Clock Script -->
+<script>
+  function updateTime() {
+    const now = new Date();
+    const options = { hour: "2-digit", minute: "2-digit" };
+    const formattedTime = now.toLocaleTimeString("fr-FR", options);
+    document.querySelector("#clock").textContent = formattedTime;
+  }
+  setInterval(updateTime, 1000);
+  updateTime();
+</script>

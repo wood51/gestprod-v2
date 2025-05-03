@@ -88,4 +88,14 @@ class DateHelper
             'first_day_of_month' => (int) (new DateTimeImmutable($instant->format('Y-m-01')))->format('N')
         ];
     }
+
+    public static function extract_week_year($semaine)
+    {
+        [$week, $year] = explode("-", $semaine);
+        return (object) [
+            'full_week' => $semaine,
+            'week' => $week,
+            'year' => $year
+        ];
+    }
 }

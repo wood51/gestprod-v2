@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="h-screen">
   <head>
     <include href="themes/base/partials/_head.html" />
   </head>
-  <body>
-    <div class="navbar flex justify-between bg-gray-700">
-      <div class="flex flex-col items-center ml-4 m-y-1">
-        <div class="flex items-center gap-4">
-          <img src="{{@BASE}}/{{@UI}}/assets/img/gears.svg" width="50" alt="Logo GestProd" />
-          <span class="text-xl sm:text-3xl font-semibold text-indigo-400">GESTPROD</span>
-        </div>
-        <span class="text-base text-gray-500 text-center font-semibold italic">Gestion de production DEE</span>
-      </div>
+  <body class="h-screen flex flex-col">
+    
+    <!-- Header -->
+    <include href="/kpi-dashboard/partials/_header.html" />
 
-      <span class="text-2xl text-white font-semibold mr-4">12:00</span>
-    </div> 
+    <!-- Main content -->
+    <main class="flex flex-col h-full w-full p-4 overflow-hidden">
+
+      <!-- Chart engagement  -->
+      <include href="/kpi-dashboard/partials/_chart_engagement.html"/>
+    </main>
   </body>
 </html>
