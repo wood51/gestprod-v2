@@ -1,5 +1,6 @@
 {
     "name":"atelier",
     "version" : "1.0.0",
-    "enabled":true
+    "enabled":true,
+    "description" : "Gère tous ce qui est attrait au model ateliers"
 }

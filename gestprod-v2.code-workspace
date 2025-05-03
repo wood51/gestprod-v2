@@ -9,6 +9,9 @@
 		},
 		{
 			"path": "app/modules"
+		},
+		{
+			"path": "app/views"
 		}
 	],
 	"settings": {
