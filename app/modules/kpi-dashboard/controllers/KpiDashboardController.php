@@ -13,6 +13,7 @@ class KpiDashboardController {
      */
     function kpi_dashboad_admin($f3) {
         $mapper  = new DB\Cortex(base::instance()->DB,"vue_prod_planning");
+        $f3->modeles = SuivisArticlesModel::all();
         $f3->produits = $mapper->find(null,['order'=>'id DESC']);
         echo \template::instance()->render("kpi-dashboard/kpi_dashboard_admin.html");
     }

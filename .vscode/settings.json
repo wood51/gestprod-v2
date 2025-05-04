@@ -11,8 +11,6 @@
         "postcss.config.js": true,
         "postcss.config.mjs": true,
         "vite.config.mjs": true,
-        "node_modules": true,
-        "vendor": true,
         ".htaccess": true,
         "composer.json": true,
         "composer.lock": true,
