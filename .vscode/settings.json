@@ -1,4 +1,22 @@
 {
-    "files.exclude": {},
+    "files.exclude": {
+        "console.bat": true,
+        "console.ps1": true,
+        "console.sh": true,
+        "daisy static.html": true,
+        "fix-perm.sh": true,
+        "migration.php": true,
+        "package-lock.json": true,
+        "package.json": true,
+        "postcss.config.js": true,
+        "postcss.config.mjs": true,
+        "vite.config.mjs": true,
+        "node_modules": true,
+        "vendor": true,
+        ".htaccess": true,
+        "composer.json": true,
+        "composer.lock": true,
+        ".vscode": true
+    },
     "css.validate": false
 }
