@@ -9,7 +9,8 @@ class SuivisArticlesModel extends DB\Cortex
     public static function all()
     {
         $mapper = new self();
-        $result = $mapper->find();
+        $result = $mapper->find(null,['order'=>'reference ASC']);
         return $result;
     }
+
 }

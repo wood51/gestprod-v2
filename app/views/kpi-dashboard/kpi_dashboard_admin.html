@@ -6,77 +6,34 @@
         <span class="text-2xl">Planning</span>
         <i class="fa-solid fa-bars"></i>
       </div>
-      <table class="table table-zebra border overflow-auto">
-        <thead class="bg-slate-100">
-          <th><label for="check_all"></label><input id="check_all" type="checkbox" class="checkbox checkbox-sm rounded-sm" /></th>
-          <th>
-            Référence
-            <!-- change popover-1 and --anchor-1 names. Use unique names for each dropdown -->
-            <button class="btn btn-ghost" popovertarget="ref-dd" style="anchor-name: --ref-dd-anchor"><i class="fas fa-caret-down text-lg"></i></button>
-            <ul class="dropdown dropdown-end card w-52 h-52 overflow-auto rounded-box bg-base-100 shadow-lg p-4" popover id="ref-dd" style="position-anchor: --ref-dd-anchor">
-              <repeat group="{{@modeles}}" value="{{@modele}}">
-                <li class="flex items-center gap-2">
-                  <input type="checkbox" class="checkbox checkbox-primary checkbox-xs rounded-xs" checked/><span lass="text-sm font-light">{{@modele.reference}}</span>
-                </li>
-              </repeat>
-              <div class="flex justify-end"><button class="btn btn-primary w-1/2 btn-xs btn-">Appliquer</button></div>
-            </ul>
-          </th>
-          <th>Type</th>
-          <th>Numéro</th>
-          <th>Semaine</th>
-          <th>Engagement</th>
-          <th>Prête</th>
-          <th class=""></th>
-        </thead>
-        <tbody>
-          <repeat group="{{@produits}}" value="{{@produit}}">
-            <tr>
-              <td>
-                <label for="check_{{@produit._id}}"></label> <input id="check_{{@produit._id}}" type="checkbox" class="checkbox checkbox-sm rounded-sm" />
-              </td>
-              <td class="flex items-start space-x-2">
-                <span style="background-color: {{@produit.reference_couleur}}" class="w-4 h-6 rounded-sm"> </span>
-                <span>{{@produit.reference}}</span>
-              </td>
-              <td>{{@produit.type}}</td>
-              <td>
-                <check if="{{@produit.numero}}">
-                  <true> {{@produit.numero}} </true>
-                  <false><span class="italic">NC</span></false>
-                </check>
-              </td>
-              <td>{{@produit.semaine}}</td>
-
-              <td>
-                <span
-                  class="badge badge-outline badge-sm text-sm font-medium 
-                          {{ 
-                            (@produit.status=='Fait' ? 'badge-success' : 
-                            (@produit.status=='Prévu' ? 'badge-info' : 
-                            (@produit.status=='En Attente' ? 'badge-warning' : 
-                            'badge-neutral' )))
-                          }}"
-                >
-                  {{@produit.status}}
-                </span>
-              </td>
-              <td class="text-xl">
-                <check if="{{@produit.prete}}">
-                  <true><i class="fa-solid fa-check text-success"></i></true>
-                  <false>
-                    <check if="{{@produit.status==='Prévu'}}">
-                      <true><i class="fa-regular fa-hourglass-half text-info"></i></true>
-                      <false><i class="fa-solid fa-xmark text-error"></i></false>
-                    </check>
-                  </false>
-                </check>
-              </td>
-              <td><i class="fas fa-ellipsis-vertical"></i></td>
-            </tr>
-          </repeat>
-        </tbody>
-      </table>
+      <div id="planning">
+        <include href="kpi-dashboard/partials/_planning_table.html" />
+      </div>
     </div>
   </div>
 </div>
+
+<!-- Formulaire caché pour les filtres -->
+<!-- <form></form> -->
+
+<script>
+  function getCheckedRefs() {
+    const checked = document.querySelectorAll('#checkboxes-ref input[type="checkbox"]:checked');
+    let vals = [];
+    checked.forEach((cb) => {
+      vals.push(cb.value);
+    });
+    console.log(vals);
+    return vals;
+  }
+
+  function getCheckedType() {
+    const checked = document.querySelectorAll('#checkboxes-types input[type="checkbox"]:checked');
+    let vals = [];
+    checked.forEach((cb) => {
+      vals.push(cb.value);
+    });
+    console.log(vals);
+    return vals;
+  }
+</script>
