@@ -1,125 +1,78 @@
-<table class="table table-zebra border overflow-auto">
-  <thead class="bg-slate-100">
-    <th><label for="check_all"></label><input id="check_all" type="checkbox" class="checkbox checkbox-sm rounded-sm" /></th>
-    <th>
-      Référence
-      <!-- change popover-1 and --anchor-1 names. Use unique names for each dropdown -->
-      <button type="button" class="btn btn-ghost" popovertarget="ref-dd" style="anchor-name: --ref-dd-anchor">
-        <i class="fas fa-caret-down text-lg"></i>
-      </button>
-      <div
-        popover
-        class="dropdown dropdown-end card w-52 h-52 overflow-auto rounded-box bg-base-100 shadow-lg p-4"
-        id="ref-dd"
-        style="position-anchor: --ref-dd-anchor"
-      >
-        <div id="checkboxes-ref" class="flex flex-col gap-1 p-0.5">
-          <repeat group="{{@modeles}}" value="{{@modele}}">
-            <label for="modele_{{@modele._id}}">
-                <input id="check_{{@modele._id}}" type="checkbox" value="{{@modele._id}}" {{@modele.selected ? 'checked' : '' }} /> {{@modele.reference}}
-            </label>
-          </repeat>
-        </div>
-        <div class="flex justify-evently gap-1">
-          <button class="btn btn-xs btn-error">Reset</button>
-          <button
-            type="button"
-            class="btn btn-xs btn-primary"
-            hx-post="/planning"
-            hx-target="#planning"
-            hx-vals="js:{'modeles[]':getCheckedRefs()}"
-            hx-swap="innerHTML"
-          >
-            Appliquer
-          </button>
-        </div>
-      </div>
-    </th>
+<form id="filtres" method="get">
+ <div class="max-h-[500px] overflow-y-auto border rounded">
+  <table class="table table-sm table-zebra ">
+    <thead class="bg-slate-100 sticky top-0 z-20">
+      <th><label for="check_all"></label><input id="check_all" type="checkbox" /></th>
+      <th>Référence</th>
+      <th>Type</th>
+      <th>Numéro</th>
+      <th>Semaine</th>
+      <th>Engagement</th>
+      <th>Prête</th>
+      <th class=""></th>
+    </thead>
 
-    <th>
-      Type
-      <!-- change popover-1 and --anchor-1 names. Use unique names for each dropdown -->
-      <button type="button" class="btn btn-ghost" popovertarget="type-dd" style="anchor-name: --type-dd-anchor">
-        <i class="fas fa-caret-down text-lg"></i>
-      </button>
-      <div
-        popover
-        class="dropdown dropdown-end card w-52 h-52 overflow-auto rounded-box bg-base-100 shadow-lg p-4"
-        id="type-dd"
-        style="position-anchor: --type-dd-anchor"
-      >
-        <div id="checkboxes-types" class="flex flex-col gap-1 p-0.5">
-          <repeat group="{{@types}}" value="{{@type}}">
-            <label for="type_{{@type._id}}">
-                <input id="type_{{@type._id}}" type="checkbox" value="{{@type._id}}" {{@type.selected ? 'checked' : '' }} /> {{@type.designation}}
-            </label>
-          </repeat>
-        </div>
-        <div class="flex justify-evently gap-1">
-          <button class="btn btn-xs btn-error">Reset</button>
-          <button
-            type="button"
-            class="btn btn-xs btn-primary"
-            hx-post="/planning"
-            hx-target="#planning"
-            hx-vals="js:{'types[]':getCheckedType()}"
-            hx-swap="innerHTML"
-          >
-            Appliquer
-          </button>
-        </div>
-      </div>
-    </th>
-    
-    <th>Numéro</th>
-    <th>Semaine</th>
-    <th>Engagement</th>
-    <th>Prête</th>
-    <th class=""></th>
-  </thead>
-  <tbody>
-    <repeat group="{{@produits}}" value="{{@produit}}">
-      <tr>
-        <td><label for="check_{{@produit._id}}"></label> <input id="check_{{@produit._id}}" type="checkbox" class="checkbox checkbox-sm rounded-sm" /></td>
-        <td class="flex items-start space-x-2">
-          <span style="background-color: {{@produit.reference_couleur}}" class="w-4 h-6 rounded-sm"> </span>
-          <span>{{@produit.reference}}</span>
-        </td>
-        <td>{{@produit.type}}</td>
-        <td>
-          <check if="{{@produit.numero}}">
-            <true> {{@produit.numero}} </true>
-            <false><span class="italic">NC</span></false>
-          </check>
-        </td>
-        <td>{{@produit.semaine}}</td>
+    <tbody>
+      <repeat group="{{@produits}}" value="{{@produit}}">
+        <tr>
+          <td><label for="check_{{@produit._id}}"></label> <input id="check_{{@produit._id}}" type="checkbox" /></td>
+          <td class="flex items-start space-x-2">
+            <span style="background-color: {{@produit.reference_couleur}}" class="w-4 h-6 rounded-sm"> </span>
+            <span>{{@produit.reference}}</span>
+          </td>
+          <td>{{@produit.type}}</td>
+          <td>
+            <check if="{{@produit.numero}}">
+              <true> {{@produit.numero}} </true>
+              <false><span class="italic">NC</span></false>
+            </check>
+          </td>
+          <td>{{@produit.semaine}}</td>
 
-        <td>
-          <span
-            class="badge badge-outline badge-sm text-sm font-medium 
+          <td>
+            <span
+              class="badge badge-outline badge-sm text-sm font-medium 
                           {{ 
                             (@produit.status=='Fait' ? 'badge-success' : 
                             (@produit.status=='Prévu' ? 'badge-info' : 
                             (@produit.status=='En Attente' ? 'badge-warning' : 
                             'badge-neutral' )))
                           }}"
-          >
-            {{@produit.status}}
-          </span>
-        </td>
-        <td class="text-xl">
-          <check if="{{@produit.prete}}">
-            <true><i class="fa-solid fa-check text-success"></i></true>
-            <false>
-              <check if="{{@produit.status==='Prévu'}}">
-                <true><i class="fas fa-xmark text-error"></i></true>
-                <false><i class="far fa-hourglass-half text-info"></i></false>
-              </check>
-            </false>
-          </check>
-        </td>
-        <td><i class="fas fa-ellipsis-vertical"></i></td>
-      </tr>
-    </repeat>
-  </tbody>
-</table>
+            >
+              {{@produit.status}}
+            </span>
+          </td>
+          <td class="text-xl">
+            <check if="{{@produit.prete}}">
+              <true><i class="fa-solid fa-check text-success"></i></true>
+              <false>
+                <check if="{{@produit.status==='Prévu'}}">
+                  <true><i class="fas fa-xmark text-error"></i></true>
+                  <false><i class="far fa-hourglass-half text-info"></i></false>
+                </check>
+              </false>
+            </check>
+          </td>
+          <td><i class="fas fa-ellipsis-vertical"></i></td>
+        </tr>
+      </repeat>
+    </tbody>
+  </table>
+  </div>
+</form>
+<div class="join mt-2">
+  <repeat group="{{@pages}}" value="{{@page}}">
+    <input
+      id="pagination_{{@page}}"
+      class="join-item btn btn-square"
+      type="radio"
+      hx-trigger="click"
+      hx-push-url="true"
+      hx-get="/planning/{{@limit}}/{{@page}}"
+      hx-target="#planning"
+      hx-swap="innerHTML"
+      aria-label="{{@page}}"
+      {{@page ==  @pos ? 'checked' : ''}}
+    />
+  </repeat>
+</div>

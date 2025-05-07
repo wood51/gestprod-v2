@@ -15,31 +15,32 @@ class KpiDashboardController
      */
     function kpi_dashboad_admin($f3)
     {
+        $limit = 15;
+        $pagination = VuePlanningModel::paginate_all(0,$limit);
+        $f3->pages = range(1, $pagination['count']);
+        $f3->pos = $pagination['pos']+1;
+        $f3->limit = $pagination['limit'];
+        $f3->produits = $pagination['subset'];
+        
 
-        // Récupère tous les modèles ->obliger de déstructure l'obj PDO pour ajouter le selected
-        $modeles = [];
-        foreach (SuivisArticlesModel::all() as $m) {
-            $modeles[] = [
-                '_id' => $m->_id,
-                'reference' => $m->reference,
-                'selected' => true
-            ];
-        }
-        $f3->modeles = $modeles;
+        echo \Template::instance()->render("kpi-dashboard/kpi_dashboard_admin.html");
+    }
 
-        $sous_ensemble = [];
-        foreach (SuivisTypeSousEnsemble::all() as $se) {
-            $sous_ensemble[] = [
-                '_id' => $se->_id,
-                'designation' => $se->designation,
-                'selected' => true
-            ];
-        }
-        $f3->types = $sous_ensemble;
+    /**
+     * @route("GET /planning/@limit/@page")
+     */
+    function paginated_planning($f3, $params)
+    {
+        $page = (int)$params['page'] - 1;
+        $limit =(int) $params['limit'];
 
-        $mapper  = new DB\Cortex(base::instance()->DB, "vue_prod_planning");
-        $f3->produits = $mapper->find(null, ['order' => 'id DESC']);
 
-        echo \template::instance()->render("kpi-dashboard/kpi_dashboard_admin.html");
+        $pagination = VuePlanningModel::paginate_all($page, $limit);
+        $f3->pages = range(1, $pagination['count']);
+        $f3->pos = $pagination['pos']+1;
+        $f3->limit = $pagination['limit'];
+        $f3->produits = $pagination['subset'];
+
+        echo \Template::instance()->render("kpi-dashboard/partials/_planning_table.html");
     }
 }

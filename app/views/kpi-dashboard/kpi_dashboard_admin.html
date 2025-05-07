@@ -2,9 +2,24 @@
 <div class="grid grid-cols-6">
   <div class="card col-span-6 bg-base-100 shadow-xl">
     <div class="card-body">
-      <div class="flex justify-between card-title m-2">
-        <span class="text-2xl">Planning</span>
-        <i class="fa-solid fa-bars"></i>
+      <div class="flex justify-between card-title m-1">
+        <span>Planning</span>
+        <div>
+          <!-- change popover-1 and --anchor-1 names. Use unique names for each dropdown -->
+          <button class="btn" popovertarget="popover-1" style="anchor-name: --anchor-1"><i class="fa-solid fa-bars"></i></button>
+          <div
+            class="dropdown dropdown-end text-sm font-normal w-32 rounded-box bg-base-100 shadow-sm"
+            popover
+            id="popover-1"
+            style="position-anchor: --anchor-1"
+          >
+            <div class="mx-2 my-2">
+              <a class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#">Ajouter</a>
+              <hr />
+              <a class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#">Exporter</a>
+            </div>
+          </div>
+        </div>
       </div>
       <div id="planning">
         <include href="kpi-dashboard/partials/_planning_table.html" />
@@ -12,28 +27,3 @@
     </div>
   </div>
 </div>
-
-<!-- Formulaire caché pour les filtres -->
-<!-- <form></form> -->
-
-<script>
-  function getCheckedRefs() {
-    const checked = document.querySelectorAll('#checkboxes-ref input[type="checkbox"]:checked');
-    let vals = [];
-    checked.forEach((cb) => {
-      vals.push(cb.value);
-    });
-    console.log(vals);
-    return vals;
-  }
-
-  function getCheckedType() {
-    const checked = document.querySelectorAll('#checkboxes-types input[type="checkbox"]:checked');
-    let vals = [];
-    checked.forEach((cb) => {
-      vals.push(cb.value);
-    });
-    console.log(vals);
-    return vals;
-  }
-</script>
