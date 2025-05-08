@@ -34,9 +34,9 @@
               class="badge badge-outline badge-sm text-sm font-medium 
                           {{ 
                             (@produit.status=='Fait' ? 'badge-success' : 
-                            (@produit.status=='Prévu' ? 'badge-info' : 
-                            (@produit.status=='En Attente' ? 'badge-warning' : 
-                            'badge-neutral' )))
+                            (@produit.status=='Engagé' ? 'badge-warming' : 
+                            (@produit.status=='Prévisionnel' ? 'badge-info' : 
+                            'badge-error' )))
                           }}"
             >
               {{@produit.status}}
@@ -46,7 +46,7 @@
             <check if="{{@produit.prete}}">
               <true><i class="fa-solid fa-check text-success"></i></true>
               <false>
-                <check if="{{@produit.status==='Prévu'}}">
+                <check if="{{@produit.status!=='Engagé'}}">
                   <true><i class="fas fa-xmark text-error"></i></true>
                   <false><i class="far fa-hourglass-half text-info"></i></false>
                 </check>

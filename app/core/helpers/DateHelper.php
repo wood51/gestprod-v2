@@ -98,4 +98,9 @@ class DateHelper
             'year' => $year
         ];
     }
+
+    public static function get_week_year() {
+        $now = new DateTimeImmutable();
+        return $now->format('Y-W');
+    }
 }

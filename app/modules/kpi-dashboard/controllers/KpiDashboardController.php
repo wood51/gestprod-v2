@@ -58,6 +58,7 @@ class KpiDashboardController
             'semaine'=>str_replace("W","",$f3->POST['semaine'])
         ];
         $last_id = ProdPlanningModel::add($data);
+        $last_engage = ProdEngagementModel::add($last_id,$data['semaine']);
         //echo var_dump($last_id);die();
         //echo var_dump($f3->POST);die();
 

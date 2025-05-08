@@ -14,7 +14,7 @@
             style="position-anchor: --anchor-1"
           >
             <div class="mx-2 my-2">
-              <a onclick="document.getElementById('ajoutModal').showModal()" class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#">Ajouter</a>
+              <a onclick="openAjoutModal()" class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#">Ajouter</a>
               <hr />
               <a class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#">Exporter</a>
             </div>
@@ -23,9 +23,7 @@
       </div>
       <div
         id="planning"
-        hx-on::after-swap="document.getElementById('ajoutForm').reset();
-                          document.getElementById('ajoutModal').close();
-                          document.getElementById('type-select').dispatchEvent(new Event('change'));"
+        hx-on::after-swap="closeAjoutModal()"
       >
         <include href="kpi-dashboard/partials/_planning_table.html" />
       </div>
@@ -34,3 +32,16 @@
 </div>
 
 <include href="/kpi-dashboard/partials/_planning_form_add.html" />
+
+
+<script>
+   function openAjoutModal() {
+    document.getElementById('ajoutModal').showModal();
+  }
+
+  function closeAjoutModal() {
+    document.getElementById('ajoutModal').close();
+    document.getElementById('ajoutForm').reset(); // Reset du form
+    document.getElementById('type-select').dispatchEvent(new Event('change')); //Provoque le changement sur select type
+  }
+</script>
