@@ -14,16 +14,23 @@
             style="position-anchor: --anchor-1"
           >
             <div class="mx-2 my-2">
-              <a class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#">Ajouter</a>
+              <a onclick="document.getElementById('ajoutModal').showModal()" class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#">Ajouter</a>
               <hr />
               <a class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#">Exporter</a>
             </div>
           </div>
         </div>
       </div>
-      <div id="planning">
+      <div
+        id="planning"
+        hx-on::after-swap="document.getElementById('ajoutForm').reset();
+                          document.getElementById('ajoutModal').close();
+                          document.getElementById('type-select').dispatchEvent(new Event('change'));"
+      >
         <include href="kpi-dashboard/partials/_planning_table.html" />
       </div>
     </div>
   </div>
 </div>
+
+<include href="/kpi-dashboard/partials/_planning_form_add.html" />

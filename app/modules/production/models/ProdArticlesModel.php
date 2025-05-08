@@ -1,6 +1,6 @@
 <?php
 
-class SuivisArticlesModel extends DB\Cortex
+class ProdArticlesModel extends DB\Cortex
 {
     protected
         $db = 'DB',
@@ -11,6 +11,11 @@ class SuivisArticlesModel extends DB\Cortex
         $mapper = new self();
         $result = $mapper->find(null,['order'=>'reference ASC']);
         return $result;
+    }
+
+    public static function get_by_id(int $id) {
+        $mapper = new self();
+        return $mapper->findone(['id = ?',$id]);
     }
 
 }
