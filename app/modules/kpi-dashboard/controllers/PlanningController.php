@@ -4,100 +4,14 @@ class PlanningController
 {
 
     /**
- * @route("GET /planning")
- */
-function filtre($f3)
-{
-    $db = \Base::instance()->DB;
-    $mapper = new DB\Cortex($db, "vue_prod_planning");
-
-    $types = (array) $f3->get('GET.type');
-    $refs  = (array) $f3->get('GET.ref');
-
-    $conditions = [];
-    $params = [];
-
-    if (!empty($types)) {
-        $conditions[] = "type IN (" . implode(',', array_fill(0, count($types), '?')) . ")";
-        $params = array_merge($params, $types);
-    }
-
-    if (!empty($refs)) {
-        $conditions[] = "reference IN (" . implode(',', array_fill(0, count($refs), '?')) . ")";
-        $params = array_merge($params, $refs);
-    }
-
-    $query = $conditions ? [implode(' AND ', $conditions), $params] : null;
-
-    $produits = $mapper->find($query, ['order' => 'id DESC']);
-    $f3->set('produits', $produits);
-
-    // Pour garder les cases cochées
-    $f3->set('selected_types', $types);
-    $f3->set('selected_refs', $refs);
-
-    // Pour recalculer les filtres restants possibles (avec count si tu veux griser)
-    $f3->set('filters', VuePlanningModel::get_filters(['reference', 'type'], $query));
-
-    echo \Template::instance()->render("kpi-dashboard/partials/_planning_table.html");
-}
-
-
-
-
-
-    // function test($f3)
-    // {
-    //     $modeles_filter = $f3->POST['modeles'] ?? [];
-    //     $sous_ensemble_filter = $f3->POST['types'] ?? [];
-
-
-    //     // Récupère tous les modèles ->obliger de déstructure l'obj PDO pour ajouter le selected
-    //     $modeles = [];
-    //     foreach (SuivisArticlesModel::all() as $m) {
-    //         $modeles[] = [
-    //             '_id' => $m->_id,
-    //             'reference' => $m->reference,
-    //             'selected' => in_array($m->_id, $modeles_filter ?? []),
-    //         ];
-    //     }
-
-    //     $sous_ensemble = [];
-    //     foreach (SuivisTypeSousEnsemble::all() as $se) {
-    //         $sous_ensemble[] = [
-    //             '_id' => $se->_id,
-    //             'designation' => $se->designation,
-    //             'selected' => in_array($se->_id, $sous_ensemble_filter ?? [])
-    //         ];
-    //     }
-    //     $f3->types = $sous_ensemble;
-
-    //     $f3->modeles = $modeles;
-
-    //     $filtres = [
-    //         "query" => "",
-    //         "data" => ""
-    //     ];
-
-    //     if (!empty($modeles_filter)) {
-    //         $in = implode(',', array_fill(0, count($modeles_filter), '?'));
-    //         $filtres[] = ["query" => "reference IN ($in)", "data" =>  $modeles_filter];
-    //     }
-
-    //     if(!empty($sous_ensemble_filter)) {
-    //         $in = implode(',', array_fill(0, count($sous_ensemble_filter), '?'));
-    //         $filtres[] = ["query" => "type IN ($in)", "data" =>  $sous_ensemble_filter];
-    //     }
-
-    //     if (count($filtres)>1) {
-    //        $filtre=[];
-    //        $filtre['query'] = implode(' AND ',array_column($filtres,'query'));
-    //        echo var_dump($filtre);
-    //     }
-
-    //     // $mapper  = new DB\Cortex(base::instance()->DB, "vue_prod_planning");
-
-    //     // $f3->produits = $mapper->find([$filtres[0]['query'], $filtres[0]['data']], ["order" => "id DESC"]);
-    //     echo \template::instance()->render("kpi-dashboard/partials/_planning_table.html");
-    // }
+     * @route("POST /planning/engagement") 
+     */
+     function planning_update_engagement($f3)
+     {
+        $patch = array_keys($f3->POST);
+        echo var_dump($patch);
+        foreach ($patch as $p) {
+            echo $p;
+        }
+     }
 }

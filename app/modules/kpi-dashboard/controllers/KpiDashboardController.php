@@ -12,8 +12,8 @@ class KpiDashboardController
         $refs = [];
         foreach ($fk_articles as $fk_article) {
             $refs[] = [
-              '_id' => $fk_article ->_id,
-              'reference' => ProdArticlesModel::get_by_id( $fk_article ->_id)->reference
+                '_id' => $fk_article->_id,
+                'reference' => ProdArticlesModel::get_by_id($fk_article->_id)->reference
             ];
         }
         $f3->refs = $refs;
@@ -30,8 +30,8 @@ class KpiDashboardController
         $refs = [];
         foreach ($fk_articles as $fk_article) {
             $refs[] = [
-              '_id' => $fk_article ->_id,
-              'reference' => ProdArticlesModel::get_by_id( $fk_article ->_id)->reference
+                '_id' => $fk_article->_id,
+                'reference' => ProdArticlesModel::get_by_id($fk_article->_id)->reference
             ];
         }
 
@@ -51,14 +51,15 @@ class KpiDashboardController
      * @route("POST /test/save")
      * 
      */
-    function planning_add($f3) {
-        $data=[
+    function planning_add($f3)
+    {
+        $data = [
             'type' => (int) $f3->POST['type'],
             'reference' => (int) $f3->POST['reference'],
-            'semaine'=>str_replace("W","",$f3->POST['semaine'])
+            'semaine' => str_replace("W", "", $f3->POST['semaine'])
         ];
         $last_id = ProdPlanningModel::add($data);
-        $last_engage = ProdEngagementModel::add($last_id,$data['semaine']);
+        $last_engage = ProdEngagementModel::add($last_id, $data['semaine']);
         //echo var_dump($last_id);die();
         //echo var_dump($f3->POST);die();
 
@@ -70,8 +71,8 @@ class KpiDashboardController
         $f3->limit = $pagination['limit'];
         $f3->produits = $pagination['subset'];
 
-        echo \Template::instance()->render("kpi-dashboard/partials/_planning_table.html");
 
+        echo \Template::instance()->render("kpi-dashboard/partials/_planning_table.html");
     }
 
     /**
@@ -86,7 +87,8 @@ class KpiDashboardController
         $f3->pos = $pagination['pos'] + 1;
         $f3->limit = $pagination['limit'];
         $f3->produits = $pagination['subset'];
-        
+
+
         // Init Form Ajout 
         $f3->types = ProdTypeSousEnsembleModel::find_type(['Alternateur', 'Compresseur']); // Recup différent type
         $type = ProdTypeSousEnsembleModel::find_by_designation('Alternateur'); // recup id type depuis sa désignation 
@@ -96,8 +98,8 @@ class KpiDashboardController
         $refs = [];
         foreach ($fk_articles as $fk_article) {
             $refs[] = [
-              '_id' => $fk_article ->_id,
-              'reference' => ProdArticlesModel::get_by_id( $fk_article ->_id)->reference
+                '_id' => $fk_article->_id,
+                'reference' => ProdArticlesModel::get_by_id($fk_article->_id)->reference
             ];
         }
         $f3->refs = $refs;
@@ -119,6 +121,7 @@ class KpiDashboardController
         $f3->pos = $pagination['pos'] + 1;
         $f3->limit = $pagination['limit'];
         $f3->produits = $pagination['subset'];
+
 
         echo \Template::instance()->render("kpi-dashboard/partials/_planning_table.html");
     }

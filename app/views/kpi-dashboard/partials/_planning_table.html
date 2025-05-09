@@ -1,78 +1,21 @@
-<form id="filtres" method="get">
- <div class="max-h-[500px] overflow-y-auto border rounded">
-  <table class="table table-sm table-zebra ">
-    <thead class="bg-slate-100 sticky top-0 z-20">
-      <th><label for="check_all"></label><input id="check_all" type="checkbox" /></th>
-      <th>Référence</th>
-      <th>Type</th>
-      <th>Numéro</th>
-      <th>Semaine</th>
-      <th>Engagement</th>
-      <th>Prête</th>
-      <th class=""></th>
-    </thead>
+  <div class="max-h-[500px] overflow-y-auto border rounded">
+    <table class="table table-sm">
+      <!-- En-têtes -->
+      <thead class="bg-slate-100 sticky top-0 z-20">
+        <include href="kpi-dashboard/partials/planning-table/_planning_thead.html" />
+      </thead>
 
-    <tbody>
-      <repeat group="{{@produits}}" value="{{@produit}}">
-        <tr>
-          <td><label for="check_{{@produit._id}}"></label> <input id="check_{{@produit._id}}" type="checkbox" /></td>
-          <td class="flex items-start space-x-2">
-            <span style="background-color: {{@produit.reference_couleur}}" class="w-4 h-6 rounded-sm"> </span>
-            <span>{{@produit.reference}}</span>
-          </td>
-          <td>{{@produit.type}}</td>
-          <td>
-            <check if="{{@produit.numero}}">
-              <true> {{@produit.numero}} </true>
-              <false><span class="italic">NC</span></false>
-            </check>
-          </td>
-          <td>{{@produit.semaine}}</td>
-
-          <td>
-            <span
-              class="badge badge-outline badge-sm text-sm font-medium 
-                          {{ 
-                            (@produit.status=='Fait' ? 'badge-success' : 
-                            (@produit.status=='Engagé' ? 'badge-warming' : 
-                            (@produit.status=='Prévisionnel' ? 'badge-info' : 
-                            'badge-error' )))
-                          }}"
-            >
-              {{@produit.status}}
-            </span>
-          </td>
-          <td class="text-xl">
-            <check if="{{@produit.prete}}">
-              <true><i class="fa-solid fa-check text-success"></i></true>
-              <false>
-                <check if="{{@produit.status!=='Engagé'}}">
-                  <true><i class="fas fa-xmark text-error"></i></true>
-                  <false><i class="far fa-hourglass-half text-info"></i></false>
-                </check>
-              </false>
-            </check>
-          </td>
-          <td><i class="fas fa-ellipsis-vertical"></i></td>
-        </tr>
-      </repeat>
-    </tbody>
-  </table>
+      <!-- TBody -->
+      <tbody>
+        <include href="kpi-dashboard/partials/planning-table/_planning_tbody.html" />
+      </tbody>
+    </table>
   </div>
-</form>
+
+<!-- Pagination  -->
 <div class="join mt-2">
   <repeat group="{{@pages}}" value="{{@page}}">
-    <input
-      id="pagination_{{@page}}"
-      class="join-item btn btn-square"
-      type="radio"
-      hx-trigger="click"
-      hx-push-url="true"
-      hx-get="/planning/{{@limit}}/{{@page}}"
-      hx-target="#planning"
-      hx-swap="innerHTML"
-      aria-label="{{@page}}"
-      {{@page ==  @pos ? 'checked' : ''}}
-    />
+    <input id="pagination_{{@page}}" class="join-item btn btn-square" type="radio" hx-trigger="click" hx-push-url="true" hx-get="/planning/{{@limit}}/{{@page}}"
+    hx-target="#planning" hx-swap="innerHTML" aria-label="{{@page}}" {{@page == @pos ? 'checked' : ''}} />
   </repeat>
 </div>
