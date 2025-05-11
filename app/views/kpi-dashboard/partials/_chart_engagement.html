@@ -133,8 +133,9 @@
 
   const chartEngagement = new ApexCharts(document.querySelector(`#chartEngagement`), optionsEngagement);
   chartEngagement.render();
-
-  fetch(`/kpi/engagement/2025-18`)
+  const now=new Date();
+  const week=dateFns.format(now, "RRRR-II");
+  fetch(`/kpi/engagement/${week}`)
     .then((response) => response.json())
     .then((data) => {
         chartEngagement.updateOptions({

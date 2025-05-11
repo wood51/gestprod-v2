@@ -11,5 +11,8 @@
         "postcss": "^8.4.30",
         "tailwindcss": "^4.1.4",
         "vite": "^6.2.5"
+    },
+    "dependencies": {
+        "date-fns": "^4.1.0"
     }
 }

@@ -4,6 +4,21 @@
 <th>Type</th>
 <th>Numéro</th>
 <th>Semaine</th>
+<th>Semaine Engagement</th>
 <th>Engagement</th>
-<th>Prête</th>
+<th>
+  <div class="flex items-center gap-2">
+    <input
+      type="checkbox"
+      id="filter-pret"
+      name="pret"
+      hx-get="/planning/{{@limit}}/1"
+      hx-target="#planning"
+      hx-include="[name=pret]"
+      hx-trigger="change"
+      {{ @filter_pret ? 'checked' : '' }}
+    />
+    Prête ?
+  </div>
+</th>
 <th class=""></th>

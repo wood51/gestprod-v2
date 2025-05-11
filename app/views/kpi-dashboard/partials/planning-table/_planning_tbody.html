@@ -1,66 +1,83 @@
+<!-- Début : Création des lignes  -->
+<repeat group="{{@produits}}" value="{{@produit}}" counter="{{@i}}">
+  <tr class="hover:bg-success/10">
+    <!-- Checkbox -->
+    <!-- <td><label for="check_{{@produit._id}}"></label> <input id="check_{{@produit._id}}" type="checkbox" /></td> -->
+    <!-- counter -->
+    <td>{{ @i+((@pos-1)*@limit) }}</td>
+    <!-- Référence -->
+    <td class="h-full">
+      <div class="flex items-center justify-start gap-2 h-full">
+        <span style="background-color: {{@produit.reference_couleur}}" class="w-4 h-6 rounded-sm "></span>
+        <span>{{@produit.reference}}</span>
+      </div>
+    </td>
 
-    <!-- Début : Création des lignes  -->
-    <repeat group="{{@produits}}" value="{{@produit}}" counter="{{@i}}">
-      <tr class="hover:bg-success/10">
-        <!-- Checkbox -->
-        <!-- <td><label for="check_{{@produit._id}}"></label> <input id="check_{{@produit._id}}" type="checkbox" /></td> -->
-        <!-- counter -->
-        <td>{{ @i+((@pos-1)*@limit) }}</td>
-        <!-- Référence -->
-        <td class="h-full">
-          <div class="flex items-center justify-start gap-2 h-full">
-            <span style="background-color: {{@produit.reference_couleur}}" class="w-4 h-6 rounded-sm"></span>
-            <span>{{@produit.reference}}</span>
-          </div>
-        </td>
+    <!-- Type -->
+    <td>{{@produit.type}}</td>
 
-        <!-- Type -->
-        <td>{{@produit.type}}</td>
+    <!-- Numéro -->
+    <td>
+      <check if="{{@produit.numero}}">
+        <!--  Numéro  absent-->
+        <true> {{@produit.numero}} </true>
+        <false><span class="italic">NC</span></false>
+      </check>
+    </td>
 
-        <!-- Numéro -->
-        <td>
-          <check if="{{@produit.numero}}">
-            <!-- Fallback Numéro  absent-->
-            <true> {{@produit.numero}} </true>
-            <false><span class="italic">NC</span></false>
-          </check>
-        </td>
+    <!-- Semaine  -->
+    <td>{{@produit.semaine}}</td>
 
-        <!-- Semaine  -->
-        <td>{{@produit.semaine}}</td>
+    <!-- Semaine d'engagement  -->
+    <td>
+      <check if="{{@produit.semaine_engagement}}">
+      <true>{{@produit.semaine_engagement}}</true>
+      <false><span class="italic">NC</span></false>
+      </check>
+    </td>
 
-        <!-- Engagement  -->
-        <td>
-          <span
-            class="badge badge-outline badge-sm text-sm font-medium 
+    <!-- Engagement  -->
+    <td>
+      <div class="flex items-center gap-2">
+        <span
+          class="badge badge-outline badge-sm text-sm font-medium 
                       {{ 
                         (@produit.status=='Fait' ? 'badge-success' : 
-                        (@produit.status=='Engagé' ? 'badge-warming' : 
-                        (@produit.status=='Prévisionnel' ? 'badge-info' : 
-                        'badge-error' )))
+                        (@produit.status=='Retard'? 'badge-warning' :
+                        (@produit.status=='Engagé' ? 'badge-info' : 
+                        (@produit.status=='Prévisionnel' ? 'badge-neutral' : 
+                        'badge-error' ))))
                       }}"
-          >
-            {{@produit.status}}
-          </span>
-        </td>
+        >
+          {{@produit.status}}
+        </span>
+        <check if="{{ (@produit.semaine < @now) &&  (@produit.status!='Fait')}}">
+          <true>
+            <div class="tooltip  tooltip-right tooltip-warning" data-tip="En retard">
+              <i class="fa-regular fa-clock text-warning text-lg font-semibold"></i>
+            </div>
+          </true>
+        </check>
+      </div>
+    </td>
 
-        <!-- Machine prête  -->
-        <td class="text-xl">
-          <check if="{{@produit.prete}}">
-            <true><i class="fa-solid fa-check text-success"></i></true>
-            <false>
-              <check if="{{@produit.status!=='Engagé'}}">
-                <true><i class="fas fa-xmark text-error"></i></true>
-                <false><i class="far fa-hourglass-half text-info"></i></false>
-              </check>
-            </false>
+    <!-- Machine prête  -->
+    <td class="text-xl">
+      <check if="{{@produit.prete}}">
+        <true><i class="fa-solid fa-check text-success"></i></true>
+        <false>
+          <check if="{{@produit.status!=='Engagé'}}">
+            <true><i class="fas fa-xmark text-error"></i></true>
+            <false><i class="far fa-hourglass-half text-info"></i></false>
           </check>
-        </td>
+        </false>
+      </check>
+    </td>
 
-        <!-- Menu action individuel  -->
-        <td>
-            <include href="kpi-dashboard/partials/planning-table/_planning_menu_individuel.html" />
-        </td>
-      </tr>
-    </repeat>
-    <!-- Fin : Création des lignes  -->
+    <!-- Menu action individuel  -->
+    <td>
+      <include href="kpi-dashboard/partials/planning-table/_planning_menu_individuel.html" />
+    </td>
+  </tr>
+</repeat>
+<!-- Fin : Création des lignes  -->

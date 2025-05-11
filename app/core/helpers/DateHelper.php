@@ -91,7 +91,7 @@ class DateHelper
 
     public static function extract_week_year($semaine)
     {
-        [$week, $year] = explode("-", $semaine);
+        [$year, $week] = explode("-", $semaine);
         return (object) [
             'full_week' => $semaine,
             'week' => $week,

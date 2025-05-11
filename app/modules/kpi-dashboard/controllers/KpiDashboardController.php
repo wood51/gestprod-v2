@@ -40,7 +40,7 @@ class KpiDashboardController
     }
 
     /**
-     * @route("GET /kpi/dashboard")
+     * @route("GET /public/dashboard")
      */
     function kpi_dashboad($f3)
     {
@@ -53,24 +53,28 @@ class KpiDashboardController
      */
     function planning_add($f3)
     {
+
         $data = [
             'type' => (int) $f3->POST['type'],
             'reference' => (int) $f3->POST['reference'],
             'semaine' => str_replace("W", "", $f3->POST['semaine'])
         ];
         $last_id = ProdPlanningModel::add($data);
-        $last_engage = ProdEngagementModel::add($last_id, $data['semaine']);
-        //echo var_dump($last_id);die();
-        //echo var_dump($f3->POST);die();
 
         // Pagination 
         $limit = 15;
-        $pagination = VuePlanningModel::paginate_all(0, $limit);
+        $produits_pret = (bool)isset($f3->GET['pret']);
+        $f3->filter_pret = $produits_pret ? true : false;
+        $filter = $produits_pret ? null : ['prete = ?', 0];
+        $pagination = VuePlanningModel::paginate_all(0, $limit, $filter);
         $f3->pages = range(1, $pagination['count']);
         $f3->pos = $pagination['pos'] + 1;
         $f3->limit = $pagination['limit'];
         $f3->produits = $pagination['subset'];
 
+        $f3->now = (new DateTimeImmutable())->format('Y-W');
+        $f3->now_iso = (new DateTimeImmutable())->format('Y-\WW');
+        $f3->set('filter_pret', isset($f3->GET['pret']) ? true : false);
 
         echo \Template::instance()->render("kpi-dashboard/partials/_planning_table.html");
     }
@@ -80,13 +84,21 @@ class KpiDashboardController
      */
     function kpi_dashboad_admin($f3)
     {
+        $f3->now = (new DateTimeImmutable())->format('Y-W');
+        $f3->now_iso = (new DateTimeImmutable())->format('Y-\WW');
+        $f3->set('filter_pret', isset($f3->GET['pret']) ? true : false);
+
         // Pagination 
         $limit = 15;
-        $pagination = VuePlanningModel::paginate_all(0, $limit);
+        $produits_pret = (bool)isset($f3->GET['pret']);
+        $f3->filter_pret = $produits_pret ? true : false;
+        $filter = $produits_pret ? null : ['prete = ?', 0];
+        $pagination = VuePlanningModel::paginate_all(0, $limit, $filter);
         $f3->pages = range(1, $pagination['count']);
         $f3->pos = $pagination['pos'] + 1;
         $f3->limit = $pagination['limit'];
-        $f3->produits = $pagination['subset'];
+        $produits = $pagination['subset'];
+        $f3->set('produits', $produits);
 
 
         // Init Form Ajout 
@@ -113,15 +125,21 @@ class KpiDashboardController
      */
     function paginated_planning($f3, $params)
     {
+        $f3->now = (new DateTimeImmutable())->format('Y-W');
+        $f3->now_iso = (new DateTimeImmutable())->format('Y-\WW');
+
+
         $page = (int)$params['page'] - 1;
         $limit = (int) $params['limit'];
 
-        $pagination = VuePlanningModel::paginate_all($page, $limit);
+        $produits_pret = (bool)isset($f3->GET['pret']);
+        $f3->filter_pret = $produits_pret ? true : false;
+        $filter = $produits_pret ? null : ['prete = ?', 0];
+        $pagination = VuePlanningModel::paginate_all($page, $limit, $filter);
         $f3->pages = range(1, $pagination['count']);
         $f3->pos = $pagination['pos'] + 1;
         $f3->limit = $pagination['limit'];
         $f3->produits = $pagination['subset'];
-
 
         echo \Template::instance()->render("kpi-dashboard/partials/_planning_table.html");
     }
