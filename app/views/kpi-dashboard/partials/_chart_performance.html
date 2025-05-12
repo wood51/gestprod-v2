@@ -1,0 +1,53 @@
+<div class="col-span-1 row-span-1 bg-white shadow-xl rounded-lg p-6 flex flex-col items-center justify-center">
+    <h2 class="text-xl font-bold text-indigo-700 mb-4">Objectif Perf. Semaine En Cours</h2>
+    <div id="performance-chart" class="w-full h-full"></div>
+  </div>
+
+  <script>
+  window.addEventListener("load", () => {
+    const optionsPerformance = {
+      chart: {
+        type: "radialBar",
+        height: "100%",
+        offsetY: 0,
+      },
+      series: [10], // Pourcentage de performance
+      plotOptions: {
+        radialBar: {
+          track: {
+            background: "#e7e7e7",
+            strokeWidth: "97%",
+            margin: 5, // space between track and bar
+          },
+          dataLabels: {
+            name: {
+              show: false,
+            },
+            value: {
+              fontSize: "40px",
+              offsetY: 10,
+              formatter: (val) => {
+                return val + "%";
+              },
+            },
+          },
+        },
+      },
+      colors: [({ value }) => (value < 30 ? "#ff637e" : value < 75 ? "#ffb900" : "#00d492")],
+    };
+
+    const el = document.querySelector("#performance-chart");
+    const perfChart = new ApexCharts(el, optionsPerformance);
+    perfChart.render();
+    fetch(`/performance/{{@week}}`) //fix temporaire
+      .then((response) => response.json())
+      .then((data) => {
+        const value = Math.min(Math.ceil(Number(data.performance)), 100);
+        console.log(value);
+        console.log(perfChart.updateSeries([value])); // Passe un tableau contenant le nombre
+      })
+      .catch((error) => {
+        console.error("Erreur lors du chargement des données :", error);
+      });
+  });
+</script>

@@ -1,92 +1,24 @@
 <div class="grid grid-cols-3 grid-rows-2 gap-6 h-full p-6">
-
-  <!-- Objectif Perf. Donut -->
-  <div class="col-span-1 row-span-1 bg-white shadow-xl rounded-lg p-6 flex flex-col items-center justify-center">
-    <h2 class="text-xl font-bold text-indigo-700 mb-4">Objectif Perf. Semaine En Cours</h2>
-    <div id="performance-chart" class="w-full h-[260px]"></div>
-  </div>
+  <!-- Objectif Perf. RadialBar -->
+  <include href="/kpi-dashboard/partials/_chart_performance.html" with="week='2025-18'" />
 
   <!-- Ligne de performance -->
   <div class="col-span-2 row-span-1 bg-white shadow-xl rounded-lg p-6 flex flex-col justify-center">
     <h2 class="text-xl font-bold text-indigo-700 mb-4">Indice de Performances - Semaines</h2>
-    <div id="month-performance-chart" class="w-full h-[260px]"></div>
+    <div id="month-performance-chart" class="w-full h-full"></div>
   </div>
 
   <!-- Barres qualité par semaine -->
   <div class="col-span-2 row-span-1 bg-white shadow-xl rounded-lg p-6 flex flex-col justify-center">
     <h2 class="text-xl font-bold text-indigo-700 mb-4">Indice de Qualité - Semaines</h2>
-    <div id="month-qualite-chart" class="w-full h-[260px]"></div>
+    <div id="month-qualite-chart" class="w-full h-full"></div>
   </div>
 
   <!-- Donut qualité actuelle -->
   <div class="col-span-1 row-span-1 bg-white shadow-xl rounded-lg p-6 flex flex-col items-center justify-center">
     <h2 class="text-xl font-bold text-indigo-700 mb-4 text-center">Indice Qualité Semaine En Cours</h2>
-    <div id="qualite-chart" class="w-full h-[260px]"></div>
+    <div id="qualite-chart" class="w-full h-full"></div>
   </div>
-
 </div>
 
-<script>
-  const optionsPerformance = {
-    chart: {
-      type: "radialBar",
-      height: "120%",
-      offsetY: "",
-    },
-    series: [10], // Pourcentage de performance
-    plotOptions: {
-      radialBar: {
-        track: {
-          background: "#e7e7e7",
-          strokeWidth: "97%",
-          margin: 5, // space between track and bar
-        },
-        dataLabels: {
-          name: {
-            show: false,
-          },
-          value: {
-            fontSize: "40px",
-            offsetY: 10,
-            formatter: (val) => {
-              return val + "%";
-            },
-          },
-        },
-      },
-    },
-    fill: {
-       //colors: [({ value }) => (value < 30 ? "#ff0000" : value < 75 ? "#FBBF24" : "#16a34a")],
-      //  colors: ["#16a34a"]
-    },
-  };
 
-  window.addEventListener("load", () => {
-  const el = document.querySelector("#performance-chart");
-  if (el) {
-    const perfChart = new ApexCharts(el, optionsPerformance);
-    perfChart.render();
-     fetch(`/performance/2025-18`) //fix temporaire
-    .then((response) => response.json())
-    .then((data) => {
-      const value = Math.min(Math.ceil(Number(data.performance)), 100);
-      perfChart.updateSeries([value]); // Passe un tableau contenant le nombre
-    })
-    .catch((error) => {
-      console.error("Erreur lors du chargement des données :", error);
-    });
-  }
-});
-
-  // const perfChart = new ApexCharts(document.querySelector("#performance-chart"), optionsPerformance);
-  // perfChart.render();
-  // fetch(`/performance/2025-18`) //fix temporaire
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     const value = Math.min(Math.ceil(Number(data.performance)), 100);
-  //     perfChart.updateSeries([value]); // Passe un tableau contenant le nombre
-  //   })
-  //   .catch((error) => {
-  //     console.error("Erreur lors du chargement des données :", error);
-  //   });
-</script>
