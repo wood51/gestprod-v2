@@ -5,7 +5,6 @@
         "kpi-securite": true,
         "user": true,
         "kpi-dashboard\\.vscode": true,
-        "kpi-dashboard\\module.json": true,
-        "kpi-dashboard": true
+        "kpi-dashboard\\module.json": true
     }
 }
