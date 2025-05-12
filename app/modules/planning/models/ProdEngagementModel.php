@@ -27,4 +27,16 @@ class ProdEngagementModel extends DB\Cortex
 
         return $last;
     }
+
+    public static function getNbMachinePretes(string $semaine): int
+    {
+        $mapper = new self();
+        try {
+            $mapper->nb = "COUNT(id)";
+            $mapper->load(["semaine_engagee = ? AND status = 'fait'", $semaine]);
+            return $mapper->dry() ? 0 : $mapper->nb;
+        } catch (\Exception $e) {
+            throw new \Exception("Erreur récupération machines prêtes : " . $e->getMessage());
+        }
+    }
 }
