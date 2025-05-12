@@ -2,17 +2,11 @@
 
 class EngagementService
 {
-    public static function engager(int $planningId, string $semaine): bool|string
+    public function engager(int $planningId, string $semaine): bool|string
     {
-        $now = (new DateTimeImmutable())->format('Y-W');
-
-        $model = new ProdEngagementModel();
-        $last = $model->find(
-            ['fk_planning = ?', $planningId],
-            ['order' => 'modified_at DESC', 'limit' => 1]
-        )[0] ?? null;
-
-        $status = $last?->status ?? null;
+        
+        $last = ProdEngagementModel::getLastEngagement($planningId);
+        $status = isset($last) ? $last->status : null;
 
         if (in_array($status, ['fait', 'annulé'])) {
             return "Engagement interdit (statut bloqué : $status).";
@@ -20,6 +14,7 @@ class EngagementService
 
         // Aucun engagement ou reporté -> créer une nouvelle ligne
         if (is_null($status) || $status === 'reporté') {
+            $now = (new DateTimeImmutable())->format('Y-W');
             $engagement = new ProdEngagementModel();
             $engagement->fk_planning = $planningId;
             $engagement->status = ($semaine === $now) ? 'engagé' : 'prévisionnel';
@@ -39,13 +34,9 @@ class EngagementService
         return "Aucune transition valide pour engagement depuis $status.";
     }
 
-    public static function reporter(int $planningId): bool|string
+    public  function reporter(int $planningId): bool|string
     {
-        $model = new ProdEngagementModel();
-        $last = $model->find(
-            ['fk_planning = ?', $planningId],
-            ['order' => 'modified_at DESC', 'limit' => 1]
-        )[0] ?? null;
+        $last = ProdEngagementModel::getLastEngagement($planningId);
 
         if (!$last || $last->status !== 'engagé') {
             return "Seul un engagement 'engagé' peut être reporté.";
@@ -58,13 +49,9 @@ class EngagementService
         return true;
     }
 
-    public static function marquerFait(int $planningId): bool|string
+    public function marquerFait(int $planningId): bool|string
     {
-        $model = new ProdEngagementModel();
-        $last = $model->find(
-            ['fk_planning = ?', $planningId],
-            ['order' => 'modified_at DESC', 'limit' => 1]
-        )[0] ?? null;
+        $last = ProdEngagementModel::getLastEngagement($planningId);
 
         if (!$last || !in_array($last->status, ['engagé', 'en cours'])) {
             return "Seul un engagement 'engagé' ou 'en cours' peut être marqué comme fait.";
@@ -74,5 +61,37 @@ class EngagementService
         $last->save();
 
         return true;
+    }
+
+    public function cleanData($data)
+    {
+        $cleaned = [
+            'pret' => false,
+            'numero' => null,
+            'semaine' => null,
+            'report' => false,
+            'produit' => null
+        ];
+
+        // transformation des data
+        foreach ($data as $key => $value) {
+            $parts = explode('-', $key);
+
+            if (count($parts) === 2) {
+                $field = $parts[0];
+
+                if ($field === 'semaine') {
+                    $value = str_replace('W', '', $value);
+                }
+
+                if ($value === 'on') {
+                    $value = true;
+                }
+
+                $cleaned[$field] = $value;
+            }
+        }
+
+        return (object) $cleaned;
     }
 }

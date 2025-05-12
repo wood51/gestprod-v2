@@ -22,7 +22,7 @@ class UserController
     }
 
     /**
-     * @route("GET /users/dashboard")
+     * @route("GET /admin/users/dashboard")
      */
     function dashboard($f3) {
         $paginated_users = $this->service->paginate_active_users();
