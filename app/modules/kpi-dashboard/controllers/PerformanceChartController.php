@@ -23,4 +23,50 @@ class PerformanceChartController
             $f3->error(500, "Erreur lors du calcul de la performance actuelle: " . $e->getMessage());
         }
     }
+
+    /**
+     * @route("GET /performance-mois/@semaine/@nb_semaines")
+     */
+    public function performanceMois($f3, $params)
+    {
+        try {
+            $semaine = $params['semaine'];
+            $nb_semaines = $params['nb_semaines'];
+
+            $serie = [
+                "name" => "Performance",
+                "color" => "#4338ca",
+                "data" => []
+            ];
+
+            $weeks = $this->getPreviousWeeks($semaine, $nb_semaines);
+
+            foreach ($weeks as $week) {
+                [$year, $weekNumber] = explode('-', $week);
+                $performance = $this->service->calculPerformance($week) / 100;
+
+                $serie["data"][] = [
+                    "x" => "$year/$weekNumber",
+                    "y" => $performance
+                ];
+            }
+
+            $f3->set('HEADER.Content-Type', 'application/json');
+            echo json_encode($serie, JSON_PRETTY_PRINT);
+        } catch (\Exception $e) {
+            $f3->error(500, "Erreur lors du calcul de la performance du mois: " . $e->getMessage());
+        }
+    }
+
+    private function getPreviousWeeks($semaine, $nbSemaines)
+    {
+        $weeks = [];
+        $annee_number = explode("-", $semaine)[0];
+        $semaine_number = explode("-", $semaine)[1];
+        for ($i = 0; $i < $nbSemaines; $i++) {
+            $date = (new DateTime())->setISODate($annee_number, $semaine_number - $i);
+            $weeks[] = $date->format('Y-W'); // Format "2024-50"
+        }
+        return array_reverse($weeks); // On inverse pour avoir les semaines dans l'ordre
+    }
 }

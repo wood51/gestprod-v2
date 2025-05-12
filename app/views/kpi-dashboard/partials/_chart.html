@@ -3,22 +3,18 @@
   <include href="/kpi-dashboard/partials/_chart_performance.html" with="week='2025-18'" />
 
   <!-- Ligne de performance -->
-  <div class="col-span-2 row-span-1 bg-white shadow-xl rounded-lg p-6 flex flex-col justify-center">
-    <h2 class="text-xl font-bold text-indigo-700 mb-4">Indice de Performances - Semaines</h2>
-    <div id="month-performance-chart" class="w-full h-full"></div>
-  </div>
+  <include href="/kpi-dashboard/partials/_chart_performance_mois.html" with="week='2025-18',nb_semaine=5" />
 
   <!-- Barres qualité par semaine -->
   <div class="col-span-2 row-span-1 bg-white shadow-xl rounded-lg p-6 flex flex-col justify-center">
-    <h2 class="text-xl font-bold text-indigo-700 mb-4">Indice de Qualité - Semaines</h2>
+    <h2 class="text-xl font-bold text-primary mb-4">Indice de Qualité - Semaines</h2>
     <div id="month-qualite-chart" class="w-full h-full"></div>
   </div>
 
   <!-- Donut qualité actuelle -->
   <div class="col-span-1 row-span-1 bg-white shadow-xl rounded-lg p-6 flex flex-col items-center justify-center">
-    <h2 class="text-xl font-bold text-indigo-700 mb-4 text-center">Indice Qualité Semaine En Cours</h2>
+    <h2 class="text-xl font-bold text-primary mb-4 text-center">Indice Qualité Semaine En Cours</h2>
     <div id="qualite-chart" class="w-full h-full"></div>
   </div>
 </div>
-
 

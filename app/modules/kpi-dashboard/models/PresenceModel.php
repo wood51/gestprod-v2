@@ -5,7 +5,7 @@ class PresenceModel extends DB\Cortex
         $db = 'DB',
         $table= 'atelier_presence';
 
-    public static function getNbOperateursSemaine($semaine = null, $annee = null, $heures_semaine = 35)
+    public static function getNbOperateursSemaine($semaine = null, $annee = null, $heures_semaine = 35) // Fix utliser les jour travaillé pour h semaine
     {
         $mapper = new self();
         try {

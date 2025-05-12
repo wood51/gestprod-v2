@@ -1,9 +1,9 @@
 <div class="col-span-1 row-span-1 bg-white shadow-xl rounded-lg p-6 flex flex-col items-center justify-center">
-    <h2 class="text-xl font-bold text-indigo-700 mb-4">Objectif Perf. Semaine En Cours</h2>
-    <div id="performance-chart" class="w-full h-full"></div>
-  </div>
+  <h2 class="text-xl font-bold text-indigo-700 mb-4">Objectif Perf. Semaine En Cours</h2>
+  <div id="performance-chart" class="w-full h-full"></div>
+</div>
 
-  <script>
+<script>
   window.addEventListener("load", () => {
     const optionsPerformance = {
       chart: {
@@ -43,8 +43,7 @@
       .then((response) => response.json())
       .then((data) => {
         const value = Math.min(Math.ceil(Number(data.performance)), 100);
-        console.log(value);
-        console.log(perfChart.updateSeries([value])); // Passe un tableau contenant le nombre
+        perfChart.updateSeries([value]); // Passe un tableau contenant le nombre
       })
       .catch((error) => {
         console.error("Erreur lors du chargement des données :", error);
