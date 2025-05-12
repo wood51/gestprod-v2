@@ -3,6 +3,7 @@
         ".vscode": true,
         "kpi-securite": true,
         "suivis": true,
-        "user": true
+        "user": true,
+        "kpi-dashboard": true
     }
 }

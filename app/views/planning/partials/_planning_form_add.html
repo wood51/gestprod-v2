@@ -7,7 +7,7 @@
     <h3 class="font-bold text-2xl mb-4">Ajouter au planning</h3>
 
     <div method="dialog" class="space-y-4">
-      <form id="ajoutForm" method="post" hx-post="/test/save" hx-target="#planning" hx-swap="innerHTML">
+      <form id="ajoutForm" method="post" hx-post="/planning/produit/add" hx-target="#planning" hx-swap="innerHTML">
         <!-- Type -->
         <div>
           <label class="label"><span class="label-text font-semibold">Type</span></label>
@@ -15,7 +15,7 @@
             name="type"
             id="type-select"
             class="select select-bordered w-full"
-            hx-get="/test/type/refs"
+            hx-get="/planning/partials/type/refs"
             hx-include="#type-select"
             hx-target="#reference-select"
             hx-trigger="change"
@@ -31,7 +31,7 @@
         <div>
           <label class="label"><span class="label-text font-semibold">Référence</span></label>
           <select name="reference" id="reference-select" class="select select-bordered w-full" required>
-            <include href="/kpi-dashboard/partials/_planning_form_refs.html" />
+            <include href="/planning/partials/_planning_form_refs.html" />
           </select>
         </div>
 

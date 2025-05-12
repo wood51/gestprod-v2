@@ -23,14 +23,14 @@
     <!-- Séparateur -->
     <li><hr class="border-t border-gray-500 my-2" /></li>
     <check if="{{ @user.role=='admin' }}">
-      <li><a href="/users/dashboard" hx-get="/users/dashboard" hx-target="#content" class="btn btn-ghost">Utilisateurs</a></li>
+      <li><a href="/admin/users/dashboard" hx-get="/admin/users/dashboard" hx-target="#content" class="btn btn-ghost">Utilisateurs</a></li>
       <!-- <li><hr class="border-t border-gray-500 my-2" /></li> -->
-      <li><a href="admin/kpi/dashboard" hx-get="admin/kpi/dashboard" hx-target="#content" class="btn btn-ghost">Planning</a></li>
+      <li><a href="/admin/planning/dashboard" hx-get="/admin/planning/dashboard" hx-target="#content" class="btn btn-ghost">Planning</a></li>
       <li><hr class="border-t border-gray-500 my-2" /></li>
     </check>
     <!-- Séparateur -->
     
-    <li><a href="/public/dashboard" class="btn btn-ghost">DashBoard public</a></li>
+    <li><a href="/public/dashboard" target="_blank" class="btn btn-ghost">KPI public</a></li>
     <!-- Séparateur -->
     <!-- <li><hr class="border-t border-gray-500 my-2" /></li>
     <li><a href="/test" hx-get="/test"  hx-target="#content" class="btn btn-ghost">/test</a></li> -->

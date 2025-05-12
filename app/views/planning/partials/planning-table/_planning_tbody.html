@@ -4,7 +4,7 @@
     <!-- Checkbox -->
     <!-- <td><label for="check_{{@produit._id}}"></label> <input id="check_{{@produit._id}}" type="checkbox" /></td> -->
     <!-- counter -->
-    <td>{{ @i+((@pos-1)*@limit) }}</td>
+    <td>{{ @i+((@pos)*@limit) }}</td>
     <!-- Référence -->
     <td class="h-full">
       <div class="flex items-center justify-start gap-2 h-full">
@@ -76,7 +76,7 @@
 
     <!-- Menu action individuel  -->
     <td>
-      <include href="kpi-dashboard/partials/planning-table/_planning_menu_individuel.html" />
+      <include href="/planning/partials/planning-table/_planning_menu_individuel.html" />
     </td>
   </tr>
 </repeat>
