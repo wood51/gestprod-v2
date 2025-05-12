@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Gestion de Production</title>
+    <link href="{{@UI}}css/output.css" rel="stylesheet" />
+  </head>
+
+  <body class="bg-gradient-to-br from-gray-200 to-blue-200 h-screen flex flex-col">
+    <!-- Header with Navbar -->
+    <header class="bg-gray-800 text-white shadow-md">
+      <div class="px-6 py-4 flex items-center justify-between w-full">
+        <!-- Logo on the left -->
+        <div class="flex items-center">
+          <img src="app/views/assets/gear.png" class="h-16 mr-2" />
+          <span class="text-4xl font-semibold text-indigo-400">GestProd</span>
+        </div>
+
+        <!-- Navbar Items on the right -->
+        <nav class="flex space-x-4">
+          <!-- Gestion de prod dropdown -->
+          <div class="relative group">
+            <button class="inline-flex items-center text-xl font-semibold focus:outline-none">
+              Gestion de Production
+              <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+              </svg>
+            </button>
+            <!-- Dropdown Content -->
+            <div class="absolute left-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <a href="/admin/engagements" class="menu block px-4 py-2 hover:bg-gray-200 rounded-t-lg">Engagements</a>
+              <a href="/admin/controles" class="menu block px-4 py-2 hover:bg-gray-200 rounded-b-lg">Contrôles</a>
+            </div>
+          </div>
+
+          <!-- Ressources H. dropdown -->
+          <div class="relative group">
+            <button class="inline-flex items-center text-xl font-semibold focus:outline-none">
+              Ressource H.
+              <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+              </svg>
+            </button>
+            <!-- Dropdown Content -->
+            <div class="absolute left-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <a href="/admin/rh/presence" class="menu block px-4 py-2 hover:bg-gray-200 rounded-lg">Présence</a>
+            </div>
+          </div>
+
+          <!-- PAS de class menu ici ce n'esp pas une page a charger dans le main -->
+          <a href="/" class="text-xl font-semibold hover:text-gray-300">Acceuil</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="flex-grow flex">
+      <!-- Main Content -->
+      <main class=" flex-grow  bg-gray-100 p-6">
+        <!-- Contenu dynamique ici (injecté via chaque route admin via AJAX) -->
+        <div id="main_content" class=" bg-white shadow-xl rounded-lg p-6 h-full  min-h-screen"></div>
+      </main>
+    </div>
+
+    <script type="module" src="/{{@UI}}js/templates/admin/admin.js"></script>
+
+  </body>
+</html>
