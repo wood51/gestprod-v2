@@ -1,10 +1,8 @@
-<div class="col-span-2 row-span-1 bg-white shadow-xl rounded-lg p-6 flex flex-col justify-center">
-    <h2 class="text-xl font-bold text-primary mb-4">Indice de Performances - Semaines</h2>
-    <div id="month-performance-chart" class="w-full h-full"></div>
-  </div>
+<h2 class="text-xl font-bold text-primary mb-4">Indice de Performances - Semaines</h2>
+<div id="month-performance-chart" class="w-full h-full"></div>
 
-  <script>
-  window.addEventListener("load", () => {
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
     const optionsMonthPerformance = {
       series: [],
       chart: {
@@ -12,6 +10,9 @@
         type: "area",
         zoom: {
           enabled: false,
+        },
+        toolbar: {
+          show: false,
         },
       },
       dataLabels: {
@@ -58,7 +59,7 @@
     const el = document.querySelector("#month-performance-chart");
     const monthPerfChart = new ApexCharts(el, optionsMonthPerformance);
     monthPerfChart.render();
-    
+
     fetch(`/performance-mois/{{@week}}/{{@nb_semaine}}`)
       .then((response) => response.json())
       .then((data) => {
@@ -67,6 +68,5 @@
       .catch((error) => {
         console.error("Erreur lors du chargement des données :", error);
       });
-
   });
 </script>

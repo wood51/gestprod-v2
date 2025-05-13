@@ -1,15 +1,15 @@
-<h2 class="text-xl font-bold text-primary mb-4">Objectif Perf. Semaine En Cours</h2>
-<div id="performance-chart" class="w-full h-full"></div>
+<h2 class="text-xl font-bold text-primary mb-4 text-center">Indice Qualité Semaine En Cours</h2>
+<div id="qualite-chart" class="w-full h-full"></div>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const optionsPerformance = {
+    const optionsQualite = {
       chart: {
         type: "radialBar",
         height: "100%",
         offsetY: 0,
       },
-      series: [10], // Pourcentage de performance
+      series: [76], // Pourcentage de performance
       plotOptions: {
         radialBar: {
           track: {
@@ -33,15 +33,14 @@
       },
       colors: [({ value }) => (value < 30 ? "#ff637e" : value < 75 ? "#ffb900" : "#00d492")],
     };
-
-    const el = document.querySelector("#performance-chart");
-    const perfChart = new ApexCharts(el, optionsPerformance);
-    perfChart.render();
-    fetch(`/performance/{{@week}}`) //fix temporaire
+    const el = document.querySelector("#qualite-chart");
+    const qualiteChart = new ApexCharts(el, optionsQualite);
+    qualiteChart.render();
+    fetch(`/defauts/{{@week}}`)
       .then((response) => response.json())
       .then((data) => {
-        const value = Math.min(Math.ceil(Number(data.performance)), 100);
-        perfChart.updateSeries([value]); // Passe un tableau contenant le nombre
+        const value = Math.min(Math.ceil(Number(data.iq)), 100);
+        qualiteChart.updateSeries([value]);
       })
       .catch((error) => {
         console.error("Erreur lors du chargement des données :", error);

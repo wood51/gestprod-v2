@@ -5,14 +5,14 @@
 </div>
 
 <script>
-  window.addEventListener("load", () => {
+  document.addEventListener("DOMContentLoaded", function () {
     const optionsEngagement = {
       chart: {
         type: "bar",
         height: "100%",
         width: "100%",
         toolbar: {
-          show: true,
+          show: false,
         },
         events: {
           updated: (chartContext, config) => {
@@ -109,6 +109,7 @@
         },
       },
       yaxis: {
+        max:max=>max*1.0025,
         labels: {
           style: {
             colors: "#333",
@@ -134,9 +135,9 @@
 
     const chartEngagement = new ApexCharts(document.querySelector(`#chartEngagement`), optionsEngagement);
     chartEngagement.render();
-    const now = new Date();
-    const week = dateFns.format(now, "RRRR-II");
-    fetch(`/kpi/engagement/${week}`)
+    // const now = new Date();
+    // const week = dateFns.format(now, "RRRR-II");
+    fetch(`/kpi/engagement/{{@week}}`)
       .then((response) => response.json())
       .then((data) => {
         chartEngagement.updateOptions({
