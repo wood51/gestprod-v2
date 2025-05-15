@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-screen">
+  <head>
+    <include href="themes/base/partials/_head.html" />
+  </head>
+  <body class="h-screen flex flex-col">
+    <!-- Header -->
+    <include href="/kpi-dashboard/partials/_header.html" />
+
+    <!-- Main content -->
+     <!-- Zone carousel -->
+  <main class="flex-1">
+    <div class="carousel w-full h-full">
+      <div id="slide1" class="carousel-item w-full h-full">
+        <!-- ton premier partial -->
+        <include href="/kpi-dashboard/partials/_chart_engagement.html" with="week='2025-18'"/>
+      </div>
+      <div id="slide2" class="carousel-item w-full h-full">
+        <!-- ton deuxième partial -->
+        <include href="/kpi-dashboard/partials/_chart.html"/>
+      </div>
+      <!-- Navigation (boutons numérotés, flèches, etc.) -->
+      <div class="flex justify-center w-full gap-2 py-2">
+        <a href="#slide1" class="btn btn-xs">1</a>
+        <a href="#slide2" class="btn btn-xs">2</a>
+      </div>
+    </div>
+  </main>
+
+
+    {*<!-- <main class="flex flex-col h-full w-full p-4 overflow-hidden"> -->
+      <!-- Chart engagement - Slide 1 -->
+      <!-- <div class="slide"> -->
+        <!-- <include href="/kpi-dashboard/partials/_chart_engagement.html" with="week='2025-18'"/> -->
+      <!-- </div> -->
+      <!-- Perf Qualité - Slide 2 -->
+      <!-- <div class="slide hidden"><include href="/kpi-dashboard/partials/_chart.html" /></div> -->*}
+    </main>
+  </body>
+</html>

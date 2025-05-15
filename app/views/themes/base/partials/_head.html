@@ -4,8 +4,15 @@
 <script src="{{@BASE}}/{{@UI}}assets/js/lib/htmx.min.js"></script>
 <script src="{{@BASE}}/{{@UI}}assets/js/lib/_hyperscript.min.js"></script>
 <script src="{{@BASE}}/{{@UI}}assets/js/lib/htmx.multi-swap.min.js"></script>
+<script src="{{@BASE}}/{{@UI}}assets/js/lib/dateFns.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  
+<script type="module">
+  if (!("anchorName" in document.documentElement.style)) {
+    import("https://unpkg.com/@oddbird/css-anchor-positioning");
+  }
+</script>
 <!-- CSS Dev / Prod -->
 <check if="{{ @DEBUG == 3 }}">
   <script type="module" src="http://localhost:5173/@vite/client"></script>

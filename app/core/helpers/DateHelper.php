@@ -91,11 +91,16 @@ class DateHelper
 
     public static function extract_week_year($semaine)
     {
-        [$week, $year] = explode("-", $semaine);
+        [$year, $week] = explode("-", $semaine);
         return (object) [
             'full_week' => $semaine,
             'week' => $week,
             'year' => $year
         ];
+    }
+
+    public static function get_week_year() {
+        $now = new DateTimeImmutable();
+        return $now->format('Y-W');
     }
 }

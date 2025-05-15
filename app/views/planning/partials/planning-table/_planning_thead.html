@@ -1,0 +1,24 @@
+<!-- <th><label for="check_all"></label><input id="check_all" type="checkbox" /></th> -->
+<th>#</th>
+<th>Référence</th>
+<th>Type</th>
+<th>Numéro</th>
+<th>Semaine</th>
+<th>Semaine Engagement</th>
+<th>Engagement</th>
+<th>
+  <div class="flex items-center gap-2">
+    <input
+      type="checkbox"
+      id="filter-pret"
+      name="pret"
+      hx-get="/planning/partials/{{@limit}}/1"
+      hx-target="#planning"
+      hx-include="[name=pret]"
+      hx-trigger="change"
+      {{ @filter_pret ? 'checked' : '' }}
+    />
+    Prête ?
+  </div>
+</th>
+<th class=""></th>

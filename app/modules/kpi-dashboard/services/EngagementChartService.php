@@ -26,7 +26,7 @@ class EngagementChartService {
 
                         'name' => 'Objectif',
                         'value' => $result->engagement,
-                        'strokeHeight' => 5,
+                        'strokeHeight' => 3,
                         'strokeDashArray' => 5,
                         'strokeColor' => '#775DD0'
 
