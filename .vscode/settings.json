@@ -1,20 +1,20 @@
 {
     "files.exclude": {
-        "console.bat": true,
-        "console.ps1": true,
-        "console.sh": true,
-        "daisy static.html": true,
-        "fix-perm.sh": true,
-        "migration.php": true,
-        "package-lock.json": true,
-        "package.json": true,
-        "postcss.config.js": true,
-        "postcss.config.mjs": true,
-        "vite.config.mjs": true,
-        ".htaccess": true,
-        "composer.json": true,
-        "composer.lock": true,
-        ".vscode": true
+        "console.bat": false,
+        "console.ps1": false,
+        "console.sh": false,
+        "daisy static.html": false,
+        "fix-perm.sh": false,
+        "migration.php": false,
+        "package-lock.json": false,
+        "package.json": false,
+        "postcss.config.js": false,
+        "postcss.config.mjs": false,
+        "vite.config.mjs": false,
+        ".htaccess": false,
+        "composer.json": false,
+        "composer.lock": false,
+        ".vscode": false
     },
     "css.validate": false
 }
