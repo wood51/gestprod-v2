@@ -1,4 +1,5 @@
 <div class="flex flex-col min-h-0 h-full w-full">
+  <div class="text-3xl text-center">Engagement vs Production — Avril 2025</div>
   <div class="flex-grow min-h-0 bg-base-100 shadow-xl rounded-lg p-6">
     <div class="flex h-full w-full">
       <div id="chartEngagementMois" class="h-full w-3/4"></div>
@@ -13,33 +14,33 @@
       chart: {
         type: "bar",
         height: "100%",
-        toolbar: { show: true },
+        toolbar: { show: false },
       },
-      title: {
-        text: "Engagement vs Production — Avril 2025",
-        align: "center",
-        style: {
-          fontSize: "22px",
-          color: "#4B4B4B",
-          fontWeight: "bold",
-        },
-      },
-      subtitle: {
-        text: "Détails par référence",
-        align: "center",
-        style: {
-          fontSize: "18px",
-          color: "#666",
-        },
-      },
+      // title: {
+      //   text: "Engagement vs Production — Avril 2025",
+      //   align: "center",
+      //   style: {
+      //     fontSize: "22px",
+      //     color: "#4B4B4B",
+      //     fontWeight: "bold",
+      //   },
+      // },
+      // subtitle: {
+      //   text: "Détails par référence",
+      //   align: "center",
+      //   style: {
+      //     fontSize: "18px",
+      //     color: "#666",
+      //   },
+      // },
       series: [
         {
           name: "Engagement",
-          data: [16, 16, 12, 4, 4, 3, 2, 1, 1],
+          data: [16, 16, 12, 4, 4, 3, 2, 1, 1, 5, 4, 4, 2],
         },
         {
           name: "Production",
-          data: [16, 16, 11, 4, 4, 3, 2, 1, 1],
+          data: [16, 16, 11, 4, 4, 3, 2, 1, 1, 5, 4, 4, 2],
         },
       ],
       xaxis: {
@@ -53,15 +54,20 @@
           "AB250M150V2",
           "AS280L240-28V9",
           "AS250L150V3",
+          "41012-001CFV10",
+          "4101-004GFV50-",
+          "4101-003GFV50+",
+          "GF41",
         ],
 
         labels: {
           rotate: -45,
+          rotateAlways: false,
           style: {
             colors: [],
             fontSize: "16px",
             fontFamily: "Helvetica, Arial, sans-serif",
-            fontWeight: 800,
+            fontWeight: 600,
             cssClass: "apexcharts-xaxis-label",
           },
         },
@@ -81,7 +87,16 @@
         style: {
           fontSize: "18px",
           fontWeight: "bold",
-          colors: ["#000"],
+          colors: ["#fff"],
+        },
+
+        dropShadow: {
+          enabled: true,
+          top: 1,
+          left: 1,
+          blur: 1,
+          color: "#000",
+          opacity: 0.45,
         },
       },
       tooltip: {
@@ -91,6 +106,8 @@
       },
       colors: ["#3b82f6", "#22c55e"], // bleu & vert
       legend: {
+        show: true,
+        offsetX: 400,
         position: "bottom",
         fontWeight: 800,
         fontSize: "18px",
@@ -108,30 +125,30 @@
 
     const chartEngagement = new ApexCharts(document.querySelector(`#chartEngagementMois`), options);
     chartEngagement.render();
-
+    // 2eme chart
     const optionsTotal = {
       chart: {
         type: "bar",
-        height: "100%",
-        toolbar: { show: true },
+        height: "89.5%",
+        toolbar: { show: false },
       },
-      title: {
-        text: "Engagement vs Production — Avril 2025",
-        align: "center",
-        style: {
-          fontSize: "22px",
-          color: "#4B4B4B",
-          fontWeight: "bold",
-        },
-      },
-      subtitle: {
-        text: "Détails par référence",
-        align: "center",
-        style: {
-          fontSize: "18px",
-          color: "#666",
-        },
-      },
+      // title: {
+      //   text: "Engagement vs Production — Avril 2025",
+      //   align: "center",
+      //   style: {
+      //     fontSize: "22px",
+      //     color: "#4B4B4B",
+      //     fontWeight: "bold",
+      //   },
+      // },
+      // subtitle: {
+      //   text: "Détails par référence",
+      //   align: "center",
+      //   style: {
+      //     fontSize: "18px",
+      //     color: "#666",
+      //   },
+      // },
       series: [
         {
           name: "Engagement",
@@ -143,17 +160,16 @@
         },
       ],
       xaxis: {
-        categories: [
-          "Total"
-        ],
+        categories: ["Total"],
 
         labels: {
           rotate: -45,
+          rotateAlways: false,
           style: {
             colors: [],
-            fontSize: "16px",
+            fontSize: "17px",
             fontFamily: "Helvetica, Arial, sans-serif",
-            fontWeight: 800,
+            fontWeight: 600,
             cssClass: "apexcharts-xaxis-label",
           },
         },
@@ -163,7 +179,7 @@
           columnWidth: "25%",
           borderRadius: 2,
           dataLabels: {
-            position: "top",
+            position: "center",
           },
         },
       },
@@ -171,9 +187,17 @@
         enabled: true,
         offsetY: -25,
         style: {
-          fontSize: "18px",
+          fontSize: "20px",
           fontWeight: "bold",
-          colors: ["#000"],
+          colors: ["#fff"],
+        },
+        dropShadow: {
+          enabled: true,
+          top: 1,
+          left: 1,
+          blur: 1,
+          color: "#000",
+          opacity: 0.45,
         },
       },
       tooltip: {
@@ -183,6 +207,7 @@
       },
       colors: ["#3b82f6", "#22c55e"], // bleu & vert
       legend: {
+        show: false,
         position: "bottom",
         fontWeight: 800,
         fontSize: "18px",

@@ -1,0 +1,351 @@
+<div class="flex flex-col h-full w-full">
+  <div class="flex-grow bg-base-100 shadow-xl rounded-lg p-6">
+    <div id="chartEngagementMois" class="h-full w-full"></div>
+  </div>
+</div>
+
+<script>
+  const data = [
+    {
+      name: "Produits prêts",
+      data: [
+        {
+          x: "AB100L100V2",
+          y: 16,
+          fillColor: "#8080FF",
+          goals: [
+            {
+              name: "Objectif",
+              value: 16,
+              strokeHeight: 3,
+              strokeDashArray: 5,
+              strokeColor: "#775DD0",
+            },
+          ],
+        },
+        {
+          x: "AS280L240-28V10",
+          y: 16,
+          fillColor: "#FF0000",
+          goals: [
+            {
+              name: "Objectif",
+              value: 16,
+              strokeHeight: 3,
+              strokeDashArray: 5,
+              strokeColor: "#775DD0",
+            },
+          ],
+        },
+        {
+          x: "AS280M140V2",
+          y: 12,
+          fillColor: "#808080",
+          goals: [
+            {
+              name: "Objectif",
+              value: 12,
+              strokeHeight: 3,
+              strokeDashArray: 5,
+              strokeColor: "#775DD0",
+            },
+          ],
+        },
+        {
+          x: "41012-001CFV10",
+          y: 5,
+          fillColor: "#90EE90",
+          goals: [
+            {
+              name: "Objectif",
+              value: 5,
+              strokeHeight: 3,
+              strokeDashArray: 5,
+              strokeColor: "#775DD0",
+            },
+          ],
+        },
+        {
+          x: "AS250M150V3",
+          y: 4,
+          fillColor: "#FFA500",
+          goals: [
+            {
+              name: "Objectif",
+              value: 4,
+              strokeHeight: 3,
+              strokeDashArray: 5,
+              strokeColor: "#775DD0",
+            },
+          ],
+        },
+        {
+          x: "AS250L250V2",
+          y: 4,
+          fillColor: "#008080",
+          goals: [
+            {
+              name: "Objectif",
+              value: 4,
+              strokeHeight: 3,
+              strokeDashArray: 5,
+              strokeColor: "#775DD0",
+            },
+          ],
+        },
+        {
+          x: "4101-004GFV50-",
+          y: 4,
+          fillColor: "#90EE90",
+          goals: [
+            {
+              name: "Objectif",
+              value: 4,
+              strokeHeight: 3,
+              strokeDashArray: 5,
+              strokeColor: "#775DD0",
+            },
+          ],
+        },
+        {
+          x: "4101-003GFV50+",
+          y: 4,
+          fillColor: "#90EE90",
+          goals: [
+            {
+              name: "Objectif",
+              value: 4,
+              strokeHeight: 3,
+              strokeDashArray: 5,
+              strokeColor: "#775DD0",
+            },
+          ],
+        },
+        {
+          x: "AS250M150V9",
+          y: 3,
+          fillColor: "#FFA500",
+          goals: [
+            {
+              name: "Objectif",
+              value: 3,
+              strokeHeight: 3,
+              strokeDashArray: 5,
+              strokeColor: "#775DD0",
+            },
+          ],
+        },
+        {
+          x: "GFV41",
+          y: 2,
+          fillColor: "#90EE90",
+          goals: [
+            {
+              name: "Objectif",
+              value: 2,
+              strokeHeight: 3,
+              strokeDashArray: 5,
+              strokeColor: "#775DD0",
+            },
+          ],
+        },
+        {
+          x: "AB250M150V2",
+          y: 2,
+          fillColor: "#ADD8E6",
+          goals: [
+            {
+              name: "Objectif",
+              value: 2,
+              strokeHeight: 3,
+              strokeDashArray: 5,
+              strokeColor: "#775DD0",
+            },
+          ],
+        },
+        {
+          x: "AS280L240-28V9",
+          y: 1,
+          fillColor: "#0000FF",
+          goals: [
+            {
+              name: "Objectif",
+              value: 1,
+              strokeHeight: 3,
+              strokeDashArray: 5,
+              strokeColor: "#775DD0",
+            },
+          ],
+        },
+      ],
+    },
+  ];
+  document.addEventListener("DOMContentLoaded", function () {
+    const optionsEngagementMois = {
+      chart: {
+        type: "bar",
+        height: "100%",
+        width: "100%",
+        toolbar: {
+          show: false,
+        },
+        // events: {
+        //   updated: (chartContext, config) => {
+        //     const excludedSeries = ["Engagement", "Vide"];
+        //     document.querySelectorAll(".apexcharts-legend-series").forEach((element) => {
+        //       // Vérifier si le nom de la série est dans la liste à exclure
+        //       if (excludedSeries.includes(element.getAttribute("seriesname"))) {
+        //         element.remove(); // Supprimer l'élément
+        //       }
+        //     });
+        //   },
+        // },
+      },
+
+      plotOptions: {
+        bar: {
+          // columnWidth: "50%",
+          borderRadius: 7,
+          distributed: false,
+          borderRadiusApplication: "end",
+          hideZeroBarsWhenGrouped: true,
+        },
+      },
+
+      noData: {
+        text: "Chargement ...",
+        fontSize: "24px",
+      },
+      legend: {
+        show: true,
+        position: "bottom",
+        horizontalAlign: "center",
+        fontSize: "20px",
+        fontWeight: "bold",
+        showForSingleSeries: true,
+        // customLegendItems: ["Réalisés", "Objectifs"],
+        // offsetY: -40,
+        markers: {
+          size: 10,
+          // fillColors: ["#00E396", "#775DD0"],
+        },
+      },
+
+      title: {
+        text: "Engagement Mois Avril 2025",
+        align: "center",
+        style: {
+          fontSize: "22px",
+          color: "#4B4B4B",
+          fontWeight: "bold",
+        },
+      },
+      subtitle: {
+        text: "Détails par références",
+        align: "center",
+        style: {
+          fontSize: "18px",
+          color: "#666",
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val, opts) {
+          return val;
+        },
+        // offsetY: 50,
+        // offsetY: function ({ value }) {
+        //   return value < 5 ? 50 : 0; // remonte si valeur petite
+        // },
+        style: {
+          colors: ["#000"],
+          fontWeight: 600,
+        },
+      },
+      series: [
+        {
+          name: "Engagés",
+          data: [16, 16, 12, 4, 4, 3, 2, 1, 1, 74], // null = pas de barre ici
+        },
+        {
+          name: "Faites",
+          data: [16, 16, 11, 4, 4, 3, 2, 1, 1, 73],
+        },
+        // {
+        //   //name: "Engagés total",
+        //   data: [null, null, null, null, null, null, null, null, null, 74],
+        //   yAxisIndex: 1,
+        //   color: "#3b82f6",
+        // },
+        // {
+        //   // name: "Faites total",
+        //   data: [null, null, null, null, null, null, null, null, null, 73],
+        //   yAxisIndex: 1,
+        //   color: "#22c55e",
+        // },
+      ],
+      xaxis: {
+        categories: [
+          "AB100L100V2",
+          "AS280L240-28V10",
+          "AS280M140V2",
+          "AS250M150V3",
+          "AS250L250V2",
+          "AS250M150V9",
+          "AB250M150V2",
+          "AS280L240-28V9",
+          "AS250L150V3",
+          "Total",
+        ],
+        labels: { rotate: -45 },
+      },
+      plotOptions: {
+        bar: {
+          columnWidth: "50%",
+          borderRadius: 4,
+          dataLabels: {
+            position: "top",
+          },
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        style: {
+          fontSize: "13px",
+          fontWeight: "bold",
+          colors: ["#000"],
+        },
+        dropShadow: {
+          enabled: true,
+          top: 1,
+          left: 1,
+          blur: 1,
+          opacity: 0.8,
+        },
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return `${val} machines`;
+          },
+        },
+      },
+      legend: {
+        position: "bottom",
+        fontWeight: 600,
+      },
+      colors: ["#3b82f6", "#22c55e"], // Bleu et vert Tailwind
+    };
+    // Fonction pour calculer la luminance d'une couleur
+    function getLuminance(hex) {
+      var r = parseInt(hex.substr(1, 2), 16) / 255;
+      var g = parseInt(hex.substr(3, 2), 16) / 255;
+      var b = parseInt(hex.substr(5, 2), 16) / 255;
+      var luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      return luminance;
+    }
+
+    const chartEngagementMois = new ApexCharts(document.querySelector(`#chartEngagementMois`), optionsEngagementMois);
+    chartEngagementMois.render();
+  });
+</script>
