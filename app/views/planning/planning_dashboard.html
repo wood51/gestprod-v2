@@ -1,0 +1,43 @@
+<!-- Content Admin -->
+<div class="grid grid-cols-6">
+  <div class="card col-span-6 bg-base-100 shadow-xl">
+    <div class="card-body">
+      <div class="flex justify-between card-title m-1">
+        <span>Planning</span>
+        <div>
+          <button class="btn" popovertarget="popover-menu-genral" style="anchor-name: --anchor-menu-general"><i class="fa-solid fa-bars"></i></button>
+          <div
+            class="dropdown dropdown-end text-sm font-normal w-32 rounded-box bg-base-100 shadow-sm"
+            popover
+            id="popover-menu-genral"
+            style="position-anchor: --anchor-menu-general"
+          >
+            <div class="mx-2 my-2">
+              <a onclick="openAjoutModal()" class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#">Ajouter au planning</a>
+              <hr />
+              <a class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#" disabled>Exporter</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="planning" hx-on::after-swap="closeAjoutModal()">
+        <include href="/planning/partials/_planning_table.html" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<include href="/planning/partials/_planning_form_add.html" />
+
+<script>
+  function openAjoutModal() {
+    document.getElementById("ajoutForm").reset(); // Reset du form
+    document.getElementById("type-select").dispatchEvent(new Event("change")); //Provoque le changement sur select type
+    document.getElementById("ajoutModal").showModal();
+  }
+
+  function closeAjoutModal() {
+    document.getElementById("ajoutModal").close();
+    
+  }
+</script>

@@ -1,0 +1,115 @@
+<!-- Dropdown -->
+<button
+type="button"
+class="btn btn-ghost"
+popovertarget="popover-menu-{{@produit._id}}"
+style="anchor-name: '--menu-{{@produit._id}}'"
+onclick="document.querySelector('#menu_tab_{{@produit._id}}').checked = true;"
+
+>
+  <i class="fas fa-ellipsis-vertical"></i>
+</button>
+<div
+  class="dropdown dropdown-left dropdown-center w-64 max-w-full rounded-box bg-base-100 shadow p-0 overflow-hidden"
+  popover
+  id="popover-menu-{{@produit._id}}"
+  style="position-anchor: '--menu-{{@produit._id}}'"
+>
+  <!-- Onglets -->
+  <div class="tabs-bordered tabs w-64">
+    <input type="hidden" id="produit-{{@produit._id}}" name="produit-{{@produit._id}}" value="{{@produit._id}}" />
+    <!-- Edition rapide -->
+    <input type="radio" id="menu_tab_{{@produit._id}}" name="menu_tab_{{@produit._id}}" class="tab" aria-label="Edition rapide" checked />
+    <div class="tab-content p-2">
+      <div class="flex h-[90px] flex-col justify-between gap-2">
+        <div class="flex flex-col gap-2">
+          <!-- Numero  -->
+          <input
+            type="number"
+            id="numero-{{@produit._id}}"
+            name="numero-{{@produit._id}}"
+            class="input-bordered input input-xs w-full"
+            placeholder="Numéro"
+            disabled
+          />
+          <!-- Pret  -->
+          <label class="flex items-center gap-2">
+            <input type="checkbox" 
+            id="pret-{{@produit._id}}" 
+            name="pret-{{@produit._id}}" 
+            onclick="toggleFields(['save','numero','report','semaine'],'{{@produit._id}}');"
+            class="checkbox checkbox-xs rounded-xs checkbox-primary" {{ (@produit.semaine_engagement) ? '' : 'disabled' }} />
+            <span>Prête ?</span>
+          </label>
+        </div>
+        <!-- Enregistrer -->
+        <div class="flex justify-end">
+          <button
+            type="button"
+            id="save-{{@produit._id}}"
+            hx-post="/planning/engagement"
+            hx-swap="none"
+            hx-include="#numero-{{@produit._id}},#pret-{{@produit._id}},#produit-{{@produit._id}}"
+            class="btn mt-auto mr-3 mb-3 w-1/4 btn-xs btn-primary"
+            disabled
+          >
+            Enregistrer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Engagement -->
+    <input type="radio" name="menu_tab_{{@produit._id}}" class="tab" aria-label="Engagement" />
+    <div class="tab-content p-2">
+      <div class="flex h-[90px] flex-col justify-between gap-2">
+        <div class="flex flex-col gap-2">
+          <!-- Semaine  -->
+          <input 
+          type="week" 
+          id="semaine-{{@produit._id}}" 
+          name="semaine-{{@produit._id}}" 
+          min="{{@now_iso}}"
+          class="input-bordered input input-xs w-full" 
+          {{ @produit.semaine_engagement ? 'disabled' : '' }}/>
+          <!-- Report  -->
+          <label class="flex items-center gap-2">
+            <input 
+            type="checkbox" 
+            id="report-{{@produit._id}}" 
+            name="report-{{@produit._id}}" 
+            class="checkbox checkbox-xs rounded-xs checkbox-warning"
+            onclick="toggleFields(['semaine'],'{{@produit._id}}');" 
+            {{ @produit.semaine_engagement ? '' : 'disabled' }} />
+            <span>Reporté</span>
+          </label>
+        </div>
+        <!-- Enregistrer  -->
+        <div class="flex justify-end">
+          <a
+            hx-post="/planning/engagement"
+            hx-swap="none"
+            hx-include="#semaine-{{@produit._id}}, #report-{{@produit._id}},#produit-{{@produit._id}}"
+            class="btn mt-auto mr-3 mb-3 w-1/4 btn-xs btn-primary"
+          >
+            Enregistrer
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleFields(types, produit) {
+    types.forEach((type) => {
+      const el = document.getElementById(`${type}-${produit}`);
+      // Ignorer si l'élément était initialement désactivé
+      
+      el.disabled = !el.disabled;
+      if (el.type === 'checkbox' && el.disabled && el.checked) {
+        el.checked = false;
+      }
+    });
+  }
+</script>

@@ -7,6 +7,7 @@ class UsersModel extends \DB\Cortex
     protected
         $db = 'DB',
         $table = 'users',
+        $primary='id',
         $fieldConf = [
             'username' => [
                 'type' => 'varchar(4)',
@@ -69,6 +70,11 @@ class UsersModel extends \DB\Cortex
     {
         $users = new self();
         return $users->afind(['deleted = ?', $deleted]);
+    }
+
+    public static function all_sst() {
+        $users = new self();
+        return $users->afind(['sst > 0']);
     }
 
     public static function paginate_all($page,$limit,$deleted = false)

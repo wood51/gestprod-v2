@@ -1,0 +1,20 @@
+{
+    "files.exclude": {
+        "console.bat": false,
+        "console.ps1": false,
+        "console.sh": false,
+        "daisy static.html": false,
+        "fix-perm.sh": false,
+        "migration.php": false,
+        "package-lock.json": false,
+        "package.json": false,
+        "postcss.config.js": false,
+        "postcss.config.mjs": false,
+        "vite.config.mjs": false,
+        ".htaccess": false,
+        "composer.json": false,
+        "composer.lock": false,
+        ".vscode": false
+    },
+    "css.validate": false
+}

@@ -1,0 +1,28 @@
+<div class="max-h-[500px] overflow-y-auto border rounded">
+  <table class="table table-sm">
+    <!-- En-têtes -->
+    <thead class="bg-slate-100 sticky top-0 z-20">
+      <include href="/planning/partials/planning-table/_planning_thead.html" />
+    </thead>
+
+    <!-- TBody -->
+    <tbody>
+      <include href="/planning/partials/planning-table/_planning_tbody.html" />
+    </tbody>
+  </table>
+</div>
+
+<!-- Pagination  -->
+<div class="join mt-2">
+  <repeat group="{{@pages}}" value="{{@page}}">
+    <input id="pagination_{{@page}}" 
+    class="join-item btn btn-square" 
+    type="radio" 
+    hx-include="#filter-pret"
+    hx-trigger="click" 
+    hx-get="/planning/partials/{{@limit}}/{{@page}}"
+    hx-target="#planning" 
+    hx-swap="innerHTML" 
+    aria-label="{{@page}}" {{@page == (@pos+1) ? 'checked' : ''}} />
+  </repeat>
+</div>

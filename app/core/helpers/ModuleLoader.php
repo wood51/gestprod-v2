@@ -13,12 +13,11 @@ class ModuleLoader extends \Prefab
             "|app/core/controllers/|" .
             "app/core/models/|" .
             "app/core/services/|" .
-            "app/core/tests/";
 
         $f3->UI = "app/views/";
 
         $autoload = "|";
-        foreach (glob("app/*", GLOB_ONLYDIR) as $dir) {
+        foreach (glob("app/modules/*", GLOB_ONLYDIR) as $dir) {
 
             $module_name = basename($dir);
             $module_config_path = "$dir/module.json";

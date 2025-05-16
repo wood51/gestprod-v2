@@ -27,6 +27,7 @@ try {
 
 // $f3->LANGUAGE='fr';
 // $f3->LOCALES='app/dict/';
+date_default_timezone_set('Europe/Paris');
 
 \Flash::instance();
 
@@ -34,4 +35,4 @@ try {
 
 
 
-$f3->run();
+$f3->run(); 
