@@ -4,21 +4,17 @@ class PlanningPartialsController extends PlanningController
 
     /**
      * @route("GET /planning/partials/@limit/@page")
+     * @deprecated
      */
     function paginatedPlanning($f3, $params)
     {
         // Récuperation paramètres
         $page = (int)$params['page'] - 1;
         $limit = (int) $params['limit'];
-        $produits_pret = (bool)isset($f3->GET['pret']); // état checkbox Prêt ?
-
-
-        // Init template 
+        $produits_pret = (bool)isset($f3->GET['filter-pret']); // état checkbox Prêt ?
         $f3->filter_pret = $produits_pret ? true : false; // retour checkbox Prêt ?
-        $f3->mset($this->service->getNowInfo());
-        $f3->mset($this->service->paginatePlanning($page, $limit, $produits_pret));
 
-        echo \Template::instance()->render("planning/partials/_planning_table.html");
+        $this->service->renderPartialPlanning($page, $limit, $produits_pret);
     }
 
     /**

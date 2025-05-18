@@ -1,12 +1,13 @@
 <?php
-class EngagementController {
+class EngagementController
+{
     protected $service;
 
     public function __construct()
     {
         $this->service = new EngagementService();
     }
-     /**
+    /**
      * @route("POST /planning/engagement")
      * Met à jour le statut d'engagement d'un produit selon les données POST
      * @param Base $f3 Instance du framework Fat-Free
@@ -24,17 +25,19 @@ class EngagementController {
 
         try {
             if ($data->pret) {
-                $this->service->marquerFait($data->produit);
+                $this->service->marquerFait($data->produit, $data->numero);
             } elseif ($data->report) {
-                 $this->service->reporter($data->produit);
+                $this->service->reporter($data->produit);
             } elseif ($data->semaine) {
-                 $this->service->engager($data->produit, $data->semaine);
+                $this->service->engager($data->produit, $data->semaine);
             }
         } catch (Exception $e) {
             // Gestion erreur - erreur service
-            $f3->error(500, 'Failed to update engagement');
+            $f3->error(500, 'Impossible de mettre a jours l\'engagement : '.$e->getMessage());
         }
-    }
 
-   
+        $planning = new PlanningService();
+        $planning->renderPartialPlanning();
+       
+    }
 }

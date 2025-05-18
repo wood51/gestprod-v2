@@ -10,15 +10,16 @@
   <div class="flex items-center gap-2">
     <input
       type="checkbox"
-      id="filter-pret"
-      name="pret"
-      hx-get="/planning/partials/{{@limit}}/1"
+      id="filter_pret"
+      name="filter_pret"
+      hx-get="/planning/filter/pret"
       hx-target="#planning"
-      hx-include="[name=pret]"
+      hx-include="[name=filter_pret]"
       hx-trigger="change"
-      {{ @filter_pret ? 'checked' : '' }}
+      {{ @SESSION.filter_pret ? 'checked' : '' }}
     />
     Prête ?
   </div>
+  
 </th>
 <th class=""></th>
