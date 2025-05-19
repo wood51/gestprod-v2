@@ -12,6 +12,7 @@ class PerformanceChartService
             $objectif_production = $operateurs['total_operateurs'];
             $indice_performance = ($objectif_production) ? round(($nb_machines_prete / $objectif_production) * 100, 2) : 0;
             return $indice_performance;
+
         } catch (\Exception $e) {
             throw new \Exception("Erreur lors du calcul de la performance: " . $e->getMessage());
         }
