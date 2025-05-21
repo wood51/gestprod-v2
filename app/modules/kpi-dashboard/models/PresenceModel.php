@@ -3,58 +3,97 @@ class PresenceModel extends DB\Cortex
 {
     protected
         $db = 'DB',
-        $table= 'atelier_presence';
+        $table = 'atelier_presence';
 
-    public static function getNbOperateursSemaine($semaine = null, $annee = null, $heures_semaine = 35) // Fix utliser les jour travaillé pour h semaine
+    
+    public static function getNbOperateursSemaine($semaine = null, $annee = null)
     {
         $mapper = new self();
-        try {
-            // Utiliser la semaine et l'année courantes par défaut si non spécifiées
-            $semaine = $semaine ?? date('W');
-            $annee = $annee ?? date('Y');
+        $semaine = $semaine ?? date('W');
+        $annee = $annee ?? date('Y');
 
-            // Récupération des données pour la semaine et l'année spécifiées
-            $results = (object) $mapper->find([
-                "WEEK(date_jour, 3) = ? AND YEAR(date_jour) = ?",
-                $semaine,
-                $annee
-            ]);
+        // Déterminer les dates de début et fin de la semaine
+        $start = new DateTimeImmutable();
+        $start = $start->setISODate($annee, $semaine)->setTime(0, 0);
+        $end = $start->modify('+6 days');
 
-            // Initialisation des heures normales et supplémentaires
-            $totalHeuresNormales = 0;
-            $totalHeuresSupp = 0;
+        // Charger toutes les présences de la semaine
+        $results = $mapper->find([
+            "WEEK(date_jour, 3) = ? AND YEAR(date_jour) = ?",
+            $semaine,
+            $annee
+        ]) ?: [];
 
-            if ($results) {
-                // Parcourir les résultats pour calculer les heures normales et supplémentaires
-                foreach ($results as $presence) {
-                    if (!$presence->heures_supp) {
-                        $totalHeuresNormales += $presence->nb_operateurs * $presence->nb_heures_normales;
-                        $totalHeuresSupp += $presence->nb_heures_supp;
-                    } else {
-                        $totalHeuresSupp += $presence->nb_operateurs * $presence->nb_heures_normales + $presence->nb_heures_supp;
-                    }
-                }
+        $totalHeuresNormales = 0;
+        $totalHeuresSupp = 0;
 
-
-                // Calcul du nombre total d'opérateurs équivalents sur la semaine
-                $totalOperateursEquivalents = ($totalHeuresNormales + $totalHeuresSupp) / $heures_semaine;
-
-                return [
-                    "heures_normales" => $totalHeuresNormales,
-                    "heures_supp" => $totalHeuresSupp,
-                    "total_operateurs" => $totalOperateursEquivalents
-                ];
-            } else {
-                // Aucun résultat trouvé pour la semaine et l'année spécifiées
-                return [
-                    "heures_normales" => 0,
-                    "heures_supp" => 0,
-                    "total_operateurs" => 0
-                ];
-            }
-        } catch (Exception $e) {
-            // Gérer les exceptions et relancer pour la gestion par l'appelant
-            throw new Exception("Erreur lors de la récupération des heures : " . $e->getMessage());
+        foreach ($results as $presence) {
+            $totalHeuresNormales += $presence->nb_operateurs * $presence->nb_heures_normales;
+            $totalHeuresSupp += $presence->nb_operateurs * $presence->nb_heures_supp;
         }
+
+        // Calcul des heures théoriques en excluant les fermetures
+        $heures_theoriques = AtelierFermeturesModel::getHeuresTheoriquesSemaine($semaine, $annee);
+
+        $totalOperateursEquivalents = $heures_theoriques > 0
+            ? ($totalHeuresNormales + $totalHeuresSupp) / $heures_theoriques
+            : 0;
+
+        return [
+            "heures_normales" => $totalHeuresNormales,
+            "heures_supp" => $totalHeuresSupp,
+            "heures_theoriques" => $heures_theoriques,
+            "total_operateurs" => round($totalOperateursEquivalents, 2)
+        ];
+    }
+
+    public static function joursManquants($semaine = null, $annee = null)
+    {
+        $semaine = $semaine ?? date('W');
+        $annee = $annee ?? date('Y');
+
+        // Déterminer les jours ouvrés (hors fermetures)
+        $start = new DateTimeImmutable();
+        $start = $start->setISODate($annee, $semaine);
+        $end = $start->modify('+6 days');
+
+        $jours_ouvres = [];
+        $current = $start;
+        while ($current <= $end) {
+            if ((int)$current->format('N') <= 5) {
+                $jours_ouvres[] = $current->format('Y-m-d');
+            }
+            $current = $current->modify('+1 day');
+        }
+
+        // Exclure les fermetures
+        $fermetures = AtelierFermeturesModel::all();
+        $jours_ouvrables = array_filter($jours_ouvres, function ($jour) use ($fermetures) {
+            foreach ($fermetures as $periode) {
+                if ($jour >= $periode['debut']->format('Y-m-d') && $jour <= $periode['fin']->format('Y-m-d')) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        // Chercher les jours présents dans la base
+        $mapper = new self();
+        $presences = $mapper->find([
+            "WEEK(date_jour, 3) = ? AND YEAR(date_jour) = ?",
+            $semaine,
+            $annee
+        ]);
+
+        $jours_saisis = [];
+
+        if ($presences) {
+            $jours_saisis = $presences
+                ? array_unique(array_map(fn($p) => (new \DateTime($p->date_jour))->format('Y-m-d'), iterator_to_array($presences)))
+                : [];
+        }
+
+        // Comparaison
+        return array_values(array_diff($jours_ouvrables, $jours_saisis));
     }
 }
