@@ -28,7 +28,6 @@ class ChartController
             'semaine' => $semaine,
             'annee' => $annee
         ]);
-
-        //echo \Template::instance()->render('debug/kpi_presence.html', 'text/html', ['stats' => $stats]);
+ 
     }
 }
