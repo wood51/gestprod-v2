@@ -1,0 +1,19 @@
+<div class="card bg-base-100 shadow p-4">
+  <h2 class="text-xl font-bold mb-2">KPI Présence – Semaine</h2>
+  <ul class="list-disc pl-4">
+    <li>Heures normales : <b>{{@stats.heures_normales}}</b></li>
+    <li>Heures supp : <b>{{@stats.heures_supp}}</b></li>
+    <li>Heures théoriques semaine : <b>{{@stats.heures_theoriques}}</b></li>
+    <li>Opérateurs équivalents : <b class="text-success">{{@stats.total_operateurs}}</b></li>
+  </ul>
+</div>
+<check if="@manquants && count(@manquants)" >
+  <div class="alert alert-warning mt-4">
+    <p class="font-bold">⚠️ Données incomplètes :</p>
+    <ul class="list-disc pl-4">
+      <repeat group="{{@manquants}}" value="{{@jour}}">
+        <li>{{@jour}}</li>
+      </repeat>
+    </ul>
+  </div>
+</check>

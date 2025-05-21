@@ -17,4 +17,33 @@ class AtelierFermeturesModel extends DB\Cortex
 
         return $fermetures;
     }
+
+    public static function getHeuresTheoriquesSemaine($semaine, $annee, $heuresJour = 7)
+    {
+        $start = new DateTimeImmutable();
+        $start = $start->setISODate($annee, $semaine)->setTime(0, 0);
+        $end = $start->modify('+6 days');
+
+        $joursOuvres = [];
+        $current = $start;
+        while ($current <= $end) {
+            if ((int)$current->format('N') <= 5) { // lundi à vendredi
+                $joursOuvres[] = $current;
+            }
+            $current = $current->modify('+1 day');
+        }
+
+        $fermetures = self::all();
+
+        $joursTravailles = array_filter($joursOuvres, function ($jour) use ($fermetures) {
+            foreach ($fermetures as $periode) {
+                if ($jour >= $periode['debut'] && $jour <= $periode['fin']) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        return count($joursTravailles) * $heuresJour;
+    }
 }
