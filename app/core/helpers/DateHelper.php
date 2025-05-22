@@ -85,7 +85,8 @@ class DateHelper
             'aujourdhui' => (new DateTimeImmutable(''))->format('Y-m-d'),
             'premier_jour_mois' => new DateTimeImmutable($instant->format('Y-m-01')),
             'nb_jours_mois' => (int) $instant->format('t'),
-            'first_day_of_month' => (int) (new DateTimeImmutable($instant->format('Y-m-01')))->format('N')
+            'first_day_of_month' => (int) (new DateTimeImmutable($instant->format('Y-m-01')))->format('N'),
+            'full_week' => $instant->format('Y-W')
         ];
     }
 
