@@ -5,7 +5,7 @@ require("vendor/autoload.php");
 $f3 = \Base::instance();
 
 
-$f3->DEBUG = 0;
+$f3->DEBUG = 3;
 
 $f3->CACHE = true;
 new Session(NULL,'CSRF');
