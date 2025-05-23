@@ -21,15 +21,11 @@
         </div>
         <!-- Slide 2 -->
         <div id="slide2" class="carousel-item relative w-full h-full">
-          <include href="/kpi-dashboard/partials/_chart.html" with="week='2025-18',nb_semaine=5" />
-        </div>
-        <!-- Slide 3 -->
-        <div id="slide3" class="carousel-item relative w-full h-full">
          <include href="/kpi-dashboard/partials/_chart_engagement.html"/>
         </div>
         <!-- Slide 3 -->
         <div id="slide3" class="carousel-item relative w-full h-full">
-         <include href="/kpi-dashboard/partials/_chart_engagement.html"/>
+          <include href="/kpi-dashboard/partials/_chart.html"/>
         </div>
       </div>
     </main>
@@ -98,7 +94,7 @@
 
         // Initialisation
         showSlide(0);
-        //startTimer();
+        startTimer();
 
         document.addEventListener("keydown", (e) => {
           // Espace : change de slide sans toucher au mode pause
