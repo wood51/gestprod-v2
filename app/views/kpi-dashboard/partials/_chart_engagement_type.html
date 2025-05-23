@@ -48,6 +48,19 @@
               },
             ],
           },
+          {
+            x: "Total",
+            y: 20,
+            fillColor:'#36d399',
+            goals: [
+              {
+                name: "Objectif",
+                value: 36,
+                strokeHeight: 5,
+                strokeColor: "#775DD0",
+              },
+            ],
+          },
         ],
       },
     ];
@@ -55,7 +68,7 @@
     const annotations = {
       points: [
         {
-          x: "Produits Electrique",
+          x: "Produits Electriques",
           y: 6,
           marker: {
             size: 0, // cache le marker
@@ -94,6 +107,22 @@
           },
           label: {
             text: 24, //text du but a genrer en php
+            style: {
+              color: "#775DD0",
+              background: "#fff", // Fond blanc pour être bien visible
+              fontSize: "20px",
+              fontWeight: 'bold',
+            },
+          },
+        },
+        {
+          x: "Total",
+          y: 36,
+          marker: {
+            size: 0, // cache le marker
+          },
+          label: {
+            text: 36, //text du but a genrer en php
             style: {
               color: "#775DD0",
               background: "#fff", // Fond blanc pour être bien visible
@@ -177,7 +206,7 @@
       },
       yaxis: {
         min: 0,
-        max: 25,
+        max: 37,
         labels: {
           style: {
             colors: "#333",
