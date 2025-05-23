@@ -18,11 +18,11 @@
     <input id="pagination_{{@page}}" 
     class="join-item btn btn-square" 
     type="radio" 
-    hx-include="#filter-pret"
     hx-trigger="click" 
-    hx-get="/planning/partials/{{@limit}}/{{@page}}"
+    hx-get="/planning/page/{{@page}}"
     hx-target="#planning" 
     hx-swap="innerHTML" 
-    aria-label="{{@page}}" {{@page == (@pos+1) ? 'checked' : ''}} />
+    aria-label="{{@page}}" 
+    {{@page == (@pos+1) ? 'checked' : ''}} />
   </repeat>
 </div>

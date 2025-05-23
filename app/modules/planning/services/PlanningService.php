@@ -67,4 +67,20 @@ class PlanningService
 
         return ['refs' => $refs];
     }
+
+    public function renderPartialPlanning()
+    {
+        $f3 = Base::instance();
+        // Recup etat session
+        $filter_pret = isset($f3->SESSION['filter_pret']) ? $f3->SESSION['filter_pret'] : false;
+        $page = isset($f3->SESSION['pagination_page']) ? $f3->SESSION['pagination_page'] : 0;
+        $limit = isset($f3->SESSION['pagination_limit']) ? $f3->SESSION['pagination_limit'] : 15;
+        
+        // Init template 
+        $f3->filter_pret = $filter_pret;
+        $f3->mset($this->getNowInfo());
+        $f3->mset($this->paginatePlanning($page, $limit, $filter_pret));
+
+        echo \Template::instance()->render("planning/partials/_planning_table.html");
+    }
 }

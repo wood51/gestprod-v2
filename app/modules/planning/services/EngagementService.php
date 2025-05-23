@@ -4,7 +4,7 @@ class EngagementService
 {
     public function engager(int $planningId, string $semaine): bool|string
     {
-        
+
         $last = ProdEngagementModel::getLastEngagement($planningId);
         $status = isset($last) ? $last->status : null;
 
@@ -49,23 +49,27 @@ class EngagementService
         return true;
     }
 
-    public function marquerFait(int $planningId): bool|string
+    public function marquerFait(int $planningId, $numero): bool|string
     {
         $last = ProdEngagementModel::getLastEngagement($planningId);
 
         if (!$last || !in_array($last->status, ['engagé', 'en cours'])) {
-            return "Seul un engagement 'engagé' ou 'en cours' peut être marqué comme fait.";
+            throw new Exception("Seul un engagement 'engagé' ou 'en cours' peut être marqué comme fait.");
         }
 
-        $last->status = 'fait';
-        $last->save();
+        if (ProdPlanningModel::updateNumero($planningId, $numero) && ProdPlanningModel::setPret($planningId)) {
+            $last->status = 'fait';
+            $last->save();
 
-        return true;
+            return true;
+        }
+        throw new Exception("Impossible d'update le numero de produit.");
     }
 
     public function cleanData($data)
     {
         $cleaned = [
+            'filter-pret' =>false,
             'pret' => false,
             'numero' => null,
             'semaine' => null,

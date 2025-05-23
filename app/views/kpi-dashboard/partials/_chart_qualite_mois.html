@@ -65,7 +65,7 @@
     const el = document.querySelector("#month-qualite-chart");
     const monthQualiteChart = new ApexCharts(el, optionsMonthQualite);
     monthQualiteChart.render();
-    fetch(`/defauts/historique/2025-21/5`)
+    fetch(`/defauts/historique/{{@week}}/{{@nb_semaine}}`)
       .then((response) => response.json())
       .then((data) => {
         monthQualiteChart.updateSeries(data);

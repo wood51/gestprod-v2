@@ -27,7 +27,6 @@ class KpiSecuriteService
 
     function isOuvrable($date)
     {
-        //$date = "2025-08-14"; // tu fixes ici pour ton test
         $dateObj = new DateTimeImmutable($date);
 
         // 1. Week-end ?

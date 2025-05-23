@@ -7,7 +7,7 @@ class UsersModel extends \DB\Cortex
     protected
         $db = 'DB',
         $table = 'users',
-        $primary='id',
+        $primary = 'id',
         $fieldConf = [
             'username' => [
                 'type' => 'varchar(4)',
@@ -41,6 +41,15 @@ class UsersModel extends \DB\Cortex
                 'filter' => 'trim|lower_case',
                 'validate' => 'required'
             ],
+            'date_entree' => [
+                'type' => 'date',
+                'nullable' => false,
+                'validate' => 'required'
+            ],
+            'date_sortie' => [
+                'type' => 'date',
+                'nullable' => true,
+            ],
             'created_at' => [
                 'type' => 'datetime',
                 'nullable' => true
@@ -72,15 +81,27 @@ class UsersModel extends \DB\Cortex
         return $users->afind(['deleted = ?', $deleted]);
     }
 
-    public static function all_sst() {
+    public static function all_sst()
+    {
         $users = new self();
         return $users->afind(['sst > 0']);
     }
 
-    public static function paginate_all($page,$limit,$deleted = false)
+    public static function actifsLe($date)
+    {
+        $mapper = new self();
+        return $mapper->find([
+            'date_entree <= ? AND (date_sortie IS NULL OR date_sortie >= ?)',
+            $date,
+            $date
+        ]);
+    }
+
+
+    public static function paginate_all($page, $limit, $deleted = false)
     {
         $users = new self();
-        return $users->paginate($page-1,$limit,['deleted = ?', $deleted]);
+        return $users->paginate($page - 1, $limit, ['deleted = ?', $deleted]);
     }
 
     public static function add($data)
