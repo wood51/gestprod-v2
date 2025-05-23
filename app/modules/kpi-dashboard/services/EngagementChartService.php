@@ -61,7 +61,7 @@ class EngagementChartService {
             "series" => $data,
             "title" => [
                 "text" => $results 
-                    ? "Engagement semaine $week->week - $total_engagee produits (équivalent " . round($total_ponderee) . ")"
+                    ? "Engagement semaine $week->week - $total_engagee produits"
                     : "Aucun engagement trouvé pour la semaine $week->week"
             ],
             "annotations" => [
