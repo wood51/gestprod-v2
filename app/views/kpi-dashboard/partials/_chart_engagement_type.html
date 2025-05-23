@@ -6,46 +6,131 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
+    const series = [
+      {
+        data: [
+          {
+            x: "Produits Electrique",
+            y: 6,
+            fillColor:'#3ABFF8',
+            goals: [
+              {
+                name: "Objectif",
+                value: 6,
+                strokeHeight: 5,
+                strokeColor: "#775DD0",
+              },
+            ],
+          },
+          {
+            x: "Compresseurs",
+            y: 6,
+            fillColor:'#FBBD23',
+            goals: [
+              {
+                name: "Objectif",
+                value: 6,
+                strokeHeight: 5,
+                strokeColor: "#775DD0",
+              },
+            ],
+          },
+          {
+            x: "Alternateurs",
+            y: 8,
+            fillColor:'#F87272',
+            goals: [
+              {
+                name: "Objectif",
+                value: 24,
+                strokeHeight: 5,
+                strokeColor: "#775DD0",
+              },
+            ],
+          },
+        ],
+      },
+    ];
+
+    const annotations = {
+      points: [
+        {
+          x: "Produits Electrique",
+          y: 6,
+          marker: {
+            size: 0, // cache le marker
+          },
+          label: {
+            text: 6, //text du but a cacher en php
+            style: {
+              color: "#775DD0",
+              background: "#fff", // Fond blanc pour être bien visible
+              fontSize: "20px",
+              fontWeight: 'bold',
+            },
+          },
+        },
+        {
+          x: "Compresseurs",
+          y: 6,
+          marker: {
+            size: 0, // cache le marker
+          },
+          label: {
+            text: 6, //text du but a cacher en php
+            style: {
+              color: "#775DD0",
+              background: "#fff", // Fond blanc pour être bien visible
+              fontSize: "20px",
+              fontWeight: 'bold',
+            },
+          },
+        },
+        {
+          x: "Alternateurs",
+          y: 24,
+          marker: {
+            size: 0, // cache le marker
+          },
+          label: {
+            text: 24, //text du but a genrer en php
+            style: {
+              color: "#775DD0",
+              background: "#fff", // Fond blanc pour être bien visible
+              fontSize: "20px",
+              fontWeight: 'bold',
+            },
+          },
+        },
+      ],
+    };
+
     const optionsEngagementType = {
+      annotations: annotations,
       chart: {
         type: "bar",
         height: "100%",
         width: "100%",
-        stacked: true,
         toolbar: {
           show: false,
         },
       },
       plotOptions: {
         bar: {
-          columnWidth: "20%",
-          borderRadius: 3,
+          columnWidth: "50%",
+          borderRadius: 4,
           distributed: false,
           borderRadiusApplication: "end",
+          hideZeroBarsWhenGrouped: true,
         },
       },
-      dataLabels: {
-        enabled: true,
-        enabledOnSeries: [0],
-        style: {
-            fontSize: '18px',
-        },
-        formatter: function (value, { seriesIndex, dataPointIndex, w }) {
-          const reel = value;
-          const objectifStacké = value + w.config.series[1].data[dataPointIndex].y;
-          return `${reel} / ${objectifStacké}`;
-        },
-      },
+
       noData: {
         text: "Chargement ...",
         fontSize: "24px",
       },
-      legend: {
-        show: false,
-      },
-
       title: {
-        text: "Engagement Semaine",
+        text: "Engagement Semaine 21 - 36 Produits (Équivalent 25)",
         align: "center",
         style: {
           fontSize: "22px",
@@ -54,35 +139,57 @@
         },
       },
       subtitle: {
-        text: "Détails par type de produit",
+        text: "Détails par type",
         align: "center",
         style: {
           fontSize: "18px",
           color: "#666",
         },
       },
-      series: [
-        {
-          name: "Réel",
-          data: [
-            { x: "Compresseur", y: 1, fillColor: "#3ABFF8" }, // info
-            { x: "Éléments Électrique", y: 5, fillColor: "#F87272" }, // error
-            { x: "Alternateur", y: 3, fillColor: "#36D399" }, // success
+      dataLabels: {
+        enabled: true,
+        formatter: function (val, opt) {
+          if (val >= 1) {
+            return val;
+          }
+          return;
+        },
+        style: {
+          fontSize: "24px",
+          fontFamily: "Helvetica, Arial, sans-serif",
+          fontWeight: "bold",
+          colors: [
           ],
         },
-        {
-          name: "Objectif",
-          data: [
-            { x: "Compresseur", y: 9, fillColor: "#3ABFF844" },
-            { x: "Éléments Électrique", y: 1, fillColor: "#F8727244" },
-            { x: "Alternateur", y: 12, fillColor: "#36D39944" },
-          ],
-        },
-      ],
+      },
+      series: series,
       xaxis: {
         type: "category",
+        labels: {
+          // rotate :45,
+          // rotateAlways: true,
+          style: {
+            colors: "#333", // Couleur des étiquettes
+            fontSize: "18px", // Taille de la police
+            fontWeight: "bold",
+          },
+        },
       },
-      yaxis: {},
+      yaxis: {
+        min: 0,
+        max: 25,
+        labels: {
+          style: {
+            colors: "#333",
+            fontSize: "20px",
+            fontWeight: "bold",
+          },
+          formatter: function (val, index) {
+            return val.toFixed(0);
+          },
+        },
+        stepSize: 1,
+      },
     };
 
     // Fonction pour calculer la luminance d'une couleur
