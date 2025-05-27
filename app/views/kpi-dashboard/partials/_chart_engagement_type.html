@@ -1,0 +1,115 @@
+<div class="flex flex-col h-full w-full">
+  <div class="flex-grow bg-base-100 shadow-xl rounded-lg p-6">
+    <div id="chartEngagementType" class="h-full w-full"></div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const optionsEngagementType = {
+      chart: {
+        type: "bar",
+        height: "100%",
+        width: "100%",
+        stacked: true,
+        toolbar: {
+          show: false,
+        },
+      },
+      plotOptions: {
+        bar: {
+          columnWidth: "20%",
+          borderRadius: 3,
+          distributed: false,
+          borderRadiusApplication: "end",
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        enabledOnSeries: [0],
+        style: {
+            fontSize: '18px',
+        },
+        formatter: function (value, { seriesIndex, dataPointIndex, w }) {
+          const reel = value;
+          const objectifStacké = value + w.config.series[1].data[dataPointIndex].y;
+          return `${reel} / ${objectifStacké}`;
+        },
+      },
+      noData: {
+        text: "Chargement ...",
+        fontSize: "24px",
+      },
+      legend: {
+        show: false,
+      },
+
+      title: {
+        text: "Engagement Semaine",
+        align: "center",
+        style: {
+          fontSize: "22px",
+          color: "#4B4B4B",
+          fontWeight: "bold",
+        },
+      },
+      subtitle: {
+        text: "Détails par type de produit",
+        align: "center",
+        style: {
+          fontSize: "18px",
+          color: "#666",
+        },
+      },
+      series: [
+        {
+          name: "Réel",
+          data: [
+            { x: "Compresseur", y: 1, fillColor: "#3ABFF8" }, // info
+            { x: "Éléments Électrique", y: 5, fillColor: "#F87272" }, // error
+            { x: "Alternateur", y: 3, fillColor: "#36D399" }, // success
+          ],
+        },
+        {
+          name: "Objectif",
+          data: [
+            { x: "Compresseur", y: 9, fillColor: "#3ABFF844" },
+            { x: "Éléments Électrique", y: 1, fillColor: "#F8727244" },
+            { x: "Alternateur", y: 12, fillColor: "#36D39944" },
+          ],
+        },
+      ],
+      xaxis: {
+        type: "category",
+      },
+      yaxis: {},
+    };
+
+    // Fonction pour calculer la luminance d'une couleur
+    function getLuminance(hex) {
+      var r = parseInt(hex.substr(1, 2), 16) / 255;
+      var g = parseInt(hex.substr(3, 2), 16) / 255;
+      var b = parseInt(hex.substr(5, 2), 16) / 255;
+      var luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      return luminance;
+    }
+
+    const chartEngagementType = new ApexCharts(document.querySelector(`#chartEngagementType`), optionsEngagementType);
+    chartEngagementType.render();
+    // const now = new Date();
+    // const week = dateFns.format(now, "RRRR-II");
+    // fetch(`/kpi/engagement/{{@week}}`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     chartEngagement.updateOptions({
+    //       title: { text: data.title.text },
+    //       plotOptions: { bar: { columnWidth: data.barWidth } },
+    //       series: data.series,
+    //       annotations: data.annotations,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.error("Erreur lors du chargement des données :", error);
+    //   });
+  });
+</script>
