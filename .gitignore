@@ -9,8 +9,8 @@
 
 # Données de la base et grafana
 /docker/bdd_data/
-/docker/grafana/
-/docker/grafana_data/
+/docker/grafana
+/docker/grafana_data
 
 
 # Certificats 
