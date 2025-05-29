@@ -10,13 +10,13 @@
       {
         data: [
           {
-            x: "Produits Electrique",
-            y: 6,
+            x: "Produits Electriques",
+            y: 10,
             fillColor:'#3ABFF8',
             goals: [
               {
                 name: "Objectif",
-                value: 6,
+                value: 10,
                 strokeHeight: 5,
                 strokeColor: "#775DD0",
               },
@@ -24,12 +24,12 @@
           },
           {
             x: "Compresseurs",
-            y: 6,
+            y: 2,
             fillColor:'#FBBD23',
             goals: [
               {
                 name: "Objectif",
-                value: 6,
+                value: 2,
                 strokeHeight: 5,
                 strokeColor: "#775DD0",
               },
@@ -37,12 +37,25 @@
           },
           {
             x: "Alternateurs",
-            y: 8,
+            y: 7,
             fillColor:'#F87272',
             goals: [
               {
                 name: "Objectif",
-                value: 24,
+                value: 20,
+                strokeHeight: 5,
+                strokeColor: "#775DD0",
+              },
+            ],
+          },
+          {
+            x: "Total",
+            y: 17,
+            fillColor:'#36d399',
+            goals: [
+              {
+                name: "Objectif",
+                value: 30,
                 strokeHeight: 5,
                 strokeColor: "#775DD0",
               },
@@ -55,13 +68,13 @@
     const annotations = {
       points: [
         {
-          x: "Produits Electrique",
-          y: 6,
+          x: "Produits Electriques",
+          y: 10,
           marker: {
             size: 0, // cache le marker
           },
           label: {
-            text: 6, //text du but a cacher en php
+            text: 10, //text du but a cacher en php
             style: {
               color: "#775DD0",
               background: "#fff", // Fond blanc pour être bien visible
@@ -72,12 +85,12 @@
         },
         {
           x: "Compresseurs",
-          y: 6,
+          y: 2,
           marker: {
             size: 0, // cache le marker
           },
           label: {
-            text: 6, //text du but a cacher en php
+            text: 2, //text du but a cacher en php
             style: {
               color: "#775DD0",
               background: "#fff", // Fond blanc pour être bien visible
@@ -88,12 +101,28 @@
         },
         {
           x: "Alternateurs",
-          y: 24,
+          y: 20,
           marker: {
             size: 0, // cache le marker
           },
           label: {
-            text: 24, //text du but a genrer en php
+            text: 20, //text du but a genrer en php
+            style: {
+              color: "#775DD0",
+              background: "#fff", // Fond blanc pour être bien visible
+              fontSize: "20px",
+              fontWeight: 'bold',
+            },
+          },
+        },
+        {
+          x: "Total",
+          y: 30,
+          marker: {
+            size: 0, // cache le marker
+          },
+          label: {
+            text: 30, //text du but a genrer en php
             style: {
               color: "#775DD0",
               background: "#fff", // Fond blanc pour être bien visible
@@ -130,7 +159,7 @@
         fontSize: "24px",
       },
       title: {
-        text: "Engagement Semaine 21 - 36 Produits (Équivalent 25)",
+        text: "Engagement Semaine 22 - 30 Produits",
         align: "center",
         style: {
           fontSize: "22px",
@@ -177,7 +206,7 @@
       },
       yaxis: {
         min: 0,
-        max: 25,
+        max: 37,
         labels: {
           style: {
             colors: "#333",
@@ -188,7 +217,7 @@
             return val.toFixed(0);
           },
         },
-        stepSize: 1,
+        stepSize: 4,
       },
     };
 
