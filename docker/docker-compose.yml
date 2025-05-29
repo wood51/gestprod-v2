@@ -1,6 +1,7 @@
 services:
   mariadb:
     image: mariadb:latest
+    container_name: mariadb
     environment:
       MARIADB_HOST: ${MARIADB_HOST}
       MARIADB_PORT: ${MARIADB_PORT}
@@ -17,6 +18,7 @@ services:
   grafana:
     image: grafana/grafana-enterprise
     container_name: grafana
+    profiles: ["monitoring"]
     ports:
       - "3000:3000"
     volumes:
@@ -36,6 +38,7 @@ services:
   renderer:
     image: grafana/grafana-image-renderer:latest
     container_name: grafana-renderer
+    profiles: ["monitoring"]
     expose:
       - 8081
     networks:
@@ -45,6 +48,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+    container_name: apache
     environment:
       MARIADB_HOST: ${MARIADB_HOST}
       MARIADB_PORT: ${MARIADB_PORT}
@@ -65,6 +69,7 @@ services:
   proxy:
     image: nginx:alpine
     container_name: proxy
+    profiles: ["dev"]
     ports:
       - "443:443"
     volumes:
@@ -76,8 +81,9 @@ services:
       - app-network
 
   vite:
-    image: node:18
+    image: node:22
     container_name: vite
+    profiles: ["dev"]
     working_dir: /app
     volumes:
       - ..:/app
