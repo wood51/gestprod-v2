@@ -1,7 +1,6 @@
 services:
   mariadb:
     image: mariadb:latest
-    container_name: mariadb
     environment:
       MARIADB_HOST: ${MARIADB_HOST}
       MARIADB_PORT: ${MARIADB_PORT}
@@ -48,7 +47,6 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    container_name: apache
     environment:
       MARIADB_HOST: ${MARIADB_HOST}
       MARIADB_PORT: ${MARIADB_PORT}
