@@ -26,4 +26,25 @@ class PlanningPartialsController extends PlanningController
         $f3->mset($this->service->getRefsByType($type));
         echo \Template::instance()->render('/planning/partials/_planning_form_refs.html');
     }
+
+    /**
+     * @route("GET /modal/engagement")
+     */
+    function modalEngagement()
+    {
+        echo \Template::instance()->render('/planning/partials/_planning_form_engagement.html');
+    }
+
+    /**
+     * @route("GET /modal/planning-add")
+     */
+    function modalPlanningAdd($f3)
+    {
+        // Init Form Ajout 
+        $f3->types = $this->service->getAvailableTypes(['Alternateur','Compresseur','Redresseur']);
+        $f3->mset($this->service->getRefsByType('Alternateur'));
+        echo \Template::instance()->render('/planning/partials/_planning_form_add.html');
+    }
+
+
 }

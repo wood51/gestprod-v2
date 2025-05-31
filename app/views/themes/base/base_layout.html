@@ -26,7 +26,7 @@
   </div>
 
   <!-- Modale -->
-  <div id="modal"></div>
+  <div id="modalContainer" hx-on::after-settle="this.querySelector('dialog')?.showModal()"></div> 
 </body>
 
 </html>

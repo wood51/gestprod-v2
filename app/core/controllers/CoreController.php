@@ -34,4 +34,11 @@ class CoreController
         $f3->flash_messages = \Flash::instance()->getMessages();
         echo \Template::instance()->render('themes/base/components/toast/_toast_messages.html');
     }
+
+    /**
+     * @route("GET /modal/close")
+     */
+    function modalClose() {
+        echo "";
+    }
 }

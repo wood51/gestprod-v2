@@ -54,8 +54,7 @@ class PlanningService
             $typeId = $type;
         }
 
-        $fk_articles = ProdGroupeSousEnsembleModel::get_refs_by_type($typeId);
-
+        $fk_articles = (array) ProdArticlesModel::get_refs_by_type($typeId);
         $refs = [];
 
         foreach ($fk_articles as $fk_article) {

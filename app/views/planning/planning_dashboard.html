@@ -13,7 +13,8 @@
             style="position-anchor: --anchor-menu-general"
           >
             <div class="mx-2 my-2">
-              <a onclick="openAjoutModal()" class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#">Ajouter au planning</a>
+              <!-- <a onclick="openAjoutModal()" class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#">Ajouter au planning</a> -->
+              <a class="btn btn-ghost btn-sm" hx-get="/modal/planning-add" hx-trigger="click" hx-target="#modalContainer" hx-swap="innerHTML"> Engager </a>
               <hr />
               <a class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#" disabled>Exporter</a>
             </div>
@@ -27,8 +28,6 @@
   </div>
 </div>
 
-<include href="/planning/partials/_planning_form_add.html" />
-
 <script>
   function openAjoutModal() {
     document.getElementById("ajoutForm").reset(); // Reset du form
@@ -38,6 +37,15 @@
 
   function closeAjoutModal() {
     document.getElementById("ajoutModal").close();
-    
+  }
+
+  function openEngagementModal(produit) {
+    const produitHidden = document.querySelector('input[type="hidden"][name="produit"]');
+    produitHidden.value = produit;
+    document.getElementById("engagementModal").showModal();
+  }
+
+  function closeEngagementModal() {
+    document.getElementById("engagementModal").close();
   }
 </script>

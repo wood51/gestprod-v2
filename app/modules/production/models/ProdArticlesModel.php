@@ -18,4 +18,13 @@ class ProdArticlesModel extends DB\Cortex
         return $mapper->findone(['id = ?',$id]);
     }
 
+    /**
+     * Retourne toutes les fk_article par type 
+     */
+    public static function get_refs_by_type(int $type)
+    {
+        $mapper = new self();
+        return $mapper->find(['fk_type_sous_ensemble = ?', $type]);
+    }
+
 }

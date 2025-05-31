@@ -8,7 +8,7 @@
     <!-- Référence -->
     <td class="h-full">
       <div class="flex items-center justify-start gap-2 h-full">
-        <span style="background-color: {{@produit.reference_couleur}}" class="w-4 h-6 rounded-sm "></span>
+        <span style="background-color:  {{@produit.reference_couleur}} " class="w-4 h-6 rounded-sm"></span>
         <span>{{@produit.reference}}</span>
       </div>
     </td>
@@ -31,8 +31,8 @@
     <!-- Semaine d'engagement  -->
     <td>
       <check if="{{@produit.semaine_engagement}}">
-      <true>{{@produit.semaine_engagement}}</true>
-      <false><span class="italic">NC</span></false>
+        <true>{{@produit.semaine_engagement}}</true>
+        <false><span class="italic">NC</span></false>
       </check>
     </td>
 
@@ -53,7 +53,7 @@
         </span>
         <check if="{{ (@produit.semaine < @now) &&  (@produit.status!='Fait')}}">
           <true>
-            <div class="tooltip  tooltip-right tooltip-warning" data-tip="En retard">
+            <div class="tooltip tooltip-right tooltip-warning" data-tip="En retard">
               <i class="fa-regular fa-clock text-warning text-lg font-semibold"></i>
             </div>
           </true>
@@ -76,7 +76,7 @@
 
     <!-- Menu action individuel  -->
     <td>
-      <include href="/planning/partials/planning-table/_planning_menu_individuel.html" />
+      <include href="/planning/partials/planning-table/_planning_menu_action.html" />
     </td>
   </tr>
 </repeat>
