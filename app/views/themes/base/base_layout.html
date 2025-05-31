@@ -1,33 +1,32 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <include href="themes/base/partials/_head.html" />
-  </head>
 
-  <body class="bg-gray-50 dark:bg-gray-800 dark:text-gray-200 font-sans text-gray-800 overflow-auto">
-    <include href="/themes/base/components/toast/_toast.html" />
-    <!-- Layout principal -->
-    <div class="flex min-h-screen">
-      <!-- Sidebar -->
-      <include href="themes/base/partials/_aside.html" />
+<head>
+  <include href="themes/base/partials/_head.html" />
+</head>
 
-      <!-- Contenu principal -->
-      <main class="flex-1">
-        <!-- Topbar -->
-        <include href="themes/base/partials/_topbar.html" />
+<body class="bg-gray-50 dark:bg-gray-800 dark:text-gray-200 font-sans text-gray-800 overflow-auto">
+  <include href="/themes/base/components/toast/_toast.html" />
+  <!-- Layout principal -->
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <include href="themes/base/partials/_aside.html" />
 
-        <!-- Main Content-->
-        <div id="content" class="p-4">
-          <!-- contenu injecté ici -->
-          <div class="card bg-base-100 shadow-md p-4">
-            <h2 class="text-lg font-bold mb-2">Engagement Semaine</h2>
-            <iframe src="http://localhost:3000/d-solo/4f866f92-9bbb-4226-a75c-08ac43f197e8/new-dashboard?orgId=1&from=1748454972455&to=1748476572455&timezone=browser&panelId=1&__feature.dashboardSceneSolo" width="450" height="200" frameborder="0"></iframe>
-          </div>
-        </div>
-      </main>
-    </div>
+    <!-- Contenu principal -->
+    <main class="flex-1">
+      <!-- Topbar -->
+      <include href="themes/base/partials/_topbar.html" />
 
-    <!-- Modale -->
-    <div id="modal"></div>
-  </body>
+      <!-- Main Content-->
+      <div id="content" class="p-4" hx-get="/admin/planning/dashboard" hx-swap="innerHTML" hx-trigger="load"> <!-- FIXME pour debug chargment du planning -->
+        <!-- contenu injecté ici -->
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Modale -->
+  <div id="modal"></div>
+</body>
+
 </html>
