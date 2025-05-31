@@ -1,0 +1,23 @@
+<!-- Dropdown -->
+<button type="button" class="btn btn-ghost" popovertarget="popover-menu-{{@produit._id}}" style="anchor-name: '--menu-{{@produit._id}}'">
+  <i class="fas fa-ellipsis-vertical"></i>
+</button>
+<div
+  class="dropdown dropdown-left menu dropdown-center max-w-full rounded-box bg-base-100 shadow p-0 overflow-hidden"
+  popover
+  id="popover-menu-{{@produit._id}}"
+  style="position-anchor: '--menu-{{@produit._id}}'"
+>
+  <!-- Boutton Engagement -->
+  <li>
+    <a
+      class="btn btn-ghost btn-sm"
+      hx-get="/modal/engagement"
+      hx-trigger="click"
+      hx-target="#modalContainer"
+      hx-swap="innerHTML"
+    >
+      Engager
+    </a>
+  </li>
+</div>
