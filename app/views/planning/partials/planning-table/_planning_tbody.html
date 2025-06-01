@@ -2,9 +2,13 @@
 <repeat group="{{@produits}}" value="{{@produit}}" counter="{{@i}}">
   <tr class="hover:bg-success/10">
     <!-- Checkbox -->
+    <td>
+      <input type="checkbox" name="select[]" value="{{@produit._id}}" _="on change call updateBulkBar()" />
+    </td>
+
     <!-- <td><label for="check_{{@produit._id}}"></label> <input id="check_{{@produit._id}}" type="checkbox" /></td> -->
     <!-- counter -->
-    <td>{{ @i+((@pos)*@limit) }}</td>
+    <td>{{ @i+((@page-1)*@limit) }}</td>
     <!-- Référence -->
     <td class="h-full">
       <div class="flex items-center justify-start gap-2 h-full">

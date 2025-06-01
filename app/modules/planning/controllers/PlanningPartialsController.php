@@ -38,6 +38,14 @@ class PlanningPartialsController extends PlanningController
     }
 
     /**
+     * @route("GET /modal/engagement-multiple")
+     */
+    function modalEngagementMultiple($f3,$params)
+    {
+        echo \Template::instance()->render('/planning/partials/planning-table/_planning_form_engagement_multiple.html');
+    }
+
+    /**
      * @route("GET /modal/planning-add")
      */
     function modalPlanningAdd($f3)

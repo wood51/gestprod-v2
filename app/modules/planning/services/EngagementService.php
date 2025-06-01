@@ -19,7 +19,7 @@ class EngagementService
         // Aucun engagement ou reporté -> créer une nouvelle ligne
         if (is_null($status) || $status === 'reporté') {
             $now = (new DateTimeImmutable())->format('Y-W');
-            $engagement = new ProdEngagementModel();
+            $engagement = new ProdEngagementModel(); // TODO Passer en statique
             $engagement->fk_planning = $planningId;
             $engagement->status = ($semaine === $now) ? 'engagé' : 'prévisionnel';
             $engagement->semaine_engagee = $semaine;
