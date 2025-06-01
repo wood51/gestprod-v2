@@ -28,10 +28,12 @@ class PlanningPartialsController extends PlanningController
     }
 
     /**
-     * @route("GET /modal/engagement")
+     * @route("GET /modal/engagement/@produit")
      */
-    function modalEngagement()
+    function modalEngagement($f3,$params)
     {
+        $f3->produit = VuePlanningModel::findById($params['produit']);
+       // echo var_dump($f3->produit);die();
         echo \Template::instance()->render('/planning/partials/_planning_form_engagement.html');
     }
 

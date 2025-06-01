@@ -14,14 +14,14 @@
           >
             <div class="mx-2 my-2">
               <!-- <a onclick="openAjoutModal()" class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#">Ajouter au planning</a> -->
-              <a class="btn btn-ghost btn-sm" hx-get="/modal/planning-add" hx-trigger="click" hx-target="#modalContainer" hx-swap="innerHTML"> Engager </a>
+              <a class="btn btn-ghost btn-sm" hx-get="/modal/planning-add" hx-trigger="click" hx-target="#modalContainer" hx-swap="innerHTML"> Ajouter au planning </a>
               <hr />
               <a class="btn btn-ghost btn-xs p-0 w-full rounded-none" href="#" disabled>Exporter</a>
             </div>
           </div>
         </div>
       </div>
-      <div id="planning" hx-on::after-swap="closeAjoutModal()">
+      <div id="planning">
         <include href="/planning/partials/_planning_table.html" />
       </div>
     </div>

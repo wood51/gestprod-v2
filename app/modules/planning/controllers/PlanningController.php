@@ -50,6 +50,7 @@ class PlanningController
         $f3->SESSION['pagination_page'] = 0;
 
         $this->service->renderPartialPlanning();
+        echo \Template::instance()->render('themes/base/partials/_modal_clear.html');
     }
 
     /**

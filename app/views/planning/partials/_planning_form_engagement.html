@@ -1,9 +1,11 @@
-<dialog id="engagementModal" class="modal">
+<dialog id="engagementModal" class="modal space-y-4">
   <div id="modal-engagement-content" class="modal-box">
     <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick="htmx.remove('#engagementModal')">✕</button>
-    <h3>Engagement</h3>
-    <form>
-        <input type="hidden" name="produit"/>
+    <h3 class="text-3xl mb-4 uppercase text-center">Engagement ({{@produit.reference}})</h3>
+    <form method="post" hx-post="/planning/engagement" hx-target="#planning" hx-swap="innnerHTML">
+        <input type="hidden" name="produit" value="{{@produit.id}}"/>
+        <input type="week" name="semaine_engagee" class="input mb-4 w-full" name="semaine_engagee" id="semaine_engagee" />
+        <button type="submit" class="btn btn-primary w-full">Enregistrer</button>
     </form>
   </div>
 </dialog>

@@ -9,28 +9,30 @@ class VuePlanningModel extends DB\Cortex
         $table = 'vue_prod_planning',
         $primary = "id";
 
-
-    public static function all(): bool|CortexCollection
+    protected static function mapper()
     {
-        $mapper = new self();
-        return $mapper->find();
+        return new self();
     }
 
-    public static function paginate_all($pos=0, $size=10, $filter=null)
+    public static function all()
     {
-        $mapper = new self();
-        return $mapper->paginate($pos,$size,$filter,['order'=>'id DESC']);
+        return self::mapper()->find();
+    }
+
+    public static function paginate_all($pos = 0, $size = 10, $filter = null)
+    {
+        return self::mapper()->paginate($pos, $size, $filter, ['order' => 'id DESC']);
     }
 
 
-
+    public static function findById($planningId) {
+        return self::mapper()->findone(['id=?',$planningId]);
+    }
 
     public static function get_filters(array|string $columns, array $query_filter = []): array
     {
-        $mapper = new self();
-
         $cols = is_string($columns) ? explode(',', $columns) : $columns;
-        $results = $mapper->find($query_filter);
+        $results = self::mapper()->find($query_filter);
 
         if ($results) {
             $filtres = [];

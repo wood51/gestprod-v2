@@ -12,32 +12,17 @@ class EngagementController
      * Met à jour le statut d'engagement d'un produit selon les données POST
      * @param Base $f3 Instance du framework Fat-Free
      */
-    public function planning_update_engagement($f3)
+    public function planning_engagement($f3)
     {
-        $data = $this->service->cleanData($f3->POST);
-
-        // Validation des données
-        if (empty($data->produit)) {
-            // Gestion erreur - produit obligatoire
-            $f3->error(400, 'Id Produit obligatoire');
-            return;
-        }
-
+        // $data = $this->service->cleanData($f3->POST);
+        $data = (object) $f3->POST;
         try {
-            if ($data->pret) {
-                $this->service->marquerFait($data->produit, $data->numero);
-            } elseif ($data->report) {
-                $this->service->reporter($data->produit);
-            } elseif ($data->semaine) {
-                $this->service->engager($data->produit, $data->semaine);
-            }
-        } catch (Exception $e) {
-            // Gestion erreur - erreur service
-            $f3->error(500, 'Impossible de mettre a jours l\'engagement : '.$e->getMessage());
+            $this->service->engager($data);
+        } catch (\Exception $e) {
+            $f3->error($e->getCode(), $e->getMessage());
         }
-
         $planning = new PlanningService();
         $planning->renderPartialPlanning();
-       
+        echo \Template::instance()->render('themes/base/partials/_modal_clear.html');
     }
 }

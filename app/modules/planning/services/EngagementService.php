@@ -2,14 +2,18 @@
 
 class EngagementService
 {
-    public function engager(int $planningId, string $semaine): bool|string
+    public function engager($data)
     {
+
+        $planningId = $data->produit;
+        $semaine = str_replace('W','',$data->semaine_engagee);
+
 
         $last = ProdEngagementModel::getLastEngagement($planningId);
         $status = isset($last) ? $last->status : null;
 
         if (in_array($status, ['fait', 'annulé'])) {
-            return "Engagement interdit (statut bloqué : $status).";
+            throw new Exception("Engagement interdit (statut bloqué : $status).",400);
         }
 
         // Aucun engagement ou reporté -> créer une nouvelle ligne
@@ -23,7 +27,7 @@ class EngagementService
             return true;
         }
 
-        // Si c'était prévisionnel → on le confirme
+        // Si c'était prévisionnel -> on le confirme
         if ($status === 'prévisionnel') {
             $last->status = 'engagé';
             $last->semaine_engagee = $semaine;
@@ -31,7 +35,7 @@ class EngagementService
             return true;
         }
 
-        return "Aucune transition valide pour engagement depuis $status.";
+        throw new Exception("Aucune transition valide pour engagement depuis $status.",400);
     }
 
     public  function reporter(int $planningId): bool|string
@@ -66,36 +70,4 @@ class EngagementService
         throw new Exception("Impossible d'update le numero de produit.");
     }
 
-    public function cleanData($data)
-    {
-        $cleaned = [
-            'filter-pret' =>false,
-            'pret' => false,
-            'numero' => null,
-            'semaine' => null,
-            'report' => false,
-            'produit' => null
-        ];
-
-        // transformation des data
-        foreach ($data as $key => $value) {
-            $parts = explode('-', $key);
-
-            if (count($parts) === 2) {
-                $field = $parts[0];
-
-                if ($field === 'semaine') {
-                    $value = str_replace('W', '', $value);
-                }
-
-                if ($value === 'on') {
-                    $value = true;
-                }
-
-                $cleaned[$field] = $value;
-            }
-        }
-
-        return (object) $cleaned;
-    }
 }
