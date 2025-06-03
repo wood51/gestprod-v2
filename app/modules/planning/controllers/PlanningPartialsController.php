@@ -42,7 +42,16 @@ class PlanningPartialsController extends PlanningController
      */
     function modalEngagementMultiple($f3,$params)
     {
-        echo \Template::instance()->render('/planning/partials/planning-table/_planning_form_engagement_multiple.html');
+        echo \Template::instance()->render('/planning/partials/_planning_form_engagement_multiple.html');
+    }
+
+    /**
+     * @route("GET /modal/report/@produit")
+     */
+    function modalReport($f3,$params)
+    {
+        $f3->produit = VuePlanningModel::findById($params['produit']);
+        echo \Template::instance()->render('/planning/partials/_planning_form_report.html');
     }
 
     /**

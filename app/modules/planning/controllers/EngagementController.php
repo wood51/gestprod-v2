@@ -29,11 +29,18 @@ class EngagementController
 
     /**
      * @route("POST /planning/engagement/multiple")
-     * Met à jour le statut d'engagement d'un produit selon les données POST
+     * Met à jour les statuts d'engagement de plusieurs produits selon les données POST
      * @param Base $f3 Instance du framework Fat-Free
      */
     public function planningEngagementMultiple($f3) {
-        $data = $f3->POST;
-        echo var_dump($data['select']);
+        $data = (object) $f3->POST;
+        try {
+            $this->service->engagerMultiple($data);
+        } catch (\Exception $e) {
+            $f3->error($e->getCode(), $e->getMessage());
+        }
+        $planning = new PlanningService();
+        $planning->renderPartialPlanning();
+        echo \Template::instance()->render('themes/base/partials/_modal_clear.html');
     }
 }

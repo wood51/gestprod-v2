@@ -20,4 +20,17 @@
       Engager
     </a>
   </li>
+
+  <li>
+    <!-- Boutton Report -->
+  <a
+    class="btn btn-ghost btn-sm"
+    hx-get="/modal/report/{{@produit._id}}"
+    hx-target="#modalContainer"
+    hx-trigger="click"
+    hx-swap="innerHTML"
+  >
+    Reporter
+  </a>
+</li>
 </div>

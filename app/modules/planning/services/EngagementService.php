@@ -1,7 +1,26 @@
 <?php
-
+// TODO recup les erreur engagement et faire les possible et signaler les impossible"
 class EngagementService
 {
+    
+    public function engagerMultiple($data) {
+        //echo var_dump($data);die();
+        $semaine = str_replace('W','',$data->semaine);
+        if(!empty($data)) {
+            foreach ($data->select as $produit) {
+                $engagementData = (object) [
+                    'semaine_engagee' => $semaine,
+                    'produit' =>intval($produit)
+                ];
+                try {
+                    $this->engager($engagementData);
+                } catch (\Exception $e){
+                    throw new Exception($e->getMessage(),$e->getCode());
+                }
+            }
+        }
+    }
+
     public function engager($data)
     {
 
@@ -47,7 +66,7 @@ class EngagementService
         }
 
         $last->status = 'reporté';
-        $last->semaine_engagee = null;
+        //$last->semaine_engagee = null;
         $last->save();
 
         return true;
