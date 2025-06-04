@@ -50,24 +50,32 @@ class EngagementService
         if ($status === 'prévisionnel') {
             $last->status = 'engagé';
             $last->semaine_engagee = $semaine;
-            $last->save();
+            $last->update();
             return true;
         }
 
         throw new Exception("Aucune transition valide pour engagement depuis $status.",400);
     }
 
-    public  function reporter(int $planningId): bool|string
+    public  function reporter($data) // TODO Passer en logique $data
     {
-        $last = ProdEngagementModel::getLastEngagement($planningId);
 
-        if (!$last || $last->status !== 'engagé') {
-            return "Seul un engagement 'engagé' peut être reporté.";
+        $planningId = $data->produit;
+        $commentaire = $data->commentaire;
+        
+        
+        $last = ProdEngagementModel::getLastEngagement($planningId);
+        if ($last && $last->status !== 'engagé') {
+            throw new Exception("Seul un produit 'engagé' peut être reporté.",400);
+        }
+        
+        if($commentaire) {
+            $last->commentaire = $commentaire;
         }
 
         $last->status = 'reporté';
-        //$last->semaine_engagee = null;
         $last->save();
+        // echo var_dump($last->insert());die();
 
         return true;
     }

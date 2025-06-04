@@ -6,17 +6,17 @@
     <h3 class="text-2xl font-bold text-center uppercase">Reporter l’engagement</h3>
 
     <form
-      hx-post="/planning/report"
+      hx-post="/planning/reporter"
       hx-target="#planning"
       hx-swap="innerHTML"
     >
       <input type="hidden" name="produit" value="{{@produit.id}}" />
 
       <div class="form-control">
-        <label class="label" for="reason">
+        <label class="label" for="commentaire">
           <span class="label-text font-semibold">Raison du report</span>
         </label>
-        <textarea name="reason" id="reason" class="textarea textarea-bordered w-full" required></textarea>
+        <textarea name="commentaire" id="commentaire" class="textarea textarea-bordered w-full" required></textarea>
       </div>
 
       <div class="modal-action">

@@ -65,5 +65,23 @@ class PlanningPartialsController extends PlanningController
         echo \Template::instance()->render('/planning/partials/_planning_form_add.html');
     }
 
+    /**
+ * @route("GET /modal/planning/valider/@id")
+ */
+function modalValiderProduit($f3, $params)
+{
+    $mapper = new \DB\SQL\Mapper($f3->get('DB'), 'prod_planning');
+    $mapper->load(['id = ?', $params['id']]);
+
+    if ($mapper->dry()) {
+        http_response_code(404);
+        echo 'Produit introuvable';
+        return;
+    }
+
+    $f3->set('produit', $mapper);
+    echo \Template::instance()->render('/planning/partials/_planning_form_valider.html');
+}
+
 
 }
