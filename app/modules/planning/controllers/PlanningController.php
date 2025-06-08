@@ -18,7 +18,7 @@ class PlanningController
         // Init Etat initial en session
         $f3->SESSION['filter_pret'] = false;
         $f3->SESSION['pagination_page'] = 0;
-        $f3->SESSION['pagination_limit'] = 15;
+        $f3->SESSION['pagination_limit'] = 11;
 
         // Init Form Ajout 
         $f3->types = $this->service->getAvailableTypes(['Alternateur', 'Compresseur']); // Recup différent type
@@ -27,7 +27,7 @@ class PlanningController
         // Init template 
         $f3->filter_pret = false; // retour checkbox Prêt ?
         $f3->mset($this->service->getNowInfo());
-        $f3->mset($this->service->paginatePlanning(0, 15, false));
+        $f3->mset($this->service->paginatePlanning(0, 11, false));
 
         echo \Template::instance()->render("planning/planning_dashboard.html");
     }
