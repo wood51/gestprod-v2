@@ -25,7 +25,6 @@ class ChartController
      */
     function setDate($f3)
     {
-        echo  $f3->SESSION['semaine-kpi'];
         $data = (object) $f3->POST;
         if ($data && isset($data->semaine)) {
             if (preg_match('/^\d{4}-W\d{2}$/', $data->semaine)) {

@@ -12,13 +12,14 @@ class EngagementTypeController
         $db = $f3->get('DB');
         $rows = $db->exec("
             SELECT
-                type_sous_ensemble,
+                type_ensemble,
                 SUM(produit) as produit,
                 SUM(engagement) as objectif,
                 couleur
             FROM vue_engagements_synthese
             WHERE semaine_engagee = ?
-            GROUP BY type_sous_ensemble
+            GROUP BY type_ensemble 
+            ORDER BY ordre_affichage
         ", [$week]);
 
 
@@ -29,7 +30,7 @@ class EngagementTypeController
         $totalObjectif = 0;
 
         foreach ($rows as $row) {
-            $libelle = $row['type_sous_ensemble'];
+            $libelle = $row['type_ensemble'];
             $realise = (int)$row['produit'];
             $objectif = (int)$row['objectif'];
             $couleur = $row['couleur'] ?? '#999';
