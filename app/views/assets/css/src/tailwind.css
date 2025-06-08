@@ -17,6 +17,16 @@
   }
 }
 
+@layer base {
+  :is(input, textarea, select, button):focus,
+  .input:focus,
+  .select:focus,
+  .textarea:focus,
+  .btn:focus {
+    @apply ring-0 ring-offset-0 outline-none shadow-none;
+  }
+}
+
 
 .alert {
   @apply shadow-md backdrop-blur-xs transition duration-300;

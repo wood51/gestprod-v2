@@ -6,167 +6,25 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const series = [
-      {
-        data: [
-          {
-            x: "Produits Electriques",
-            y: 10,
-            fillColor:'#3ABFF8',
-            goals: [
-              {
-                name: "Objectif",
-                value: 10,
-                strokeHeight: 5,
-                strokeColor: "#775DD0",
-              },
-            ],
-          },
-          {
-            x: "Compresseurs",
-            y: 2,
-            fillColor:'#FBBD23',
-            goals: [
-              {
-                name: "Objectif",
-                value: 2,
-                strokeHeight: 5,
-                strokeColor: "#775DD0",
-              },
-            ],
-          },
-          {
-            x: "Alternateurs",
-            y: 7,
-            fillColor:'#F87272',
-            goals: [
-              {
-                name: "Objectif",
-                value: 20,
-                strokeHeight: 5,
-                strokeColor: "#775DD0",
-              },
-            ],
-          },
-          {
-            x: "Total",
-            y: 17,
-            fillColor:'#36d399',
-            goals: [
-              {
-                name: "Objectif",
-                value: 30,
-                strokeHeight: 5,
-                strokeColor: "#775DD0",
-              },
-            ],
-          },
-        ],
-      },
-    ];
-
-    const annotations = {
-      points: [
-        {
-          x: "Produits Electriques",
-          y: 10,
-          marker: {
-            size: 0, // cache le marker
-          },
-          label: {
-            text: 10, //text du but a cacher en php
-            style: {
-              color: "#775DD0",
-              background: "#fff", // Fond blanc pour être bien visible
-              fontSize: "20px",
-              fontWeight: 'bold',
-            },
-          },
-        },
-        {
-          x: "Compresseurs",
-          y: 2,
-          marker: {
-            size: 0, // cache le marker
-          },
-          label: {
-            text: 2, //text du but a cacher en php
-            style: {
-              color: "#775DD0",
-              background: "#fff", // Fond blanc pour être bien visible
-              fontSize: "20px",
-              fontWeight: 'bold',
-            },
-          },
-        },
-        {
-          x: "Alternateurs",
-          y: 20,
-          marker: {
-            size: 0, // cache le marker
-          },
-          label: {
-            text: 20, //text du but a genrer en php
-            style: {
-              color: "#775DD0",
-              background: "#fff", // Fond blanc pour être bien visible
-              fontSize: "20px",
-              fontWeight: 'bold',
-            },
-          },
-        },
-        {
-          x: "Total",
-          y: 30,
-          marker: {
-            size: 0, // cache le marker
-          },
-          label: {
-            text: 30, //text du but a genrer en php
-            style: {
-              color: "#775DD0",
-              background: "#fff", // Fond blanc pour être bien visible
-              fontSize: "20px",
-              fontWeight: 'bold',
-            },
-          },
-        },
-      ],
-    };
-
-    const optionsEngagementType = {
-      annotations: annotations,
+    const chartEngagementType = new ApexCharts(document.querySelector("#chartEngagementType"), {
       chart: {
         type: "bar",
         height: "100%",
-        width: "100%",
-        toolbar: {
-          show: false,
-        },
+        toolbar: { show: false }
       },
       plotOptions: {
         bar: {
           columnWidth: "50%",
           borderRadius: 4,
-          distributed: false,
           borderRadiusApplication: "end",
           hideZeroBarsWhenGrouped: true,
         },
       },
-
       noData: {
         text: "Chargement ...",
         fontSize: "24px",
       },
-      title: {
-        text: "Engagement Semaine 22 - 30 Produits",
-        align: "center",
-        style: {
-          fontSize: "22px",
-          color: "#4B4B4B",
-          fontWeight: "bold",
-        },
-      },
+      title: {},
       subtitle: {
         text: "Détails par type",
         align: "center",
@@ -177,75 +35,53 @@
       },
       dataLabels: {
         enabled: true,
-        formatter: function (val, opt) {
-          if (val >= 1) {
-            return val;
-          }
-          return;
-        },
+        formatter: (val) => val >= 1 ? val : null,
         style: {
           fontSize: "24px",
-          fontFamily: "Helvetica, Arial, sans-serif",
           fontWeight: "bold",
-          colors: [
-          ],
+          colors: [],
         },
       },
-      series: series,
+      series: [],
+      annotations: { points: [] },
       xaxis: {
         type: "category",
         labels: {
-          // rotate :45,
-          // rotateAlways: true,
           style: {
-            colors: "#333", // Couleur des étiquettes
-            fontSize: "18px", // Taille de la police
+            colors: "#333",
+            fontSize: "18px",
             fontWeight: "bold",
           },
         },
       },
       yaxis: {
         min: 0,
-        max: 37,
         labels: {
           style: {
             colors: "#333",
             fontSize: "20px",
             fontWeight: "bold",
           },
-          formatter: function (val, index) {
-            return val.toFixed(0);
-          },
+          formatter: val => val.toFixed(0),
         },
-        stepSize: 4,
       },
-    };
+    });
 
-    // Fonction pour calculer la luminance d'une couleur
-    function getLuminance(hex) {
-      var r = parseInt(hex.substr(1, 2), 16) / 255;
-      var g = parseInt(hex.substr(3, 2), 16) / 255;
-      var b = parseInt(hex.substr(5, 2), 16) / 255;
-      var luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-      return luminance;
-    }
-
-    const chartEngagementType = new ApexCharts(document.querySelector(`#chartEngagementType`), optionsEngagementType);
     chartEngagementType.render();
-    // const now = new Date();
-    // const week = dateFns.format(now, "RRRR-II");
-    // fetch(`/kpi/engagement/{{@week}}`)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     chartEngagement.updateOptions({
-    //       title: { text: data.title.text },
-    //       plotOptions: { bar: { columnWidth: data.barWidth } },
-    //       series: data.series,
-    //       annotations: data.annotations,
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.error("Erreur lors du chargement des données :", error);
-    //   });
+
+    const semaine = "{{@week}}"; // à remplacer dynamiquement si tu veux, ou hardcodé pour test
+
+    fetch(`/kpi/engagement-type/${semaine}`)
+      .then((res) => res.json())
+      .then((data) => {
+        chartEngagementType.updateOptions({
+          title: data.title,
+          series: data.series,
+          annotations: data.annotations,
+        });
+      })
+      .catch((err) => {
+        console.error("Erreur chargement données engagement-type:", err);
+      });
   });
 </script>

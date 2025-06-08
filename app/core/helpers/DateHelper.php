@@ -86,8 +86,18 @@ class DateHelper
             'premier_jour_mois' => new DateTimeImmutable($instant->format('Y-m-01')),
             'nb_jours_mois' => (int) $instant->format('t'),
             'first_day_of_month' => (int) (new DateTimeImmutable($instant->format('Y-m-01')))->format('N'),
-            'full_week' => $instant->format('Y-W')
+            'full_week' => $instant->format('Y-W'),
         ];
+    }
+
+    public static function toWeekPickerFormat(string $week)
+    {
+        return str_contains($week, '-W') ? $week : str_replace('-', '-W', $week);
+    }
+
+    public static function fromWeekPickerFormat(string $picker)
+    {
+        return str_replace('-W', '-', $picker);
     }
 
     public static function extract_week_year($semaine)
@@ -100,7 +110,8 @@ class DateHelper
         ];
     }
 
-    public static function get_week_year() {
+    public static function get_week_year()
+    {
         $now = new DateTimeImmutable();
         return $now->format('Y-W');
     }

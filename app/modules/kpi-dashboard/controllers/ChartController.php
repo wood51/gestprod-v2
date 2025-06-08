@@ -6,9 +6,34 @@ class ChartController
      */
     function kpi_dashboad($f3)
     {
-        $f3->week = "2025-23";//(DateHelper::build(2025,21))->full_week;
+        $now = DateHelper::build();
+        $week = $f3->SESSION['semaine-kpi'] ?? $now->full_week;
+
+        $f3->now = $now;
+        $f3->week = $week;
+        $f3->week_picker = DateHelper::toWeekPickerFormat($week);
+        $f3->max_week_picker = DateHelper::toWeekPickerFormat($now->full_week);
         $f3->nb_semaine = 5;
+
         echo \template::instance()->render("kpi-dashboard/kpi_dashboard.html");
+    }
+
+
+
+    /**
+     * @route("POST /public/dashboard/set-date")
+     */
+    function setDate($f3)
+    {
+        echo  $f3->SESSION['semaine-kpi'];
+        $data = (object) $f3->POST;
+        if ($data && isset($data->semaine)) {
+            if (preg_match('/^\d{4}-W\d{2}$/', $data->semaine)) {
+                $f3->SESSION['semaine-kpi'] = str_replace('-W', '-', $data->semaine);
+                header('HX-Trigger: reload-page');
+                exit();
+            }
+        }
     }
 
     /**
@@ -28,7 +53,5 @@ class ChartController
             'semaine' => $semaine,
             'annee' => $annee
         ]);
- 
     }
- 
 }
