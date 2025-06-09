@@ -88,7 +88,7 @@ class PlanningController
     }
 
     /**
-     * @route("POST /planning/valider")
+     * @route("POST /planning/valider") // TODO Refactoriser
      */
     function valider($f3)
     {
