@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <include href="themes/base/partials/_head.html" />
-  </head>
 
-  <body class="bg-gray-50 dark:bg-gray-800 dark:text-gray-200 font-sans text-gray-800 overflow-auto">
-    <include href="/themes/base/components/toast/_toast.html" />
-    <!-- Layout principal -->
-    <div class="flex min-h-screen">
-      <!-- Sidebar -->
-      <include href="themes/base/partials/_aside.html" />
+<head>
+  <include href="themes/base/partials/_head.html" />
+</head>
 
-      <!-- Contenu principal -->
-      <main class="flex-1">
-        <!-- Topbar -->
-        <include href="themes/base/partials/_topbar.html" />
+<body class="bg-gray-50 dark:bg-gray-800 dark:text-gray-200 font-sans text-gray-800 overflow-auto">
+  <include href="/themes/base/components/toast/_toast.html" />
+  <!-- Layout principal -->
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <include href="themes/base/partials/_aside.html" />
 
-        <!-- Main Content-->
-        <div id="content" class="p-4">
-          <!-- contenu injecté ici -->
-          
-        </div>
-      </main>
-    </div>
+    <!-- Contenu principal -->
+    <main class="flex-1">
+      <!-- Topbar -->
+      <include href="themes/base/partials/_topbar.html" />
 
-    <!-- Modale -->
-    <div id="modal"></div>
-  </body>
+      <!-- Main Content-->
+      <div id="content" class="p-4" hx-get="/admin/planning/dashboard" hx-swap="innerHTML" hx-trigger="load"> <!-- FIXME pour debug chargment du planning -->
+        <!-- contenu injecté ici -->
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Modale -->
+  <div id="modalContainer" hx-on::after-settle="this.querySelector('dialog')?.showModal()"></div> 
+</body>
+
 </html>

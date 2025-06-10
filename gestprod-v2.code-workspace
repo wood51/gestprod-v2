@@ -32,6 +32,7 @@
 				"username": "root",
 				"password": "Bd135@c127"
 			}
-		]
+		],
+		"remote.autoForwardPortsFallback": 0
 	}
 }

@@ -1,4 +1,14 @@
-<!-- <th><label for="check_all"></label><input id="check_all" type="checkbox" /></th> -->
+<th>
+  <label for="check_all"></label>
+  <input
+    id="check_all"
+    type="checkbox"
+    _="on change
+            for el in document.querySelectorAll('input[name=select[]]')
+              set el.checked to me.checked
+            call updateBulkBar()"
+  />
+</th>
 <th>#</th>
 <th>Référence</th>
 <th>Type</th>
@@ -8,18 +18,8 @@
 <th>Engagement</th>
 <th>
   <div class="flex items-center gap-2">
-    <input
-      type="checkbox"
-      id="filter_pret"
-      name="filter_pret"
-      hx-get="/planning/filter/pret"
-      hx-target="#planning"
-      hx-include="[name=filter_pret]"
-      hx-trigger="change"
-      {{ @SESSION.filter_pret ? 'checked' : '' }}
-    />
-    Prête ?
+    <input type="checkbox" id="filter_pret" name="filter_pret" hx-get="/planning/filter/pret" hx-target="#planning" hx-include="[name=filter_pret]"
+    hx-trigger="change" {{ @SESSION.filter_pret ? 'checked' : '' }} /> Prête ?
   </div>
-  
 </th>
 <th class=""></th>

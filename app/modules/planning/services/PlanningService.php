@@ -27,11 +27,22 @@ class PlanningService
     {
         $filter = $all ? null : ['prete = ?', 0];
         $pagination =  VuePlanningModel::paginate_all($page, $limit, $filter);
+        // $prev = max($pagination['pos']+1,1);
+        // $next = min($pagination['pos']+2,$pagination['count']-1);
+        $totalPages = $pagination['count'];
+        $currentPage = $pagination['pos'] + 1; // remettre en page 1-indexée
+
+        $prev = ($currentPage > 1) ? $currentPage - 1 : null;
+        $next = ($currentPage < $totalPages) ? $currentPage + 1 : null;
+        
         return [
             'pages' => range(1, $pagination['count']),
-            'pos' => $pagination['pos'],
+            'total' => $pagination['count'],
+            'page' =>  $currentPage,
             'limit' => $pagination['limit'],
-            'produits' => $pagination['subset']
+            'produits' => $pagination['subset'],
+            'prev' => $prev,
+            'next' => $next
         ];
     }
 
@@ -54,8 +65,7 @@ class PlanningService
             $typeId = $type;
         }
 
-        $fk_articles = ProdGroupeSousEnsembleModel::get_refs_by_type($typeId);
-
+        $fk_articles = (array) ProdArticlesModel::get_refs_by_type($typeId);
         $refs = [];
 
         foreach ($fk_articles as $fk_article) {
@@ -75,7 +85,7 @@ class PlanningService
         $filter_pret = isset($f3->SESSION['filter_pret']) ? $f3->SESSION['filter_pret'] : false;
         $page = isset($f3->SESSION['pagination_page']) ? $f3->SESSION['pagination_page'] : 0;
         $limit = isset($f3->SESSION['pagination_limit']) ? $f3->SESSION['pagination_limit'] : 15;
-        
+
         // Init template 
         $f3->filter_pret = $filter_pret;
         $f3->mset($this->getNowInfo());

@@ -50,6 +50,7 @@ class PlanningController
         $f3->SESSION['pagination_page'] = 0;
 
         $this->service->renderPartialPlanning();
+        echo \Template::instance()->render('themes/base/partials/_modal_clear.html');
     }
 
     /**
@@ -84,5 +85,56 @@ class PlanningController
 
         header('Content-Type: application/json');
         echo json_encode(['unique' => $isUnique]);
+    }
+
+    /**
+     * @route("POST /planning/valider")
+     */
+    function valider($f3)
+    {
+        $db = new \DB\SQL\Mapper($f3->get('DB'), 'prod_planning');
+        $db->load(['id = ?', $f3->POST['planning_id']]);
+
+        if ($db->dry()) {
+            http_response_code(404);
+            echo "Produit introuvable.";
+            return;
+        }
+
+        // MàJ des numéros si fournis
+        if (!empty($f3->POST['numero'])) {
+            $db->numero = $f3->POST['numero'];
+        }
+
+        // if (!empty($f3->POST['numero_rotor'])) {
+        //     $db->numero_rotor = $f3->POST['numero_rotor'];
+        // }
+
+        // if (!empty($f3->POST['numero_stator'])) {
+        //     $db->numero_stator = $f3->POST['numero_stator'];
+        // }
+
+        $db->save();
+
+        // Ajout du contrôle qualité OK
+        $controle = new \DB\SQL\Mapper($f3->get('DB'), 'qualite_controles');
+        $controle->fk_planning = $db->id;
+        $controle->fk_etat = 4; // À remplacer par l’ID réel de l’état "OK"
+        $controle->hasDefaut = 0;
+        $controle->commentaire = 'Contrôle validé';
+        $controle->save();
+
+        // Passage à "fait" dans engagement
+        $eng = new \DB\SQL\Mapper($f3->get('DB'), 'prod_engagement');
+        $eng->load(['fk_planning = ? AND status = ?', $db->id, 'engagé']);
+        if (!$eng->dry()) {
+            $eng->status = 'fait';
+            $eng->save();
+        }
+
+        $this->service->renderPartialPlanning(); 
+
+        echo \Template::instance()->render('/planning/partials/_planning_table.html');
+        echo \Template::instance()->render('themes/base/partials/_modal_clear.html');
     }
 }

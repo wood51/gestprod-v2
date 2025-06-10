@@ -7,13 +7,16 @@
 # Fichiers compilés par Vite
 /app/views/assets/css/build/
 
-# Données de la base (MariaDB montée en local)
+# Données de la base et grafana
 /docker/bdd_data/
+/docker/grafana/
+/docker/grafana_data/
+
 
 # Certificats 
 # /docker/conf/certs/*.*
 
-# Configs perso (à ajouter si tu veux plus tard)
+# Configs perso
 # /docker/.env
 
 # Fichier temporaires F3
