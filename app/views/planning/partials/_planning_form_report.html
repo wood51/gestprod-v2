@@ -12,9 +12,21 @@
     >
       <input type="hidden" name="produit" value="{{@produit.id}}" />
 
+      <div class="form-control mb-2">
+        <label class="label" for="type_defaut">
+          <span class="label-text font-semibold">Type defaut</span>
+        </label>
+        <!-- TODO Rendre dynamique -->
+        <select id="type_defaut" class="select w-full">
+          <!-- <option value="1">Production</option> -->
+          <option value="2">Appro</option>
+          <option value="3">Autre</option>
+        </select>
+      </div>
+
       <div class="form-control">
         <label class="label" for="commentaire">
-          <span class="label-text font-semibold">Raison du report</span>
+          <span class="label-text font-semibold">Commentaire</span>
         </label>
         <textarea name="commentaire" id="commentaire" class="textarea textarea-bordered w-full" required></textarea>
       </div>
