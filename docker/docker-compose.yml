@@ -66,7 +66,6 @@ services:
       - app-network
   proxy:
     image: nginx:alpine
-    container_name: proxy
     profiles: ["dev"]
     ports:
       - "443:443"
@@ -80,7 +79,6 @@ services:
 
   vite:
     image: node:22
-    container_name: vite
     profiles: ["dev"]
     working_dir: /app
     volumes:
