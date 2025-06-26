@@ -20,10 +20,14 @@ class PlanningController
         $f3->SESSION['pagination_page'] = 0;
         $f3->SESSION['pagination_limit'] = 11;
 
+
         // Init Form Ajout 
         $f3->types = $this->service->getAvailableTypes(['Alternateur', 'Compresseur']); // Recup différent type
         $f3->mset($this->service->getRefsByType('Alternateur'));
 
+        $filtres = VuePlanningModel::get_filters(['reference','type']); // ou avec des filtres
+        $f3->set('references', $filtres['reference']);
+        $f3->set('types', $filtres['type']);
         // Init template 
         $f3->filter_pret = false; // retour checkbox Prêt ?
         $f3->mset($this->service->getNowInfo());
@@ -69,6 +73,9 @@ class PlanningController
     public function setPlanningPage($f3, $params)
     {
         $f3->SESSION['pagination_page'] = intval($params['page']) - 1;
+        $filtres = VuePlanningModel::get_filters(['reference','type']); // ou avec des filtres
+        $f3->set('references', $filtres['reference']);
+        $f3->set('types', $filtres['type']);
         $this->service->renderPartialPlanning();
     }
 
@@ -132,7 +139,7 @@ class PlanningController
             $eng->save();
         }
 
-        $this->service->renderPartialPlanning(); 
+        $this->service->renderPartialPlanning();
 
         echo \Template::instance()->render('/planning/partials/_planning_table.html');
         echo \Template::instance()->render('themes/base/partials/_modal_clear.html');

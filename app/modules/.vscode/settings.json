@@ -2,6 +2,8 @@
     "files.exclude": {
         ".vscode": true,
         "kpi-dashboard\\.vscode": true,
-        "kpi-dashboard\\module.json": true
+        "kpi-dashboard\\module.json": true,
+        "kpi-dashboard": true,
+        "kpi-securite": true
     }
 }
