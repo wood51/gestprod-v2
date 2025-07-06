@@ -14,9 +14,7 @@ class PlanningController
      */
     function planningDashboard($f3)
     {
-
         // Init Etat initial en session
-        $f3->SESSION['filter_pret'] = false;
         $f3->SESSION['pagination_page'] = 0;
         $f3->SESSION['pagination_limit'] = 11;
 
@@ -25,13 +23,13 @@ class PlanningController
         $f3->types = $this->service->getAvailableTypes(['Alternateur', 'Compresseur']); // Recup différent type
         $f3->mset($this->service->getRefsByType('Alternateur'));
 
-        $filtres = VuePlanningModel::get_filters(['reference','type']); // ou avec des filtres
-        $f3->set('references', $filtres['reference']);
+        $filtres = VuePlanningModel::get_filters(['reference', 'type']); // ou avec des filtres
+        $f3->set('reference', $filtres['reference']);
         $f3->set('types', $filtres['type']);
         // Init template 
-        $f3->filter_pret = false; // retour checkbox Prêt ?
+        $filter = FilterHelper::getFilter();
         $f3->mset($this->service->getNowInfo());
-        $f3->mset($this->service->paginatePlanning(0, 11, false));
+        $f3->mset($this->service->paginatePlanning(0, 11, $filter));
 
         echo \Template::instance()->render("planning/planning_dashboard.html");
     }
@@ -43,8 +41,6 @@ class PlanningController
      */
     function planning_add($f3)
     {
-
-
         $this->service->addProduit([
             'type' => (int) $f3->POST['type'],
             'reference' => (int) $f3->POST['reference'],
@@ -57,15 +53,7 @@ class PlanningController
         echo \Template::instance()->render('themes/base/partials/_modal_clear.html');
     }
 
-    /**
-     * @route("GET /planning/filter/pret")
-     */
-    public function setFilterPret($f3)
-    {
-        $filter_pret = isset($f3->GET['filter_pret']) ? true : false;
-        $f3->SESSION['filter_pret'] = $filter_pret;
-        $this->service->renderPartialPlanning();
-    }
+
 
     /**
      * @route("GET /planning/page/@page")
@@ -73,9 +61,10 @@ class PlanningController
     public function setPlanningPage($f3, $params)
     {
         $f3->SESSION['pagination_page'] = intval($params['page']) - 1;
-        $filtres = VuePlanningModel::get_filters(['reference','type']); // ou avec des filtres
-        $f3->set('references', $filtres['reference']);
+        $filtres = VuePlanningModel::get_filters(['reference', 'type']); // ou avec des filtres
+        $f3->set('reference', $filtres['reference']);
         $f3->set('types', $filtres['type']);
+        $filter = FilterHelper::getFilter();
         $this->service->renderPartialPlanning();
     }
 
@@ -112,14 +101,6 @@ class PlanningController
         if (!empty($f3->POST['numero'])) {
             $db->numero = $f3->POST['numero'];
         }
-
-        // if (!empty($f3->POST['numero_rotor'])) {
-        //     $db->numero_rotor = $f3->POST['numero_rotor'];
-        // }
-
-        // if (!empty($f3->POST['numero_stator'])) {
-        //     $db->numero_stator = $f3->POST['numero_stator'];
-        // }
 
         $db->save();
 

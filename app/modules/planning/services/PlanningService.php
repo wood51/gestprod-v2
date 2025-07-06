@@ -23,18 +23,15 @@ class PlanningService
     /**
      * Paginer les machines du planning avec ou sans filtre "non prêtes".
      */
-    public  function paginatePlanning(int $page, int $limit, bool $all = false): array
+    public  function paginatePlanning($page, $limit, $filter)
     {
-        $filter = $all ? null : ['prete = ?', 0];
-        $pagination =  VuePlanningModel::paginate_all($page, $limit, $filter);
-        // $prev = max($pagination['pos']+1,1);
-        // $next = min($pagination['pos']+2,$pagination['count']-1);
+        $pagination =  VuePlanningModel::paginate_all($page, $limit, $filter['filter'], $filter['option']);
         $totalPages = $pagination['count'];
         $currentPage = $pagination['pos'] + 1; // remettre en page 1-indexée
 
         $prev = ($currentPage > 1) ? $currentPage - 1 : null;
         $next = ($currentPage < $totalPages) ? $currentPage + 1 : null;
-        
+
         return [
             'pages' => range(1, $pagination['count']),
             'total' => $pagination['count'],
@@ -46,7 +43,24 @@ class PlanningService
         ];
     }
 
-    /**
+
+    public function renderPartialPlanning()
+    {
+        $f3 = Base::instance();
+
+        $filter=FilterHelper::getFilter();
+        // Recup etat session
+        $page = isset($f3->SESSION['pagination_page']) ? $f3->SESSION['pagination_page'] : 0;
+        $limit = isset($f3->SESSION['pagination_limit']) ? $f3->SESSION['pagination_limit'] : 15;
+
+        // Init template 
+        $f3->mset($this->getNowInfo());
+        $f3->mset($this->paginatePlanning($page, $limit, $filter));
+
+        echo \Template::instance()->render("planning/partials/_planning_table.html");
+    }
+
+     /**
      * Récupère les types de sous-ensemble disponibles (ex: Alternateur).
      */
     public  function getAvailableTypes(array $designations = []): bool|\DB\CortexCollection
@@ -78,19 +92,4 @@ class PlanningService
         return ['refs' => $refs];
     }
 
-    public function renderPartialPlanning()
-    {
-        $f3 = Base::instance();
-        // Recup etat session
-        $filter_pret = isset($f3->SESSION['filter_pret']) ? $f3->SESSION['filter_pret'] : false;
-        $page = isset($f3->SESSION['pagination_page']) ? $f3->SESSION['pagination_page'] : 0;
-        $limit = isset($f3->SESSION['pagination_limit']) ? $f3->SESSION['pagination_limit'] : 15;
-
-        // Init template 
-        $f3->filter_pret = $filter_pret;
-        $f3->mset($this->getNowInfo());
-        $f3->mset($this->paginatePlanning($page, $limit, $filter_pret));
-
-        echo \Template::instance()->render("planning/partials/_planning_table.html");
-    }
 }
