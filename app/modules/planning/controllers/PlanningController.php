@@ -2,11 +2,13 @@
 
 class PlanningController
 {
-    protected $service;
+    protected $service, $table,$filtered_col;
 
     public function __construct()
     {
         $this->service = new PlanningService();
+        $this->table = 'vue_prod_planning';
+        $this->filtered_col = ['reference','type','numero'];
     }
 
     /**
@@ -23,9 +25,13 @@ class PlanningController
         $f3->types = $this->service->getAvailableTypes(['Alternateur', 'Compresseur']); // Recup différent type
         $f3->mset($this->service->getRefsByType('Alternateur'));
 
-        $filtres = VuePlanningModel::get_filters(['reference', 'type']); // ou avec des filtres
-        $f3->set('reference', $filtres['reference']);
-        $f3->set('types', $filtres['type']);
+
+        //$filtres = VuePlanningModel::get_filters(['reference', 'type']); // ou avec des filtres
+        $filtres = FilterHelper::get_filters($this->table, $this->filtered_col); // ou avec des filtres
+        //*echo var_dump($filtres);die();
+        $f3->filtres = $filtres;
+        // $f3->set('reference', $filtres['reference']);
+        // $f3->set('type', $filtres['type']);
         // Init template 
         $filter = FilterHelper::getFilter();
         $f3->mset($this->service->getNowInfo());
@@ -33,6 +39,20 @@ class PlanningController
 
         echo \Template::instance()->render("planning/planning_dashboard.html");
     }
+
+    /**
+     * @route("GET /planning/page/@page")
+     */
+    public function setPlanningPage($f3, $params)
+    {
+        $f3->SESSION['pagination_page'] = intval($params['page']) - 1;
+        //$filtres = VuePlanningModel::get_filters(['reference', 'type']); // ou avec des filtres
+        $filtres = FilterHelper::get_filters($this->table, $this->filtered_col); // ou avec des filtres
+        $f3->filtres = $filtres;
+        //$filter = FilterHelper::getFilter();
+        $this->service->renderPartialPlanning();
+    }
+
 
 
     /**
@@ -51,21 +71,6 @@ class PlanningController
 
         $this->service->renderPartialPlanning();
         echo \Template::instance()->render('themes/base/partials/_modal_clear.html');
-    }
-
-
-
-    /**
-     * @route("GET /planning/page/@page")
-     */
-    public function setPlanningPage($f3, $params)
-    {
-        $f3->SESSION['pagination_page'] = intval($params['page']) - 1;
-        $filtres = VuePlanningModel::get_filters(['reference', 'type']); // ou avec des filtres
-        $f3->set('reference', $filtres['reference']);
-        $f3->set('types', $filtres['type']);
-        $filter = FilterHelper::getFilter();
-        $this->service->renderPartialPlanning();
     }
 
     /**

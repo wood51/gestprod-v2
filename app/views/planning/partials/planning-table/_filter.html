@@ -1,17 +1,17 @@
-<button class="btn btn-ghost" popovertarget="popover-ref" style="anchor-name: --anchor-ref">
+<button class="btn btn-ghost" popovertarget="popover-{{@col}}" style="anchor-name: --anchor-{{@col}}">
   <i class="fa-solid fa-filter"></i>
 </button>
 
-<div id="popover-ref" class="dropdown dropdown-end bg-base-100 p-3 shadow-md text-xs font-normal w-64" popover style="position-anchor: --anchor-ref" hx-on:htmx:after-request="this.hidePopover()">
+<div id="popover-{{@col}}" class="dropdown dropdown-end bg-base-100 p-3 shadow-md text-xs font-normal w-64" popover style="position-anchor: --anchor-{{@col}}" hx-on:htmx:after-request="this.hidePopover()">
   <!-- Tri + reset -->
   <div class="space-y-1 mb-2">
-    <button hx-post="/planning/sort" hx-swap="innerHTML" hx-target="#planning" hx-vals='{"col":"reference","order":"asc"}' type="button" class="btn btn-ghost btn-xs justify-start w-full sort-asc">
+    <button hx-get="/planning/sort/{{@col}}/asc" hx-swap="innerHTML" hx-target="#planning" type="button" class="btn btn-ghost btn-xs justify-start w-full sort-asc">
       <i class="fa-solid fa-caret-up mr-2"></i> 
       Trier de A à Z
     </button>
   </div>
   <div class="space-y-1 mb-2">
-    <button type="button" hx-post="/planning/sort" hx-swap="innerHTML" hx-target="#planning" hx-vals='{"col":"reference","order":"desc"}' class="btn btn-ghost btn-xs justify-start w-full sort-desc"><i class="fa-solid fa-caret-down mr-2"></i> Trier de Z à A</button>
+    <button type="button" hx-get="/planning/sort/{{@col}}/desc" hx-swap="innerHTML" hx-target="#planning" class="btn btn-ghost btn-xs justify-start w-full sort-desc"><i class="fa-solid fa-caret-down mr-2"></i> Trier de Z à A</button>
   </div>
   <hr class="space-y-1 mb-2" />
   <div class="space-y-1 mb-2">
@@ -27,7 +27,7 @@
     </label>
   </div>
 
-  <form method="post" hx-post="/planning/filter/reference" hx-target="#planning" hx-swap="innerHTML">
+  <form method="post" hx-post="/planning/filter/{{@col}}" hx-target="#planning" hx-swap="innerHTML">
 
     <!-- Liste scrollable -->
     <div class="overflow-y-auto max-h-40 pr-1 mb-2">
@@ -36,11 +36,10 @@
           <input type="checkbox" class="check-all" />
           <span>Tout Sélectionner</span>
         </li>
-
-        <repeat group="{{@reference}}" value="{{@value}}">
+        <repeat group="{{@filtres[@col]}}" value="{{@value}}">
           <li class="flex items-center gap-2">
             <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
-            <input type="checkbox" name="reference[]" value="{{@value}}" class="filter-checkbox" />
+            <input type="checkbox" name="{{@col}}[]" value="{{@value}}" class="filter-checkbox" />
             <span>{{@value}}</span>
           </li>
         </repeat>
@@ -60,7 +59,7 @@
 <!-- JS scoped -->
 <script>
   function initPopoverFilter() {
-    const root = document.getElementById("popover-ref");
+    const root = document.getElementById("popover-{{@col}}");
     if (!root) return;
 
     const sortAscBtn = root.querySelector(".sort-asc");
@@ -111,7 +110,7 @@
 
   // réappel si injecté dynamiquement par HTMX (ou un futur F3 partiel)
   document.body.addEventListener("htmx:afterSwap", (e) => {
-    if (e.detail.target.id === "popover-ref") {
+    if (e.detail.target.id === "popover-{{@col}}") {
       initPopoverFilter();
     }
   });

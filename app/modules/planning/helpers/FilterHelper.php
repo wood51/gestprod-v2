@@ -60,4 +60,31 @@ class FilterHelper
         //     ]
         //);
     }
+
+    public static function get_filters(string $table,array|string $columns, array $query_filter = [])
+    {
+        $mapper = new DB\Cortex(Base::instance()->DB,$table);
+        $cols = is_string($columns) ? explode(',', $columns) : $columns;
+        $results = $mapper->find($query_filter);
+
+        if ($results) {
+            $filtres = [];
+            $tmp = [];
+            foreach ($cols as $col) {
+
+                foreach ($results as $result) {
+
+                    if (!isset($result->$col)) continue;
+                    $tmp[$col][$result->$col] = true;
+                }
+
+                $filtres[$col] = array_keys($tmp[$col]);
+                asort($filtres[$col]);
+            }
+
+            return $filtres;
+        }
+
+        return [];
+    }
 }

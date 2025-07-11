@@ -3,11 +3,14 @@
 class PlanningFilterController
 {
 
-    protected $service;
+    protected $service,$table,$filtered_col;
+
 
     public function __construct()
     {
         $this->service = new PlanningService();
+        $this->table = 'vue_prod_planning';
+        $this->filtered_col = ['reference','type','numero'];
     }
 
     /**
@@ -20,22 +23,26 @@ class PlanningFilterController
 
         FilterHelper::makeFilter($col,$formData);
 
-        $filtres = VuePlanningModel::get_filters([$col]); // ou avec des filtres
-        $f3->set('reference', $filtres[$col]);
+        //$filtres = VuePlanningModel::get_filters([$col]); // ou avec des filtres
+        $filtres = FilterHelper::get_filters($this->table,$this->filtered_col); // ou avec des filtres // BUG ici on renvoie qu'un filter type ou ref alors qu'il y en as 2 (interdépendance des deux)
+        $f3->filtres = $filtres;
+        $f3->set($col, $filtres[$col]);
         $this->service->renderPartialPlanning();
     }
 
     /**
-     * @route("POST /planning/sort")
+     * @route("GET /planning/sort/@col/@order")
      */
-    public function sortPlanning($f3)
+    public function sortPlanning($f3,$param)
     {
-        $col = isset($f3->POST['col']) ? $f3->POST['col'] : [];
-        $order = (isset($f3->POST['order']) && (in_array($f3->POST['order'], ['asc', 'desc']))) ? $f3->POST['order'] : 'asc';
+        $col = $param['col'] ?? [];
+        $order = $param['order'] ?? 'asc'; 
         FilterHelper::makeSort($col, $order);
 
-        $filtres = VuePlanningModel::get_filters(['reference']); // ou avec des filtres
-        $f3->set('reference', $filtres['reference']);
+        //$filtres = VuePlanningModel::get_filters([$col]); // ou avec des filtres
+        $filtres = FilterHelper::get_filters($this->table, $this->filtered_col); // ou avec des filtres
+        $f3->filtres = $filtres;
+        $f3->set($col, $filtres[$col]);
         $this->service->renderPartialPlanning();
     }
 
@@ -46,8 +53,13 @@ class PlanningFilterController
     {
         FilterHelper::resetFilter();
 
-        $filtres = VuePlanningModel::get_filters(['reference']); // ou avec des filtres
-        $f3->set('reference', $filtres['reference']);
+        // $filtres = VuePlanningModel::get_filters(['reference']); // ou avec des filtres
+        $filtres = FilterHelper::get_filters($this->table,$this->filtered_col); // ou avec des filtres
+        $f3->filtres = $filtres;
+        // $f3->set('reference', $filtres['reference']);
+        // $f3->set('type', $filtres['type']);
         $this->service->renderPartialPlanning();
     }
+
+    
 }
