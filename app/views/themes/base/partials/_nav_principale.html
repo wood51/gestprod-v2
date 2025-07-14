@@ -12,8 +12,8 @@
       >
         <i class="fas fa-home"></i>
       </a>
-      <a href="#" class="text-gray-500 hover:text-indigo-500 text-xl" title="Paramètres" hx-get="/user/parametres" hx-target="body" hx-swap="beforeend">
-        <i class="fas fa-cog"></i>
+      <a href="#" class="text-gray-500 hover:text-indigo-500 text-xl" title="{{@user.prenom | ucfirst}} - Paramètres" hx-get="/user/parametres" hx-target="body" hx-swap="beforeend">
+        <i class="fa-solid fa-user"></i>
       </a>
       <a href="/logout" class="text-gray-500 hover:text-indigo-500 text-xl" title="Déconnexion">
         <i class="fas fa-sign-out-alt"></i>
@@ -29,7 +29,7 @@
       <li><hr class="border-t border-gray-500 my-2" /></li>
     </check>
     <!-- Séparateur -->
-    
+
     <li><a href="/public/dashboard" target="_blank" class="btn btn-ghost">KPI public</a></li>
     <!-- Séparateur -->
     <!-- <li><hr class="border-t border-gray-500 my-2" /></li>

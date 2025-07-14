@@ -1,0 +1,114 @@
+<form method="get">
+  <!-- Card 1 -->
+  <div id="step1" class="card w-1/2 bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title">Ajouter un nouvel aléa</h2>
+      <!-- Steper -->
+      <ul class="steps m-4">
+        <li class="step step-primary">Item</li>
+        <li class="step">Opérateur</li>
+        <li class="step">Aléas</li>
+        <li class="step">Origine</li>
+        <li class="step">Commentaire</li>
+      </ul>
+
+      <!-- Inputs -->
+      <div class="flex flex-row items-center justify-center gap-4 w-full">
+        <label
+          ><input type="radio" name="item" value="production" class="radio radio-md m-2" checked /><span class="font-bold align-middle">Production</span></label
+        >
+        <label><input type="radio" name="item" value="qualite" class="radio radio-md m-2" /><span class="font-bold align-middle">Qualité</span></label>
+        <label><input type="radio" name="item" value="securite" class="radio radio-md m-2" /><span class="font-bold align-middle">Sécurité</span></label>
+      </div>
+      <!-- Validation -->
+      <div class="flex justify-end">
+        <button type="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div id="step2" class="card w-1/2 bg-base-100 shadow-xl hidden">
+    <div class="card-body">
+      <h2 class="card-title">Ajouter un nouvel aléa</h2>
+      <!-- Steper -->
+      <ul class="steps m-4">
+        <li class="step step-primary">Opérateur</li>
+        <li class="step step-primary">Aléas</li>
+        <li class="step">Origine</li>
+        <li class="step">Commentaire</li>
+      </ul>
+      <div class="flex flex-col items-center justify-center gap-4 w-full">
+        <label class="select" for="operation">
+          <span class="label">Opération</span>
+          <select id="operation" name="operation">
+            <option value="1">Empilage</option>
+            <option value="2">Bobinage</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="card-actions justify-end">
+        <button type="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
+      </div>
+    </div>
+  </div>
+  <!-- Card 3 -->
+  <div id="step3" class="card w-1/2 bg-base-100 shadow-xl hidden">
+    <div class="card-body">
+      <h2 class="card-title">Ajouter un nouvel aléa</h2>
+      <!-- Steper -->
+      <ul class="steps">
+        <li class="step step-primary">Opérateur</li>
+        <li class="step step-primary">Aléas</li>
+        <li class="step step-primary">Origine</li>
+        <li class="step">Commentaire</li>
+      </ul>
+      <div class="card-actions justify-end">
+        <button type="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
+      </div>
+    </div>
+  </div>
+  <!-- Card 4 -->
+  <div id="step4" class="card w-1/2 bg-base-100 shadow-xl hidden">
+    <div class="card-body">
+      <h2 class="card-title">Ajouter un nouvel aléa</h2>
+      <!-- Steper -->
+      <ul class="steps">
+        <li class="step step-primary">Opérateur</li>
+        <li class="step step-primary">Aléas</li>
+        <li class="step step-primary">Origine</li>
+        <li class="step step-primary">Commentaire</li>
+      </ul>
+
+      <div class="card-actions justify-end">
+        <button type="submit" class="btn btn-primary">Valider</button>
+      </div>
+    </div>
+  </div>
+</form>
+<script>
+  // Cangement de step
+  let currentStep = 1;
+  function getSelectedItem() {
+    const selected = document.querySelector(`input[name="item"]:checked`);
+    return selected ? selected.value : null;
+  }
+
+  function nextStep() {
+    document.getElementById("step" + currentStep).classList.add("hidden");
+    // Example switch usage, complete as needed or remove if not required
+    switch (getSelectedItem()) {
+      case "production":
+        currentStep++;
+        break;
+      case "qualite":
+        break;
+      case "securite":
+        break;
+      default:
+        break;
+    }
+    document.getElementById("step" + currentStep).classList.remove("hidden");
+  }
+</script>

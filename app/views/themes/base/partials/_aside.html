@@ -6,6 +6,7 @@
         <span class="text-2xl sm:text-3xl font-semibold text-indigo-400">GESTPROD</span>
       </div>
       <span class="text-base text-gray-500 text-center font-semibold italic">Gestion de production DEE</span>
+      <div id="clock" class="font-mono font-bold text-xs text-gray-500 mt-2">&nbsp;</div>
     </div>
   </div>
 
@@ -13,4 +14,19 @@
   <div id="aside_menu">{{@aside_menu|raw}}</div>
 </aside>
 
-<script></script>
+<script>
+  setInterval(() => {
+    const options = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    };
+    const now = new Date();
+    const clock = document.getElementById("clock");
+    if (clock) {
+      clock.innerText = now.toLocaleString("fr-FR", options);
+    }
+  }, 1000);
+</script>
