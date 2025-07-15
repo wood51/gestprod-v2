@@ -21,7 +21,8 @@
         <label><input type="radio" name="item" value="securite" class="radio radio-md m-2" /><span class="font-bold align-middle">Sécurité</span></label>
       </div>
       <!-- Validation -->
-      <div class="flex justify-end">
+      <div class="flex justify-between">
+        <button type="button" class="btn btn-primary" onclick="previousStep();" disabled>Précédent</button>
         <button type="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
       </div>
     </div>
@@ -33,22 +34,24 @@
       <h2 class="card-title">Ajouter un nouvel aléa</h2>
       <!-- Steper -->
       <ul class="steps m-4">
+        <li class="step step-primary">Item</li>
         <li class="step step-primary">Opérateur</li>
-        <li class="step step-primary">Aléas</li>
+        <li class="step">Aléas</li>
         <li class="step">Origine</li>
         <li class="step">Commentaire</li>
       </ul>
       <div class="flex flex-col items-center justify-center gap-4 w-full">
-        <label class="select" for="operation">
-          <span class="label">Opération</span>
-          <select id="operation" name="operation">
-            <option value="1">Empilage</option>
-            <option value="2">Bobinage</option>
+        <label class="select" for="operateur">
+          <span class="label">Opérateur</span>
+          <select id="operation" name="operateur">
+            <option value="1">Justin</option>
+            <option value="2">Germain</option>
           </select>
         </label>
       </div>
 
-      <div class="card-actions justify-end">
+      <div class="card-actions justify-between">
+        <button type="button" class="btn btn-primary" onclick="previousStep();">Précédent</button>
         <button type="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
       </div>
     </div>
@@ -59,12 +62,14 @@
       <h2 class="card-title">Ajouter un nouvel aléa</h2>
       <!-- Steper -->
       <ul class="steps">
+        <li class="step step-primary">Item</li>
         <li class="step step-primary">Opérateur</li>
         <li class="step step-primary">Aléas</li>
-        <li class="step step-primary">Origine</li>
+        <li class="step">Origine</li>
         <li class="step">Commentaire</li>
       </ul>
-      <div class="card-actions justify-end">
+      <div class="card-actions justify-between">
+        <button type="button" class="btn btn-primary" onclick="previousStep();">Précédent</button>
         <button type="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
       </div>
     </div>
@@ -75,14 +80,46 @@
       <h2 class="card-title">Ajouter un nouvel aléa</h2>
       <!-- Steper -->
       <ul class="steps">
+        <li class="step step-primary">Item</li>
+        <li class="step step-primary">Opérateur</li>
+        <li class="step step-primary">Aléas</li>
+        <li class="step step-primary">Origine</li>
+        <li class="step">Commentaire</li>
+      </ul>
+
+      <div class="flex flex-col items-center justify-center gap-4 w-full">
+        <label class="select" for="operation">
+          <span class="label">Opérateur</span>
+          <select id="operation" name="operateur">
+            <option value="1">Justin</option>
+            <option value="2">Germain</option>
+          </select>
+        </label>
+        
+      </div>
+
+      <div class="card-actions justify-between">
+        <button type="button" class="btn btn-primary" onclick="previousStep();">Précédent</button>
+        <button type="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
+      </div>
+    </div>
+  </div>
+  <!-- Card  -->
+  <div id="step5" class="card w-1/2 bg-base-100 shadow-xl hidden">
+    <div class="card-body">
+      <h2 class="card-title">Ajouter un nouvel aléa</h2>
+      <!-- Steper -->
+      <ul class="steps">
+        <li class="step step-primary">Item</li>
         <li class="step step-primary">Opérateur</li>
         <li class="step step-primary">Aléas</li>
         <li class="step step-primary">Origine</li>
         <li class="step step-primary">Commentaire</li>
       </ul>
 
-      <div class="card-actions justify-end">
-        <button type="submit" class="btn btn-primary">Valider</button>
+      <div class="card-actions justify-between">
+        <button type="button" class="btn btn-primary" onclick="previousStep();">Précédent</button>
+        <button type="submit" class="btn btn-warning">Valider</button>
       </div>
     </div>
   </div>
@@ -97,18 +134,13 @@
 
   function nextStep() {
     document.getElementById("step" + currentStep).classList.add("hidden");
-    // Example switch usage, complete as needed or remove if not required
-    switch (getSelectedItem()) {
-      case "production":
-        currentStep++;
-        break;
-      case "qualite":
-        break;
-      case "securite":
-        break;
-      default:
-        break;
-    }
+    currentStep++;
+    document.getElementById("step" + currentStep).classList.remove("hidden");
+  }
+
+  function previousStep() {
+    document.getElementById("step" + currentStep).classList.add("hidden");
+    currentStep--;
     document.getElementById("step" + currentStep).classList.remove("hidden");
   }
 </script>

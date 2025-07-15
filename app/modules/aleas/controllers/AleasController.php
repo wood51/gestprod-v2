@@ -2,7 +2,7 @@
 class AleasController
 {
     /**
-     * @route("GET /aleas")
+     * @route("GET /alea")
      */
     public function aleas($f3)
     {
