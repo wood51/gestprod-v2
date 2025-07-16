@@ -5,7 +5,8 @@
     <ul class="steps m-4">
       <li class="step step-primary">Item</li>
       <li class="step step-primary">Opérateur</li>
-      <li class="step step-primary">Opération</li>
+      <li class="step step-primary">Référence</li>
+      <li class="step">Opération</li>
       <li class="step">Aléas</li>
       <li class="step">Origine</li>
       <li class="step">FNC</li>
@@ -13,11 +14,20 @@
     </ul>
 
     <div class="flex flex-col items-center justify-center gap-4 w-full">
-      <label class="select" for="operation">
-        <span class="label">Opération</span>
-        <select id="operation" name="operation">
-          <option value="1">Empilage Stator</option>
-          <option value="2">Bobinage Stator</option>
+      <label class="select" for="type">
+        <span class="label">Type</span>
+        <select id="type" name="type">
+          <option value="1">Alternateurs</option>
+          <option value="2">Compresseurs</option>
+          <option value="3">Produit Électriques</option>
+        </select>
+      </label>
+
+      <label class="select" for="reference">
+        <span class="label">Réference</span>
+        <select id="reference" name="reference">
+          <option value="1">AB100L100V2</option>
+          <option value="2">AB180L225V1</option>
         </select>
       </label>
     </div>

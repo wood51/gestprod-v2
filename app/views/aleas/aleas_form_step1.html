@@ -1,29 +1,39 @@
 <div id="step1" class="card w-1/2 bg-base-100 shadow-xl">
-    <div class="card-body">
-      <h2 class="card-title">Ajouter un nouvel aléa</h2>
-      <!-- Steper -->
-      <ul class="steps m-4">
-        <li class="step step-primary">Item</li>
-        <li class="step">Opérateur</li>
-        <li class="step">Opération</li>
-        <li class="step">Aléas</li>
-        <li class="step">Origine</li>
-        <li class="step">FNC</li>
-        <li class="step">Commentaire</li>
-      </ul>
+  <div class="card-body">
+    <h2 class="card-title">Ajouter un nouvel aléa</h2>
+    <!-- Steper -->
+    <ul class="steps m-4">
+      <li class="step step-primary">Général</li>
+      <li class="step">Opérateur</li>
+      <li class="step">Référence</li>
+      <li class="step">Opération</li>
+      <li class="step">Aléas</li>
+      <li class="step">Origine</li>
+      <li class="step">FNC</li>
+      <li class="step">Commentaire</li>
+    </ul>
 
-      <!-- Inputs -->
-      <div class="flex flex-row items-center justify-center gap-4 w-full">
-        <label
-          ><input type="radio" name="item" value="production" class="radio radio-md m-2" checked /><span class="font-bold align-middle">Production</span></label
-        >
-        <label><input type="radio" name="item" value="qualite" class="radio radio-md m-2" /><span class="font-bold align-middle">Qualité</span></label>
-        <label><input type="radio" name="item" value="securite" class="radio radio-md m-2" /><span class="font-bold align-middle">Sécurité</span></label>
-      </div>
-      <!-- Validation -->
-      <div class="flex justify-between m-4">
-        <button type="button" class="btn btn-primary" onclick="previousStep();" disabled>Précédent</button>
-        <button type="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
-      </div>
+    <!-- Inputs -->
+    <div class="flex flex-row items-center justify-center gap-4 w-full">
+      <label class="select" for="item">
+        <span class="label">Item</span>
+        <select id="item" name="item">
+          <option value="1">Production</option>
+          <option value="2">Qualité</option>
+          <option value="3">Sécurité</option>
+        </select>
+      </label>
+
+      <label class="input">
+        <span class="label">Date</span>
+        <input id="date" name="date" type="date" />
+      </label>
+    </div>
+
+    <!-- Validation -->
+    <div class="flex justify-between m-4">
+      <button item="button" class="btn btn-primary" onclick="previousStep();" disabled>Précédent</button>
+      <button item="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
     </div>
   </div>
+</div>

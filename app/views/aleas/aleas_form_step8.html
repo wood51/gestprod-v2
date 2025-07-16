@@ -1,4 +1,4 @@
-<div id="step7" class="card w-1/2 bg-base-100 shadow-xl hidden">
+<div id="step8" class="card w-1/2 bg-base-100 shadow-xl hidden">
   <div class="card-body">
     <h2 class="card-title">Ajouter un nouvel aléa</h2>
     <!-- Steper -->
@@ -10,22 +10,19 @@
       <li class="step step-primary">Aléas</li>
       <li class="step step-primary">Origine</li>
       <li class="step step-primary">FNC</li>
-      <li class="step">Commentaire</li>
+      <li class="step step-primary">Commentaire</li>
     </ul>
 
     <div class="flex flex-row items-center justify-center gap-4 w-full">
-      <input id="cb_fnc" name="cb_fnc" type="checkbox" class="checkbox" onclick="enableFNC();" />
-      <label for="cb_fnc">FNC ?</label>
-
-      <label class="input">
-        <span class="label">N° FNC</span>
-        <input id="no_fnc" name="no_fnc" type="text" disabled />
+      <label class="input w-3/4">
+        <span class="label">Commentaire</span>
+        <input id="commentaire" name="commentaire" type="text" />
       </label>
     </div>
 
     <div class="card-actions justify-between m-4">
       <button type="button" class="btn btn-primary" onclick="previousStep();">Précédent</button>
-      <button type="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
+      <button type="submit" class="btn btn-warning">Valider</button>
     </div>
   </div>
 </div>
