@@ -1,0 +1,37 @@
+<div id="step4" class="card w-1/2 bg-base-100 shadow-xl hidden">
+    <div class="card-body">
+      <h2 class="card-title">Ajouter un nouvel aléa</h2>
+      <!-- Steper -->
+      <ul class="steps m-4">
+        <li class="step step-primary">Item</li>
+        <li class="step step-primary">Opérateur</li>
+        <li class="step step-primary">Opération</li>
+        <li class="step step-primary">Aléas</li>
+        <li class="step">Origine</li>
+        <li class="step">FNC</li>
+        <li class="step">Commentaire</li>
+      </ul>
+
+      <div class="flex flex-row items-center justify-center gap-4 w-full">
+        <label class="select" for="type_aleas">
+          <span class="label">Type Aléas</span>
+          <select id="type_aleas" name="type_aleas">
+            <option value="1">Reprise Rectification</option>
+            <option value="2">Autre</option>
+          </select>
+        </label>
+        <label class="select" for="aleas">
+          <span class="label">Aléas</span>
+          <select id="aleas" name="aleas">
+            <option value="1">Masse</option>
+            <option value="2">Autre</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="card-actions justify-between m-4">
+        <button type="button" class="btn btn-primary" onclick="previousStep();">Précédent</button>
+        <button type="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
+      </div>
+    </div>
+  </div>

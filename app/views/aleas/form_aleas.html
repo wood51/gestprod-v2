@@ -1,128 +1,24 @@
 <form method="get">
   <!-- Card 1 -->
-  <div id="step1" class="card w-1/2 bg-base-100 shadow-xl">
-    <div class="card-body">
-      <h2 class="card-title">Ajouter un nouvel aléa</h2>
-      <!-- Steper -->
-      <ul class="steps m-4">
-        <li class="step step-primary">Item</li>
-        <li class="step">Opérateur</li>
-        <li class="step">Aléas</li>
-        <li class="step">Origine</li>
-        <li class="step">Commentaire</li>
-      </ul>
-
-      <!-- Inputs -->
-      <div class="flex flex-row items-center justify-center gap-4 w-full">
-        <label
-          ><input type="radio" name="item" value="production" class="radio radio-md m-2" checked /><span class="font-bold align-middle">Production</span></label
-        >
-        <label><input type="radio" name="item" value="qualite" class="radio radio-md m-2" /><span class="font-bold align-middle">Qualité</span></label>
-        <label><input type="radio" name="item" value="securite" class="radio radio-md m-2" /><span class="font-bold align-middle">Sécurité</span></label>
-      </div>
-      <!-- Validation -->
-      <div class="flex justify-between">
-        <button type="button" class="btn btn-primary" onclick="previousStep();" disabled>Précédent</button>
-        <button type="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
-      </div>
-    </div>
-  </div>
+  <include href="aleas/aleas_form_step1.html" />
 
   <!-- Card 2 -->
-  <div id="step2" class="card w-1/2 bg-base-100 shadow-xl hidden">
-    <div class="card-body">
-      <h2 class="card-title">Ajouter un nouvel aléa</h2>
-      <!-- Steper -->
-      <ul class="steps m-4">
-        <li class="step step-primary">Item</li>
-        <li class="step step-primary">Opérateur</li>
-        <li class="step">Aléas</li>
-        <li class="step">Origine</li>
-        <li class="step">Commentaire</li>
-      </ul>
-      <div class="flex flex-col items-center justify-center gap-4 w-full">
-        <label class="select" for="operateur">
-          <span class="label">Opérateur</span>
-          <select id="operation" name="operateur">
-            <option value="1">Justin</option>
-            <option value="2">Germain</option>
-          </select>
-        </label>
-      </div>
+  <include href="aleas/aleas_form_step2.html" />
 
-      <div class="card-actions justify-between">
-        <button type="button" class="btn btn-primary" onclick="previousStep();">Précédent</button>
-        <button type="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
-      </div>
-    </div>
-  </div>
   <!-- Card 3 -->
-  <div id="step3" class="card w-1/2 bg-base-100 shadow-xl hidden">
-    <div class="card-body">
-      <h2 class="card-title">Ajouter un nouvel aléa</h2>
-      <!-- Steper -->
-      <ul class="steps">
-        <li class="step step-primary">Item</li>
-        <li class="step step-primary">Opérateur</li>
-        <li class="step step-primary">Aléas</li>
-        <li class="step">Origine</li>
-        <li class="step">Commentaire</li>
-      </ul>
-      <div class="card-actions justify-between">
-        <button type="button" class="btn btn-primary" onclick="previousStep();">Précédent</button>
-        <button type="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
-      </div>
-    </div>
-  </div>
+  <include href="aleas/aleas_form_step3.html" />
+
   <!-- Card 4 -->
-  <div id="step4" class="card w-1/2 bg-base-100 shadow-xl hidden">
-    <div class="card-body">
-      <h2 class="card-title">Ajouter un nouvel aléa</h2>
-      <!-- Steper -->
-      <ul class="steps">
-        <li class="step step-primary">Item</li>
-        <li class="step step-primary">Opérateur</li>
-        <li class="step step-primary">Aléas</li>
-        <li class="step step-primary">Origine</li>
-        <li class="step">Commentaire</li>
-      </ul>
+  <include href="aleas/aleas_form_step4.html" />
 
-      <div class="flex flex-col items-center justify-center gap-4 w-full">
-        <label class="select" for="operation">
-          <span class="label">Opérateur</span>
-          <select id="operation" name="operateur">
-            <option value="1">Justin</option>
-            <option value="2">Germain</option>
-          </select>
-        </label>
-        
-      </div>
+  <!-- Card 5 -->
+  <include href="aleas/aleas_form_step5.html" />
 
-      <div class="card-actions justify-between">
-        <button type="button" class="btn btn-primary" onclick="previousStep();">Précédent</button>
-        <button type="button" class="btn btn-primary" onclick="nextStep();">Suivant</button>
-      </div>
-    </div>
-  </div>
-  <!-- Card  -->
-  <div id="step5" class="card w-1/2 bg-base-100 shadow-xl hidden">
-    <div class="card-body">
-      <h2 class="card-title">Ajouter un nouvel aléa</h2>
-      <!-- Steper -->
-      <ul class="steps">
-        <li class="step step-primary">Item</li>
-        <li class="step step-primary">Opérateur</li>
-        <li class="step step-primary">Aléas</li>
-        <li class="step step-primary">Origine</li>
-        <li class="step step-primary">Commentaire</li>
-      </ul>
+  <!-- Card 6 -->
+  <include href="aleas/aleas_form_step6.html" />
 
-      <div class="card-actions justify-between">
-        <button type="button" class="btn btn-primary" onclick="previousStep();">Précédent</button>
-        <button type="submit" class="btn btn-warning">Valider</button>
-      </div>
-    </div>
-  </div>
+  <!-- Card 7 -->
+  <include href="aleas/aleas_form_step7.html" />
 </form>
 <script>
   // Cangement de step
@@ -142,5 +38,10 @@
     document.getElementById("step" + currentStep).classList.add("hidden");
     currentStep--;
     document.getElementById("step" + currentStep).classList.remove("hidden");
+  }
+
+  function enableFNC() {
+    const isChecked = document.getElementById("cb_fnc").checked;
+    document.getElementById("no_fnc").disabled = !isChecked;
   }
 </script>
