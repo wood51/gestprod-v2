@@ -17,8 +17,11 @@
       <label class="select" for="operateur">
         <span class="label">Opérateur</span>
         <select id="operateur" name="operateur">
-          <option value="1">Justin</option>
-          <option value="2">Germain</option>
+          <repeat group="{{@operateurs}}" value="{{@operateur}}">
+            <option value="{{@operateur._id}}">{{@operateur.prenom|ucfirst}}</option>
+          </repeat>
+          <!-- <option value="1">Justin</option>
+          <option value="2">Germain</option> -->
         </select>
       </label>
     </div>
