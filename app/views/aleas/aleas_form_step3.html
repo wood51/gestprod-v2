@@ -12,22 +12,21 @@
       <li class="step">FNC</li>
       <li class="step">Commentaire</li>
     </ul>
-
     <div class="flex flex-row items-center justify-center gap-4 w-full">
       <label class="select" for="type">
         <span class="label">Type</span>
-        <select id="type" name="type">
-          <option value="1">Alternateurs</option>
-          <option value="2">Compresseurs</option>
-          <option value="3">Produit Électriques</option>
+        <select id="type" name="type"  hx-get="/aleas/ref/" hx-target="#reference" hx-trigger="change" ></select>
+          <repeat group="{{@types}}" value="{{@type}}">
+            <option value="{{@type.id}}">{{@type.designation}}</option>
+          </repeat>
         </select>
       </label>
 
       <label class="select" for="reference">
         <span class="label">Réference</span>
         <select id="reference" name="reference">
-          <option value="1">AB100L100V2</option>
-          <option value="2">AB180L225V1</option>
+          <!-- <option value="1">AB100L100V2</option>
+          <option value="2">AB180L225V1</option> -->
         </select>
       </label>
     </div>
@@ -38,3 +37,6 @@
     </div>
   </div>
 </div>
+
+<script>
+</script>
