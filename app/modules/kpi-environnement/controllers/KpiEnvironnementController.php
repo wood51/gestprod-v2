@@ -1,38 +1,38 @@
 <?php
-class KpiSecuriteController
+class KpiEnvironnementController
 {
     protected $service;
 
     function __construct()
     {
-        $this->service = new KpiSecuriteService();
+        $this->service = new KpiEnvironnementService();
     }
 
     /**
-     * @route("GET /kpi/securite")
+     * @route("GET /kpi/environnement")
      */
     function kpi_securite($f3, $params)
     {
         $f3->daysSince = $this->service->nb_jours_sans_at();
         $f3->record = $this->service->record_sans_at();
         $f3->calendar = $this->service->createCalendar();
-        echo Template::instance()->render("kpi-securite/kpi-securite.html");
+        echo Template::instance()->render("kpi-environnement/kpi-environnement.html");
     }
 
 
     /**
-     * @route("GET /kpi/securite/indicateurs")
+     * @route("GET /kpi/environnement/indicateurs")
      */
     function indicateurs($f3)
     {
         $f3->daySince= $this->service->nb_jours_sans_at();
         $f3->record= $this->service->record_sans_at();
-        echo Template::instance()->render('kpi-securite/partials/_indicateurs.html');
+        echo Template::instance()->render('kpi-securite/partials/_indicateurs_env.html');
     }
 
 
     /**
-     * @route("GET /kpi/securite/@annee/@mois")
+     * @route("GET /kpi/environnement/@annee/@mois")
      */
     function kpi_securite_partial($f3, $params)
     {
@@ -44,7 +44,7 @@ class KpiSecuriteController
     }
 
     /**
-     * @route("GET /kpi/securite/accident-form/@date")
+     * @route("GET /kpi/environnement/accident-form/@date")
      */
     function accidentForm($f3, $params)
     {
@@ -63,7 +63,7 @@ class KpiSecuriteController
     }
 
     /**
-     * @route("POST /kpi/securite/accident-save")
+     * @route("POST /kpi/environnement/accident-save")
      */
     function accidentSave($f3)
     {
@@ -90,7 +90,7 @@ class KpiSecuriteController
     }
 
     /**
-     * @route("POST /kpi/securite/accident-delete")
+     * @route("POST /kpi/environnement/accident-delete")
      */
     function accidentDelete($f3)
     {

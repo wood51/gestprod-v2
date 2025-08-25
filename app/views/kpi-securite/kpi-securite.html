@@ -1,35 +1,90 @@
-<div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-4xl border border-gray-300">
-  <h1 class="text-6xl font-extrabold text-center bg-red-600 text-white py-4 rounded-xl mb-8 tracking-widest">SÉCURITÉ</h1>
+<!DOCTYPE html>
+<html lang="fr" class="h-screen">
 
-  <!-- Indicateurs séparés -->
-  <div id="indicateurs">
-    <include href="/kpi-securite/partials/_indicateurs.html"/>
+<head>
+  <include href="themes/base/partials/_head.html" />
+</head>
+
+<body class="grid grid-cols-2 gap-0">
+
+  <!-- Sécurité -->
+  <div class="bg-white p-8 rounded-3xl shadow-2xl w-full h-full max-w-4xl mx-auto  border  border-gray-300">
+    <h1 class="text-6xl font-extrabold text-center bg-red-600 text-white py-4 rounded-xl mb-8 tracking-widest">SÉCURITÉ
+    </h1>
+
+    <!-- Indicateurs séparés -->
+    <div id="indicateurs">
+      <include href="/kpi-securite/partials/_indicateurs.html" />
+    </div>
+
+    <div id="calendar flex " class="p-2">
+      <include href="/kpi-securite/partials/_calendar.html" />
+    </div>
+
+    <!-- Légende -->
+    <div class="flex justify-center items-center gap-6 mt-10 text-xl border border-gray-300 rounded-xl p-4">
+      <div class="flex items-center gap-1 m-2">
+        <div class="w-6 h-6 bg-amber-200 border border-gray-500 rounded"></div>
+        Jour encours
+      </div>
+      <div class="flex items-center gap-1 m-2">
+        <div class="w-6 h-6 bg-green-200 border border-gray-500 rounded"></div>
+        Jour sans AT
+      </div>
+      <div class="flex items-center gap-1 m-2">
+        <div class="w-6 h-6 bg-red-300 border border-gray-500 rounded"></div>
+        Jour avec AT
+      </div>
+      <div class="flex items-center gap-1 m-2">
+        <div class="w-6 h-6 bg-gray-300 border border-gray-500 rounded"></div>
+        Non travaillé
+      </div>
+    </div>
   </div>
 
-  <div id="calendar" class="p-2">
-    <include href="/kpi-securite/partials/_calendar.html" />
+  <!-- Environement -->
+  <div class="bg-white p-8 rounded-3xl shadow-2xl w-full h-full max-w-4xl mx-auto  border  border-gray-300">
+    <h1 class="text-6xl font-extrabold text-center bg-green-600 text-white py-4 rounded-xl mb-8 tracking-widest">
+      ENVIRONEMENT
+    </h1>
+
+    <!-- Indicateurs séparés -->
+    <div id="indicateurs">
+      <include href="/kpi-securite/partials/_indicateurs_env.html" />
+    </div>
+
+    <div id="calendar flex " class="p-2">
+      <include href="/kpi-securite/partials/_calendar.html" />
+    </div>
+
+    <!-- Légende -->
+    <div class="flex justify-center items-center gap-6 mt-10 text-xl border border-gray-300 rounded-xl p-4">
+      <div class="flex items-center gap-1 m-2">
+        <div class="w-6 h-6 bg-amber-200 border border-gray-500 rounded"></div>
+        Jour encours
+      </div>
+      <div class="flex items-center gap-1 m-2">
+        <div class="w-6 h-6 bg-green-200 border border-gray-500 rounded"></div>
+        Jour sans Incident
+      </div>
+      <div class="flex items-center gap-1 m-2">
+        <div class="w-6 h-6 bg-red-300 border border-gray-500 rounded"></div>
+        Jour avec Incident
+      </div>
+      <div class="flex items-center gap-1 m-2">
+        <div class="w-6 h-6 bg-gray-300 border border-gray-500 rounded"></div>
+        Non travaillé
+      </div>
+      <div class="flex items-center gap-1 m-2">
+
+        Incident = Déversement, Départ de feu, Fuite...
+      </div>
+    </div>
   </div>
 
-  <!-- Légende -->
-  <div class="flex justify-center items-center gap-6 mt-10 text-xl border border-gray-300 rounded-xl p-4">
-    <div class="flex items-center gap-1 m-2">
-      <div class="w-6 h-6 bg-amber-200 border border-gray-500 rounded"></div>
-      Jour encours
-    </div>
-    <div class="flex items-center gap-1 m-2">
-      <div class="w-6 h-6 bg-green-200 border border-gray-500 rounded"></div>
-      Jour sans AT
-    </div>
-    <div class="flex items-center gap-1 m-2">
-      <div class="w-6 h-6 bg-red-300 border border-gray-500 rounded"></div>
-      Jour avec AT
-    </div>
-    <div class="flex items-center gap-1 m-2">
-      <div class="w-6 h-6 bg-gray-300 border border-gray-500 rounded"></div>
-      Non travaillé
-    </div>
-  </div>
-</div>
+  <!-- Modale pour les accidents du travail -->
+  <div id="accident-modal"></div>
 
-<!-- Modale pour les accidents du travail -->
-<div id="accident-modal"></div>
+</body>
+
+</html>

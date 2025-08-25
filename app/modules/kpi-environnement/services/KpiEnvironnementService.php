@@ -1,5 +1,5 @@
 <?php
-class KpiSecuriteService
+class KpiEnvironnementService
 {
     private array $joursFeries = [];
 
@@ -92,7 +92,7 @@ class KpiSecuriteService
                 for ($current; $current < $fin; $current = $current->modify('+1 day')) {
                     //if ($this->isOuvrable($current->format('Y-m-d'))) {
                         $nb_jours++;
-                        //}
+                    //}
                     }
                     
                     
