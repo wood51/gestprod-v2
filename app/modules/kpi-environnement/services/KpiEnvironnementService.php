@@ -46,9 +46,9 @@ class KpiEnvironnementService
 
     function nb_jours_sans_at()
     {
-        $lastAccident = AccidentsTravailModel::last_accident();
+        $lastAccident = EnvironnementlModel::last_accident();
         if ($lastAccident) {
-            $dernier_arret = new DateTimeImmutable(AccidentsTravailModel::last_accident());
+            $dernier_arret = new DateTimeImmutable(EnvironnementlModel::last_accident());
             $now = new DateTimeImmutable();
 
             $count = 0;
@@ -74,7 +74,7 @@ class KpiEnvironnementService
             'fin' => null
         ];
 
-        $allAccidents = AccidentsTravailModel::all();
+        $allAccidents = EnvironnementlModel::all();
         
         if ($allAccidents) {
             $dates_arrets = array_column($allAccidents, 'date');
@@ -113,7 +113,7 @@ class KpiEnvironnementService
         $jours = [];
         $max_case = 42;
         $now = DateHelper::build($annee, $mois);
-        $joursAT = AccidentsTravailModel::accidents($now->annee, $now->mois);
+        $joursAT = EnvironnementlModel::accidents($now->annee, $now->mois);
         $feries_mois = DateHelper::get_ferries($now->annee, $now->mois);
         $prevDate = $now->datetime->modify('-1 month');
         $nextDate = $now->datetime->modify('+1 month');

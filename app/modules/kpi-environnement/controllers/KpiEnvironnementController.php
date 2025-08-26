@@ -11,7 +11,7 @@ class KpiEnvironnementController
     /**
      * @route("GET /kpi/environnement")
      */
-    function kpi_securite($f3, $params)
+    function kpi_environnement($f3, $params)
     {
         $f3->daysSince = $this->service->nb_jours_sans_at();
         $f3->record = $this->service->record_sans_at();
@@ -34,19 +34,19 @@ class KpiEnvironnementController
     /**
      * @route("GET /kpi/environnement/@annee/@mois")
      */
-    function kpi_securite_partial($f3, $params)
+    function kpi_environnement_partial($f3, $params)
     {
         $annee = $params['annee'];
         $mois = $params['mois'];
 
         $f3->calendar = $this->service->createCalendar($annee, $mois);
-        echo Template::instance()->render("kpi-securite/partials/_calendar.html");
+        echo Template::instance()->render("kpi-environnement/partials/_calendar.html");
     }
 
     /**
-     * @route("GET /kpi/environnement/accident-form/@date")
+     * @route("GET /kpi/environnement/incident-form/@date")
      */
-    function accidentForm($f3, $params)
+    function incidentForm($f3, $params)
     {
         $date = $params['date'];
 
@@ -65,7 +65,7 @@ class KpiEnvironnementController
     /**
      * @route("POST /kpi/environnement/accident-save")
      */
-    function accidentSave($f3)
+    function incidentSave($f3)
     {
         // Mode pompier 
         // TODO save dans le model , validation des data
@@ -84,15 +84,15 @@ class KpiEnvironnementController
         $f3->record = $this->service->record_sans_at();
 
         $f3->calendar = $this->service->createCalendar($date->format('Y'), $date->format('m'));
-        $calendar = Template::instance()->render("kpi-securite/partials/_calendar.html");
-        $indicateurs = Template::instance()->render('kpi-securite/partials/_indicateurs.html');
+        $calendar = Template::instance()->render("kpi-envoronnement/partials/_calendar.html");
+        $indicateurs = Template::instance()->render('kpi-environnement/partials/_indicateurs.html');
         echo $indicateurs.$calendar;
     }
 
     /**
      * @route("POST /kpi/environnement/accident-delete")
      */
-    function accidentDelete($f3)
+    function incidentDelete($f3)
     {
         $data = $f3->POST;
         $date = new DateTimeImmutable($data['date']);
@@ -112,8 +112,8 @@ class KpiEnvironnementController
         $f3->record = $this->service->record_sans_at();
 
         $f3->calendar = $this->service->createCalendar($date->format('Y'), $date->format('m'));
-        $calendar = Template::instance()->render("kpi-securite/partials/_calendar.html");
-        $indicateurs = Template::instance()->render('kpi-securite/partials/_indicateurs.html');
+        $calendar = Template::instance()->render("kpi-envoronnement/partials/_calendar.html");
+        $indicateurs = Template::instance()->render('kpi-environnement/partials/_indicateurs.html');
         echo $indicateurs.$calendar;
     }
 
