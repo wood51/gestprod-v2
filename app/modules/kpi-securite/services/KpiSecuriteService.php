@@ -46,7 +46,8 @@ class KpiSecuriteService
 
     function nb_jours_sans_at()
     {
-        if (AccidentsTravailModel::last_accident()) {
+        $lastAccident = AccidentsTravailModel::last_accident();
+        if ($lastAccident) {
             $dernier_arret = new DateTimeImmutable(AccidentsTravailModel::last_accident());
             $now = new DateTimeImmutable();
 
@@ -54,9 +55,9 @@ class KpiSecuriteService
             $date = $dernier_arret->modify('+1 day'); // commencer le lendemain de l'accident
 
             while ($date <= $now) {
-                if ($this->isOuvrable($date->format('Y-m-d'))) {
+                // if ($this->isOuvrable($date->format('Y-m-d'))) {
                     $count++;
-                }
+                // }
                 $date = $date->modify('+1 day');
             }
 
@@ -73,24 +74,28 @@ class KpiSecuriteService
             'fin' => null
         ];
 
-        if (AccidentsTravailModel::all()) {
-            $dates_arrets = array_column(AccidentsTravailModel::all(), 'date');
-
-
-
+        $allAccidents = AccidentsTravailModel::all();
+        
+        if ($allAccidents) {
+            $dates_arrets = array_column($allAccidents, 'date');
+            
+            
+            
             for ($i = 0; $i < count($dates_arrets) - 1; $i++) {
                 $debut = new DateTimeImmutable($dates_arrets[$i]);
                 $fin = new DateTimeImmutable($dates_arrets[$i + 1]);
-
+                
                 $nb_jours = 0;
+
                 $current = $debut->modify('+1 day');
-
-                for (; $current < $fin; $current = $current->modify('+1 day')) {
-                    if ($this->isOuvrable($current->format('Y-m-d'))) {
+                
+                for ($current; $current < $fin; $current = $current->modify('+1 day')) {
+                    //if ($this->isOuvrable($current->format('Y-m-d'))) {
                         $nb_jours++;
+                        //}
                     }
-                }
-
+                    
+                    
                 if ($nb_jours > $record['nb_jours']) {
                     $record = [ // pour utlisé dans les templates
                         'nb_jours' => $nb_jours,

@@ -11,16 +11,13 @@
   />
 </th>
 <th>#</th>
-<th>Référence</th>
-<th>Type</th>
-<th>Numéro</th>
+<th>Référence <include href="/planning/partials/planning-table/_filter.html" with="col='reference'"/></th>
+<th>Type <include href="/planning/partials/planning-table/_filter.html" with="col='type'"/></th>
+<th>Numéro <include href="/planning/partials/planning-table/_filter.html" with="col='numero'"/></th>
 <th>Semaine</th>
 <th>Semaine Engagement</th>
 <th>Engagement</th>
-<th>
-  <div class="flex items-center gap-2">
-    <input type="checkbox" id="filter_pret" name="filter_pret" hx-get="/planning/filter/pret" hx-target="#planning" hx-include="[name=filter_pret]"
-    hx-trigger="change" {{ @SESSION.filter_pret ? 'checked' : '' }} /> Prête ?
-  </div>
-</th>
-<th class=""></th>
+<th>Prête ?</th>
+<th></th>
+
+

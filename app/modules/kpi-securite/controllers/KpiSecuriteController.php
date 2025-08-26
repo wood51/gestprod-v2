@@ -54,7 +54,7 @@ class KpiSecuriteController
         $accident = AccidentsTravailModel::find_by_date($date);
         $f3->ssts = UsersModel::all_sst();
         $f3->users = UsersModel::all();
-        $f3->operations = SuivisOperationModel::all();
+        //$f3->operations = SuivisOperationModel::all();
 
         $f3->date = $date;
         $f3->accident = $accident;

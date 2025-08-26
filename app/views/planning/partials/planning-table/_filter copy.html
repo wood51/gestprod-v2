@@ -1,0 +1,62 @@
+<button class="btn btn-ghost" popovertarget="popover-ref" style="anchor-name: --anchor-ref">
+    <i class="fa-solid fa-filter"></i>
+  </button>
+
+  <ul id="popover-ref"
+      class="dropdown rounded-box bg-base-100 p-2 max-h-64 w-64 shadow overflow-y-auto text-xs font-normal"
+      popover
+      style="position-anchor: --anchor-ref">
+    
+    <!-- champ recherche -->
+    <li>
+      <input type="text" class="input input-xs w-full mb-2 filter-search" placeholder="Rechercher...">
+    </li>
+
+    <!-- tout cocher -->
+     <li>
+    <li class="mb-1">
+      <input type="checkbox" class="check-all" id="check-all-ref">
+      <label for="check-all-ref">Tout cocher</label>
+    </li>
+
+    <!-- filtres réels -->
+    <repeat group="{{@references}}" value="{{@reference}}">
+      <li class="flex gap-1 items-center text-xs">
+        <input type="checkbox" name="ref[]" value="{{@reference}}" class="filter-checkbox"
+               hx-post="/test/filter"
+               hx-trigger="change"
+               hx-include="closest form">
+        <span>{{@reference}}</span>
+      </li>
+    </repeat>
+    </li>
+  </ul>  
+
+  <!-- JS scoped -->
+<script>
+  (() => {
+    const root = document.getElementById("popover-ref");
+    if (!root) return;
+
+    const searchInput = root.querySelector(".filter-search");
+    const allCheckbox = root.querySelector(".check-all");
+    const checkboxes = root.querySelectorAll(".filter-checkbox");
+
+    // Recherche dynamique
+    searchInput?.addEventListener("input", () => {
+      const val = searchInput.value.toLowerCase();
+      checkboxes.forEach((cb) => {
+        const label = cb.nextElementSibling?.textContent.toLowerCase();
+        cb.closest("li").style.display = label.includes(val) ? "" : "none";
+      });
+    });
+
+    // Tout cocher/décocher
+    allCheckbox?.addEventListener("change", () => {
+      checkboxes.forEach((cb) => {
+        cb.checked = allCheckbox.checked;
+        cb.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+    });
+  })();
+</script>

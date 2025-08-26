@@ -1,0 +1,117 @@
+<button class="btn btn-ghost" popovertarget="popover-{{@col}}" style="anchor-name: --anchor-{{@col}}">
+  <i class="fa-solid fa-filter"></i>
+</button>
+
+<div id="popover-{{@col}}" class="dropdown dropdown-end bg-base-100 p-3 shadow-md text-xs font-normal w-64" popover style="position-anchor: --anchor-{{@col}}" hx-on:htmx:after-request="this.hidePopover()">
+  <!-- Tri + reset -->
+  <div class="space-y-1 mb-2">
+    <button hx-get="/planning/sort/{{@col}}/asc" hx-swap="innerHTML" hx-target="#planning" type="button" class="btn btn-ghost btn-xs justify-start w-full sort-asc">
+      <i class="fa-solid fa-caret-up mr-2"></i> 
+      Trier de A à Z
+    </button>
+  </div>
+  <div class="space-y-1 mb-2">
+    <button type="button" hx-get="/planning/sort/{{@col}}/desc" hx-swap="innerHTML" hx-target="#planning" class="btn btn-ghost btn-xs justify-start w-full sort-desc"><i class="fa-solid fa-caret-down mr-2"></i> Trier de Z à A</button>
+  </div>
+  <hr class="space-y-1 mb-2" />
+  <div class="space-y-1 mb-2">
+    <button type="button" hx-get="/planning/filter/reset" hx-swap="innerHTML" hx-target="#planning" class="btn btn-ghost btn-xs justify-start w-full"><i class="fa-solid fa-filter-circle-xmark mr-2"></i> Effacer les filtres</button>
+  </div>
+  <hr class="space-y-1 mb-2" />
+
+  <!-- Recherche -->
+  <div class="space-y-1 mb-2">
+    <label class="input">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="search" class="grow filter-search" placeholder="Rechercher..." />
+    </label>
+  </div>
+
+  <form method="post" hx-post="/planning/filter/{{@col}}" hx-target="#planning" hx-swap="innerHTML">
+
+    <!-- Liste scrollable -->
+    <div class="overflow-y-auto max-h-40 pr-1 mb-2">
+      <ul class="space-y-1">
+        <li class="flex items-center gap-2">
+          <input type="checkbox" class="check-all" />
+          <span>Tout Sélectionner</span>
+        </li>
+        <repeat group="{{@filtres[@col]}}" value="{{@value}}">
+          <li class="flex items-center gap-2">
+            <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
+            <input type="checkbox" name="{{@col}}[]" value="{{@value}}" class="filter-checkbox" />
+            <span>{{@value}}</span>
+          </li>
+        </repeat>
+      </ul>
+    </div>
+
+    <!-- Boutons -->
+    <div class="flex justify-between gap-2">
+      <button type="submit" class="btn btn-primary btn-xs">
+        <span>Envoyer</span>
+      </button>
+      <button type="reset" class="btn btn-outline btn-xs" onclick="this.closest('[popover]').hidePopover()">Annuler</button>
+    </div>
+  </form>
+</div>
+
+<!-- JS scoped -->
+<script>
+  function initPopoverFilter() {
+    const root = document.getElementById("popover-{{@col}}");
+    if (!root) return;
+
+    const sortAscBtn = root.querySelector(".sort-asc");
+    const sortDescBtn = root.querySelector(".sort-desc");
+    const listContainer = root.querySelector("ul");
+
+    const searchInput = root.querySelector(".filter-search");
+    const allCheckbox = root.querySelector(".check-all");
+    const checkboxes = root.querySelectorAll(".filter-checkbox");
+
+    // Recherche dynamique
+    searchInput?.addEventListener("input", () => {
+      const val = searchInput.value.toLowerCase();
+      checkboxes.forEach((cb) => {
+        const label = cb.nextElementSibling?.textContent.toLowerCase();
+        label.includes(val) ? cb.closest("li").classList.remove("hidden") : cb.closest("li").classList.add("hidden");
+      });
+    });
+
+    // Tout cocher/décocher
+    allCheckbox?.addEventListener("change", () => {
+      checkboxes.forEach((cb) => {
+        const isVisible = !cb.closest("li")?.classList.contains("hidden");
+        if (isVisible) {
+          cb.checked = allCheckbox.checked;
+          cb.dispatchEvent(new Event("change", { bubbles: true })); // Simuler l'event change sur les checkbox (si future besoin )
+        }
+      });
+    });
+
+    // Ajoute un listener sur chaque checkbox pour décocher "check-all" si une case est décochée
+    checkboxes.forEach((cb) => {
+      cb.addEventListener("change", () => {
+        if (!cb.checked) {
+          allCheckbox.checked = false;
+        } else {
+          // Si toutes les cases sont cochées, coche "check-all"
+          if ([...checkboxes].every((c) => c.checked)) {
+            allCheckbox.checked = true;
+          }
+        }
+      });
+    });
+  }
+
+  // appel immédiat si c’est chargé directement
+  initPopoverFilter();
+
+  // réappel si injecté dynamiquement par HTMX (ou un futur F3 partiel)
+  document.body.addEventListener("htmx:afterSwap", (e) => {
+    if (e.detail.target.id === "popover-{{@col}}") {
+      initPopoverFilter();
+    }
+  });
+</script>

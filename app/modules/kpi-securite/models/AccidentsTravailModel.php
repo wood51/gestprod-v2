@@ -5,7 +5,7 @@ class AccidentsTravailModel extends \DB\Cortex
         $db = 'DB',
         $table = 'securite_accidents_travail';
 
-    public static function all($add_sans_arret = false)
+    public static function all($add_sans_arret = true)
     {
         $accidents = new self();
         $filtre = ($add_sans_arret) ? [""] : ["arret > 0"];
@@ -48,7 +48,7 @@ class AccidentsTravailModel extends \DB\Cortex
     public static function last_accident()
     {
         $accident = new self();
-        $last = $accident->findone(['arret > 0'], ['order' => 'date DESC']);
+        $last = $accident->findone(['arret = 1'], ['order' => 'date DESC']); // on considère chaque accidentmême sans arrêt
 
        return ($last) ? $last['date'] : null;
     }

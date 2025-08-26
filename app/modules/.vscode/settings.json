@@ -1,7 +1,10 @@
 {
     "files.exclude": {
-        ".vscode": true,
-        "kpi-dashboard\\.vscode": true,
-        "kpi-dashboard\\module.json": true
+        ".vscode": false,
+        "kpi-dashboard\\.vscode": false,
+        "kpi-dashboard\\module.json": false,
+        "kpi-dashboard": false,
+        "kpi-securite": false,
+        "ateliers": false
     }
 }

@@ -19,9 +19,9 @@ class VuePlanningModel extends DB\Cortex
         return self::mapper()->find();
     }
 
-    public static function paginate_all($pos = 0, $size = 10, $filter = null)
+    public static function paginate_all($pos = 0, $size = 10, $filter = null,$option=null)
     {
-        return self::mapper()->paginate($pos, $size, $filter, ['order' => 'id DESC']);
+        return self::mapper()->paginate($pos, $size, $filter, $option);
     }
 
 

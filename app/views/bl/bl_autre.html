@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      /* === Réglages d'impression === */
+      @page {
+        margin: 15mm 12mm;
+      }
+
+      /* === Variables globales === */
+      :root {
+        --border-color: rgb(63, 63, 63);
+        --header-bg: rgb(127, 200, 243);
+        --zebra-bg: rgb(214, 214, 214);
+        --border-size: 1.5px;
+        --font-base: sans-serif;
+        --font-size-base: 11pt;
+      }
+
+      /* === Typographie générale === */
+      body {
+        font-family: var(--font-base);
+        font-size: var(--font-size-base);
+      }
+
+      h1 {
+        font-size: 22pt;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15mm;
+      }
+
+      /* === Tables globales === */
+      table {
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        text-align: center;
+        vertical-align: middle;
+        height: 18px;
+      }
+
+      th {
+        background-color: var(--header-bg);
+        font-weight: normal;
+      }
+
+      .table-border th,
+      .table-border td {
+        border: solid var(--border-size) var(--border-color);
+      }
+
+      /* === Utilitaires === */
+      .mb-10mm {
+        margin-bottom: 10mm;
+      }
+
+      /* === Zebra table === */
+      .zebra tr:nth-child(even) {
+        background-color: var(--zebra-bg);
+      }
+
+      /* === Sections spécifiques === */
+      #adresses {
+        width: 100%;
+        font-style: italic;
+      }
+
+      #adresses td {
+        text-align: left;
+      }
+
+      #infos-bl {
+        width: 30%;
+      }
+
+      #infos-bl th {
+        padding-left: 5px;
+        text-align: left;
+      }
+
+      #commandes {
+        width: 100%;
+      }
+
+      #commandes thead {
+        display: table-header-group;
+      }
+
+      #observations {
+        width: 100%;
+        page-break-inside: avoid;
+      }
+
+      #observations th {
+        height: 26px;
+      }
+
+      #observations td {
+        vertical-align: top;
+        text-align: left;
+        word-break: normal;
+        height: 25mm;
+        padding: 2mm;
+      }
+
+      #signature {
+        text-align: right;
+        font-style: italic;
+      }
+
+      #footer {
+        page-break-inside: avoid;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>BON DE LIVRAISON</h1>
+
+    <table id="adresses" class="mb-10mm">
+      <tr>
+        <td>
+          <strong>Expéditeur :</strong><br />
+          DEE<br />
+          PAOS LA SAUSSAYE<br />
+          95 rue du rond d'eau<br />
+          45590 Saint-Cyr-en-Val<br />
+          France
+        </td>
+        <td style="width: 50%"></td>
+        <td>
+          <strong>Destinataire :</strong><br />
+          GUINAULT SA<br />
+          PAOS LA SAUSSAYE<br />
+          95 rue du rond d'eau<br />
+          45590 Saint-Cyr-en-Val<br />
+          France
+        </td>
+      </tr>
+    </table>
+
+    <table id="infos-bl" class="table-border mb-10mm">
+      <tr>
+        <th>BL N°</th>
+        <td>{{ @num_bl }}</td>
+      </tr>
+      <tr>
+        <th>Date</th>
+        <td>{{ @date_bl }}</td>
+      </tr>
+    </table>
+
+    <table id="commandes" class="table-border zebra mb-10mm" style="page-break-inside: auto">
+      <thead>
+        <tr style="page-break-after: auto">
+          <th>#</th>
+          <th>N° Cmde</th>
+          <th>Poste</th>
+          <th>Qte</th>
+          <th>Référence</th>
+          <th>N° Produit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <repeat group="{{ @data }}" value="{{ @row }}" counter="{{@line}}">
+          <tr style="page-break-inside: avoid">
+            <td>{{ @line }}</td>
+            <td>{{ @row.pa }}</td>
+            <td>{{ @row.poste }}</td>
+            <td>{{ @@row.qte ?: 1}}</td>
+            <td>{{ @row.reference }}</td>
+            <td>{{ @row.num_machine }}</td>
+          </tr>
+        </repeat>
+        <repeat group="{{ @repeat_fill }}" value="{{ @i }}">
+          <tr style="page-break-inside: avoid">
+            <td>{{ @line + @i }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </repeat>
+      </tbody>
+    </table>
+
+    <div id="footer">
+      <!-- <hr /> -->
+      <table id="observations" class="table-border mb-10mm">
+        <tr>
+          <th>Observations</th>
+        </tr>
+        <tr>
+          <td>{{ @@observations ?: 'R.A.S.' }}</td>
+        </tr>
+      </table>
+
+      <div id="signature">Signature : {{@@user.username ?: 'PLE1'}} le {{@date_bl}}</div>
+    </div>
+  </body>
+</html>

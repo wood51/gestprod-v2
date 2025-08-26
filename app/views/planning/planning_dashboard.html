@@ -40,24 +40,24 @@
   </div>
 
   <script>
-    function openAjoutModal() {
-      document.getElementById("ajoutForm").reset(); // Reset du form
-      document.getElementById("type-select").dispatchEvent(new Event("change")); //Provoque le changement sur select type
-      document.getElementById("ajoutModal").showModal();
-    }
+  //   function openAjoutModal() {
+  //     document.getElementById("ajoutForm").reset(); // Reset du form
+  //     document.getElementById("type-select").dispatchEvent(new Event("change")); //Provoque le changement sur select type
+  //     document.getElementById("ajoutModal").showModal();
+  //   }
 
-    function closeAjoutModal() {
-      document.getElementById("ajoutModal").close();
-    }
+  //   function closeAjoutModal() {
+  //     document.getElementById("ajoutModal").close();
+  //   }
 
-    function openEngagementModal(produit) {
-      const produitHidden = document.querySelector('input[type="hidden"][name="produit"]');
-      produitHidden.value = produit;
-      document.getElementById("engagementModal").showModal();
-    }
+  //   function openEngagementModal(produit) {
+  //     const produitHidden = document.querySelector('input[type="hidden"][name="produit"]');
+  //     produitHidden.value = produit;
+  //     document.getElementById("engagementModal").showModal();
+  //   }
 
-    function closeEngagementModal() {
-      document.getElementById("engagementModal").close();
-    }
+  //   function closeEngagementModal() {
+  //     document.getElementById("engagementModal").close();
+  //   }
   </script>
 </div>

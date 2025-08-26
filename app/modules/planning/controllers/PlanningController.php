@@ -2,11 +2,13 @@
 
 class PlanningController
 {
-    protected $service;
+    protected $service, $table,$filtered_col;
 
     public function __construct()
     {
         $this->service = new PlanningService();
+        $this->table = 'vue_prod_planning';
+        $this->filtered_col = ['reference','type','numero'];
     }
 
     /**
@@ -14,23 +16,43 @@ class PlanningController
      */
     function planningDashboard($f3)
     {
-
         // Init Etat initial en session
-        $f3->SESSION['filter_pret'] = false;
         $f3->SESSION['pagination_page'] = 0;
         $f3->SESSION['pagination_limit'] = 11;
+
 
         // Init Form Ajout 
         $f3->types = $this->service->getAvailableTypes(['Alternateur', 'Compresseur']); // Recup différent type
         $f3->mset($this->service->getRefsByType('Alternateur'));
 
+
+        //$filtres = VuePlanningModel::get_filters(['reference', 'type']); // ou avec des filtres
+        $filtres = FilterHelper::get_filters($this->table, $this->filtered_col); // ou avec des filtres
+        //*echo var_dump($filtres);die();
+        $f3->filtres = $filtres;
+        // $f3->set('reference', $filtres['reference']);
+        // $f3->set('type', $filtres['type']);
         // Init template 
-        $f3->filter_pret = false; // retour checkbox Prêt ?
+        $filter = FilterHelper::getFilter();
         $f3->mset($this->service->getNowInfo());
-        $f3->mset($this->service->paginatePlanning(0, 11, false));
+        $f3->mset($this->service->paginatePlanning(0, 11, $filter));
 
         echo \Template::instance()->render("planning/planning_dashboard.html");
     }
+
+    /**
+     * @route("GET /planning/page/@page")
+     */
+    public function setPlanningPage($f3, $params)
+    {
+        $f3->SESSION['pagination_page'] = intval($params['page']) - 1;
+        //$filtres = VuePlanningModel::get_filters(['reference', 'type']); // ou avec des filtres
+        $filtres = FilterHelper::get_filters($this->table, $this->filtered_col); // ou avec des filtres
+        $f3->filtres = $filtres;
+        //$filter = FilterHelper::getFilter();
+        $this->service->renderPartialPlanning();
+    }
+
 
 
     /**
@@ -39,8 +61,6 @@ class PlanningController
      */
     function planning_add($f3)
     {
-
-
         $this->service->addProduit([
             'type' => (int) $f3->POST['type'],
             'reference' => (int) $f3->POST['reference'],
@@ -51,25 +71,6 @@ class PlanningController
 
         $this->service->renderPartialPlanning();
         echo \Template::instance()->render('themes/base/partials/_modal_clear.html');
-    }
-
-    /**
-     * @route("GET /planning/filter/pret")
-     */
-    public function setFilterPret($f3)
-    {
-        $filter_pret = isset($f3->GET['filter_pret']) ? true : false;
-        $f3->SESSION['filter_pret'] = $filter_pret;
-        $this->service->renderPartialPlanning();
-    }
-
-    /**
-     * @route("GET /planning/page/@page")
-     */
-    public function setPlanningPage($f3, $params)
-    {
-        $f3->SESSION['pagination_page'] = intval($params['page']) - 1;
-        $this->service->renderPartialPlanning();
     }
 
     /**
@@ -106,14 +107,6 @@ class PlanningController
             $db->numero = $f3->POST['numero'];
         }
 
-        // if (!empty($f3->POST['numero_rotor'])) {
-        //     $db->numero_rotor = $f3->POST['numero_rotor'];
-        // }
-
-        // if (!empty($f3->POST['numero_stator'])) {
-        //     $db->numero_stator = $f3->POST['numero_stator'];
-        // }
-
         $db->save();
 
         // Ajout du contrôle qualité OK
@@ -132,7 +125,7 @@ class PlanningController
             $eng->save();
         }
 
-        $this->service->renderPartialPlanning(); 
+        $this->service->renderPartialPlanning();
 
         echo \Template::instance()->render('/planning/partials/_planning_table.html');
         echo \Template::instance()->render('themes/base/partials/_modal_clear.html');

@@ -1,27 +1,51 @@
 FROM php:8.2-apache
 
-# Installation des extensions PHP nécessaires
+# Installation des bibliothèques système pour extensions PHP
 RUN apt-get update && apt-get install -y \
     libmariadb-dev \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
-    libicu-dev \ 
-    && docker-php-ext-install mysqli pdo_mysql intl \
-    && docker-php-ext-install mysqli pdo_mysql \
+    libgd-dev \
+    libicu-dev \
+    libonig-dev \
+    libcurl4-openssl-dev \
+    libzip-dev \
+    unzip \
+    zip \
+    curl \
+    git \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd
+    && docker-php-ext-install \
+        gd \
+        mbstring \
+        intl \
+        pdo_mysql \
+        mysqli \
+        curl \
+        zip
 
-
-RUN  pecl install apcu \
+# Installation de l'extension APCu via PECL
+RUN pecl install apcu \
     && docker-php-ext-enable apcu
 
-# Activation des modules Apache
-RUN a2enmod ssl
-RUN a2enmod rewrite
+# Installation de Composer dans le conteneur
+RUN curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer
 
-# Activation du site SSL par défaut
-RUN a2ensite default-ssl
+# Activation des modules Apache utiles
+RUN a2enmod ssl \
+    && a2enmod rewrite \
+    && a2ensite default-ssl
+
+
+RUN git config --global --add safe.directory /var/www/html    
+
+# Définition du répertoire de travail
+WORKDIR /var/www/html
+
+# Copie du projet
+COPY . .
 
 # Commande de démarrage
 CMD ["apache2-foreground"]

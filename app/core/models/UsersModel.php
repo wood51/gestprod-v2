@@ -81,6 +81,12 @@ class UsersModel extends \DB\Cortex
         return $users->afind(['deleted = ?', $deleted]);
     }
 
+    public static function all_prod($deleted = false)
+    {
+        $users = new self();
+        return $users->afind(['in_production = ? AND deleted = ?', true, false]);
+    }
+
     public static function all_sst()
     {
         $users = new self();

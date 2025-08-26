@@ -1,8 +1,9 @@
 {
     "files.exclude": {
-        ".vscode": true,
-        "kpi-securite": true,
-        "suivis": true,
-        "user": true
+        ".vscode": false,
+        "kpi-securite": false,
+        "suivis": false,
+        "user": false,
+        "kpi-dashboard": false
     }
 }
