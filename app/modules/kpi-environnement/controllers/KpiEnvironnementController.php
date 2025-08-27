@@ -27,7 +27,7 @@ class KpiEnvironnementController
     {
         $f3->daySince= $this->service->nb_jours_sans_at();
         $f3->record= $this->service->record_sans_at();
-        echo Template::instance()->render('kpi-securite/partials/_indicateurs_env.html');
+        echo Template::instance()->render('kpi-environnement/partials/_indicateurs_env.html');
     }
 
 
@@ -40,7 +40,7 @@ class KpiEnvironnementController
         $mois = $params['mois'];
 
         $f3->calendar = $this->service->createCalendar($annee, $mois);
-        echo Template::instance()->render("kpi-environnement/partials/_calendar.html");
+        echo Template::instance()->render("kpi-environnement/partials/_calendar_env.html");
     }
 
     /**
@@ -59,7 +59,7 @@ class KpiEnvironnementController
         $f3->date = $date;
         $f3->accident = $accident;
 
-        echo Template::instance()->render('kpi-securite/partials/_accident_form.html');
+        echo Template::instance()->render('kpi-environnement/partials/_accident_form.html');
     }
 
     /**
