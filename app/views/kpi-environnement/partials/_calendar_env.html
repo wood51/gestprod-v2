@@ -1,13 +1,13 @@
 <div id="calendar_env" class="p-2">
   <div class="flex justify-center items-center text-center font-bold text-indigo-600 text-2xl ">
     <i class="fas fa-caret-left text-2xl mr-4  cursor-pointer"
-      hx-get="/kpi/environnement/{{ @calendar.prev_year }}/{{ @calendar.prev_month }}" hx-target="#calendar_env"
+      hx-get="/kpi/environnement/{{ @calendarEnv.prev_year }}/{{ @calendarEnv.prev_month }}" hx-target="#calendar_env"
       hx-swap="innerHTML"></i>
 
-    {{ @calendar.month_name }} {{@calendar.year}}
+    {{ @calendarEnv.month_name }} {{@calendarEnv.year}}
 
     <i class="fas fa-caret-right text-2xl ml-4  cursor-pointer"
-      hx-get="/kpi/environnement/{{ @calendar.next_year }}/{{ @calendar.next_month }}" hx-target="#calendar_env"
+      hx-get="/kpi/environnement/{{ @calendarEnv.next_year }}/{{ @calendarEnv.next_month }}" hx-target="#calendar_env"
       hx-swap="innerHTML"></i>
   </div>
 
@@ -23,8 +23,8 @@
   </div>
 
   <!-- Jours du calendrier sans bordure principale -->
-  <div class="grid grid-cols-7 gap-3 text-center text-xl rounded-xl p-2">
-    <repeat group="{{@calendar.days}}" value="{{@day}}">
+  <div class="grid grid-cols-7 gap-1.5 text-center text-xl rounded-xl ">
+    <repeat group="{{@calendarEnv.days}}" value="{{@day}}">
       <check if="{{@day.nb}}">
         <false>
           <div class="select-none cursor-pointer py-1 rounded-xl font-semibold bg-transparent">&nbsp;</div>
@@ -34,7 +34,7 @@
           <div class="select-none p-1 border border-gray-700 rounded-xl font-semibold text-gray-700
           {{ @day.at ? 'bg-red-200' : ( @day.aujourdhui ? 'bg-yellow-200' : ( @day.ferie || @day.ferme || !@day.work ? 'bg-gray-300' : 'bg-green-200' ) ) }}
           cursor-pointer"
-            hx-get="/kpi/environnement/incident-form/{{@calendar.year}}-{{sprintf('%02d', @calendar.month)}}-{{sprintf('%02d', @day.nb)}}"
+            hx-get="/kpi/environnement/incident-form/{{@calendarEnv.year}}-{{sprintf('%02d', @calendarEnv.month)}}-{{sprintf('%02d', @day.nb)}}"
             hx-target="#incident-modal" hx-swap="innerHTML">
             {{@day.nb}}
           </div>

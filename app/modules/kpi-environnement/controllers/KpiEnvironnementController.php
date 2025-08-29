@@ -13,9 +13,9 @@ class KpiEnvironnementController
      */
     function kpi_environnement($f3, $params)
     {
-        $f3->daysSince = $this->service->nb_jours_sans_at();
-        $f3->record = $this->service->record_sans_at();
-        $f3->calendar = $this->service->createCalendar();
+        $f3->daysSinceEnv = $this->service->nb_jours_sans_at();
+        $f3->recordEnv = $this->service->record_sans_at();
+        $f3->calendarEnv = $this->service->createCalendar();
         echo Template::instance()->render("kpi-environnement/kpi-environnement.html");
     }
 

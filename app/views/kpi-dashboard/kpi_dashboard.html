@@ -3,6 +3,7 @@
 
 <head>
   <include href="themes/base/partials/_head.html" />
+
 </head>
 
 <body class="h-screen flex flex-col">
@@ -25,17 +26,16 @@
       <div id="slide2" class="carousel-item relative w-full h-full">
         <include href="/kpi-dashboard/partials/_chart_engagement.html" />
       </div>
-      <!-- Slide 3 -->
+      <!-- Slide 3  -->
       <div id="slide3" class="carousel-item relative w-full h-full">
         <include href="/kpi-dashboard/partials/_chart.html" />
       </div>
-      <!-- Slide 3 -->
-      <div id="slide4" class="carousel-item relative w-full">
-
-        <div class="grid grid-cols-2 gap-6 items-center">
-          <div class="mx-auto" hx-get="/kpi/environnement" hx-trigger="load"></div>
-          <div class="mx-auto" hx-get="/kpi/securite" hx-trigger="load"></div>
-        </div >
+      <!-- Slide 4-->
+      <div id="slide4" class="carousel-item relative w-full h-full gap-2">
+        <!-- <div class="grid grid-cols-2 gap-4 "> -->
+         <include href="kpi-environnement/kpi-environnement.html"/>
+         <include href="kpi-securite/kpi-securite.html"/>
+        <!-- </div> -->
       </div>
     </div>
   </main>

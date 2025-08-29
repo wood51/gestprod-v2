@@ -1,14 +1,14 @@
 <div id="indicateurs">
-  <div class="grid grid-cols-2 gap-6 text-center text-2xl">
-    <div class="border border-gray-300 rounded-xl p-4">
+  <div class="grid grid-cols-2 gap-10 text-center text-2xl">
+    <div class="border border-gray-300 rounded-xl p-2">
       <p class="text-lg">Jours sans accident</p>
-      <p class="text-5xl text-green-600 font-bold" id="compteur">{{@daysSince}}</p>
+      <p class="text-2xl text-green-600 font-bold" id="compteur">{{@daysSince}}</p>
     </div>
-    <div class="border border-gray-300 rounded-xl p-4">
+    <div class="border border-gray-300 rounded-xl p-2">
       <p class="text-lg">Record sans accident</p>
       <check if="{{@daysSince > @record.nb_jours}}">
         <true><p class="text-5xl text-blue-600 font-bold">{{@daysSince}}</p></true>
-        <false><p class="text-5xl text-blue-600 font-bold">{{@record.nb_jours}}</p></false>
+        <false><p class="text-2xl text-blue-600 font-bold">{{@record.nb_jours}}</p></false>
       </check>
     </div>
   </div>

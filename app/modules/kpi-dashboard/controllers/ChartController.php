@@ -6,14 +6,23 @@ class ChartController
      */
     function kpi_dashboad($f3)
     {
+        $KpiEnvironnementService = new KpiEnvironnementService();
+        $KpiSecuriteService = new KpiSecuriteService();
         $now = DateHelper::build();
         $week = $f3->SESSION['semaine-kpi'] ?? $now->full_week;
-
         $f3->now = $now;
         $f3->week = $week;
         $f3->week_picker = DateHelper::toWeekPickerFormat($week);
         $f3->max_week_picker = DateHelper::toWeekPickerFormat($now->full_week);
         $f3->nb_semaine = 5;
+
+        $f3->daysSinceEnv = $KpiEnvironnementService->nb_jours_sans_at();
+        $f3->recordEnv = $KpiEnvironnementService->record_sans_at();
+        $f3->calendarEnv = $KpiEnvironnementService->createCalendar();
+
+        $f3->daysSince = $KpiSecuriteService->nb_jours_sans_at();
+        $f3->record = $KpiSecuriteService->record_sans_at();
+        $f3->calendar = $KpiSecuriteService->createCalendar();
 
         echo \template::instance()->render("kpi-dashboard/kpi_dashboard.html");
     }
